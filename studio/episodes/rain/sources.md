@@ -1,0 +1,3 @@
+- 4 mm raindrop terminal velocity ≈ 8.8–9 m/s (Gunn & Kinzer 1949).
+- Falling drops are spherical when small and flatten into a 'hamburger bun' shape as they grow (USGS Water Science School: https://www.usgs.gov/special-topics/water-science-school/science/shape-a-raindrop).
+- Vacuum speed from 2 km: sqrt(2·9.81·2000) = 198 m/s = 713 km/h. Sim: 217 s fall.

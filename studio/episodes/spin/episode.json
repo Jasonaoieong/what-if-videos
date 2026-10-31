@@ -1,0 +1,202 @@
+{
+ "id": "spin",
+ "engine": "spin",
+ "title": "WHAT IF THE EARTH STOPPED SPINNING?",
+ "hook_text": "WHAT IF THE\nEARTH STOPPED\nSPINNING?",
+ "hook_em": "STOPPED",
+ "counter": {
+  "label": "EARTH'S SPIN",
+  "unit": "km/h"
+ },
+ "voice_style": "Deep, calm male documentary narrator (ElevenLabs Adam/Brian), stability ~50%.",
+ "display": [
+  [
+   "sixteen hundred and seventy kilometers per hour",
+   "1,670 km/h"
+  ],
+  [
+   "twenty-three and a half hours",
+   "23.5 hours"
+  ],
+  [
+   "Six months",
+   "6 months"
+  ],
+  [
+   "six months",
+   "6 months"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "space",
+   "heading": "FULL STOP",
+   "text": "The Earth just stopped spinning.",
+   "counter": {
+    "label": "EARTH'S SPIN",
+    "unit": "km/h",
+    "from": 1674,
+    "to": 0,
+    "ease": "out"
+   },
+   "sfx": [
+    "hit_open"
+   ],
+   "event": "Hook: rotation halts."
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "escalate",
+   "camera": "zoom",
+   "heading": "BUT YOU DIDN'T",
+   "text": "The ground stopped. But you didn't.",
+   "counter": {
+    "label": "YOUR SPEED",
+    "unit": "km/h",
+    "from": 0,
+    "to": 1674
+   },
+   "sfx": [
+    "riser_short"
+   ],
+   "event": "Inertia: you keep 465 m/s."
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "escalate",
+   "camera": "flung",
+   "cut": true,
+   "wind": 90,
+   "heading": "THROWN EAST",
+   "text": "On the equator, you're thrown east at sixteen hundred and seventy kilometers per hour.",
+   "counter": {
+    "label": "DISTANCE THROWN",
+    "unit": "m",
+    "rate": 465
+   },
+   "fact": {
+    "title": "FASTER THAN SOUND",
+    "value": "sound = 1,235 km/h"
+   },
+   "sfx": [
+    "number_hit",
+    "doppler"
+   ],
+   "event": "Equatorial surface speed 465 m/s = 1,674 km/h."
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "climax",
+   "camera": "wind",
+   "cut": true,
+   "wind": 90,
+   "heading": "THE AIR KEEPS GOING",
+   "text": "So does the air. Winds three times stronger than the worst tornado ever measured.",
+   "counter": {
+    "label": "WIND",
+    "unit": "km/h",
+    "from": 0,
+    "to": 1674
+   },
+   "fact": {
+    "title": "WORST TORNADO EVER",
+    "value": "≈ 484 km/h · 1999"
+   },
+   "sfx": [
+    "cloud_whoosh",
+    "rumble_low"
+   ],
+   "event": "Bridge Creek–Moore 1999 Doppler 301 mph."
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "reveal",
+   "camera": "latitude",
+   "cut": true,
+   "heading": "SAFER AT THE POLES",
+   "text": "But near the poles, that speed shrinks. At the pole itself, you'd barely move.",
+   "counter": {
+    "label": "SPEED AT YOUR LATITUDE",
+    "unit": "km/h",
+    "from": 1674,
+    "to": 0
+   },
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "event": "v = 1674·cos(latitude)."
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "reveal",
+   "camera": "oceans",
+   "heading": "A NEW SUPERCONTINENT",
+   "text": "Then the oceans drain toward the poles, leaving one giant continent around the middle.",
+   "counter": {
+    "label": "EQUATOR WATER BULGE",
+    "unit": "m",
+    "from": 8000,
+    "to": 0
+   },
+   "fact": {
+    "title": "RESULT",
+    "value": "2 polar oceans"
+   },
+   "sfx": [
+    "riser_long",
+    "wide_atmos"
+   ],
+   "event": "Esri/Fraczek: ~8 km water bulge migrates; equatorial megacontinent."
+  },
+  {
+   "id": "seg07",
+   "scene": 7,
+   "mood": "climax",
+   "camera": "day",
+   "heading": "1 DAY = 1 YEAR",
+   "text": "And one day would last a whole year. Six months of daylight. Six months of night.",
+   "counter": {
+    "label": "HOURS IN ONE DAY",
+    "unit": "h",
+    "from": 24,
+    "to": 8766
+   },
+   "sfx": [
+    "bass_hit"
+   ],
+   "event": "No rotation: solar day = 1 year."
+  },
+  {
+   "id": "seg08",
+   "scene": 8,
+   "mood": "ending",
+   "camera": "ending",
+   "heading": "70 MILLION YEARS AGO",
+   "text": "The good news? Earth can't just stop. But it is slowing down. When dinosaurs lived, a day was only twenty-three and a half hours.",
+   "counter": {
+    "label": "MINUTES IN A DAY",
+    "unit": "min",
+    "from": 1440,
+    "to": 1410
+   },
+   "fact": {
+    "title": "DINOSAUR DAY",
+    "value": "23.5 h · 372 days a year"
+   },
+   "sfx": [
+    "drone_resolve",
+    "hit_final"
+   ],
+   "event": "de Winter et al. 2020, rudist shell."
+  }
+ ]
+}

@@ -1,0 +1,3 @@
+- Orbital speed at the surface sqrt(gR)=7.9 km/s ≈ 17× the equatorial rotation speed (465 m/s) → effective weight 0 at the equator; day = 23.93 h / 17 ≈ 84 min.
+- Faster spin enlarges the equatorial bulge; ocean water migrates toward the equator.
+- 70 Myr ago day ≈ 23.5 h (de Winter et al. 2020).

@@ -1,0 +1,204 @@
+{
+ "id": "rain",
+ "engine": "penny",
+ "object": {
+  "type": "drop"
+ },
+ "title": "WHY DOESN'T RAIN HURT?",
+ "hook_text": "WHY DOESN'T\nRAIN HURT?",
+ "hook_em": "HURT?",
+ "marker_label": "RAINDROP",
+ "danger_h": 0,
+ "vmax": 10,
+ "counter": {
+  "label": "ALTITUDE",
+  "field": "h",
+  "unit": "m",
+  "ticks": {
+   "step": 50,
+   "major": 500,
+   "px": 0.6,
+   "max": 2100
+  }
+ },
+ "voice_style": "Calm, deep male narrator.",
+ "display": [
+  [
+   "two kilometers",
+   "2 km"
+  ],
+  [
+   "over seven hundred kilometers per hour",
+   "over 700 km/h"
+  ],
+  [
+   "about thirty",
+   "about 30 km/h"
+  ],
+  [
+   "seven hundred kilometers per hour into thirty",
+   "700 km/h into 30"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "hook",
+   "heading": "2,000 M · ONE RAINDROP",
+   "text": "This raindrop just fell out of a cloud, two kilometers up.",
+   "sim": [
+    0,
+    4
+   ],
+   "sfx": [
+    "hit_open"
+   ],
+   "event": "Cloud base ~2 km."
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "camera": "wide",
+   "heading": "IF THERE WAS NO AIR",
+   "text": "Without air, it would hit you at over seven hundred kilometers per hour.",
+   "sim": [
+    4,
+    15
+   ],
+   "sfx": [
+    "wide_atmos"
+   ],
+   "fact": {
+    "title": "IN A VACUUM",
+    "value": "≈ 713 km/h"
+   },
+   "event": "sqrt(2g·2000)."
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "reveal",
+   "camera": "flutter",
+   "heading": "THE TWIST",
+   "text": "But it lands at only about thirty.",
+   "sim": [
+    15,
+    40
+   ],
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "fact": {
+    "title": "TERMINAL VELOCITY",
+    "value": "≈ 32 km/h"
+   },
+   "event": "4 mm drop Vt ≈ 8.8 m/s (Gunn & Kinzer 1949)."
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "explain",
+   "camera": "facade",
+   "heading": "NOT A TEARDROP",
+   "text": "And it isn't tear-shaped. Falling raindrops look more like tiny buns.",
+   "sim": [
+    40,
+    90
+   ],
+   "sfx": [
+    "whoosh"
+   ],
+   "fact": {
+    "title": "REAL SHAPE",
+    "value": "round top, flat bottom"
+   },
+   "event": "Large drops flatten (USGS)."
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "escalate",
+   "camera": "topdown",
+   "heading": "STILL FALLING",
+   "text": "The trip takes over three minutes.",
+   "sim": [
+    90,
+    180
+   ],
+   "sfx": [
+    "riser_short"
+   ],
+   "event": "217 s total."
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "rush",
+   "heading": "",
+   "text": "And then it lands.",
+   "sim": [
+    180,
+    216.5
+   ],
+   "sfx": [
+    "heartbeat"
+   ],
+   "event": "Approach."
+  },
+  {
+   "id": "seg07",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "impact_cut",
+   "heading": "",
+   "text": "",
+   "silent_duration": 1.1,
+   "sim": [
+    216.5,
+    217.21
+   ],
+   "sfx": [
+    "silence",
+    "splash"
+   ],
+   "event": "Impact ~32 km/h."
+  },
+  {
+   "id": "seg08",
+   "scene": 7,
+   "mood": "ending",
+   "camera": "land",
+   "heading": "A GENTLE TAP",
+   "text": "A gentle tap. Not a bullet. The air turned seven hundred kilometers per hour into thirty.",
+   "sim": [
+    217.21,
+    217.21
+   ],
+   "sfx": [
+    "drone_resolve"
+   ],
+   "event": "Ending."
+  },
+  {
+   "id": "seg09",
+   "scene": 8,
+   "mood": "ending",
+   "camera": "rise",
+   "heading": "",
+   "text": "Which is why you can walk in the rain.",
+   "sim": [
+    217.21,
+    217.21
+   ],
+   "sfx": [
+    "hit_final"
+   ],
+   "event": "Ending."
+  }
+ ]
+}

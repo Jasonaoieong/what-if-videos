@@ -1,0 +1,202 @@
+{
+ "id": "bowling",
+ "engine": "penny",
+ "object": {
+  "type": "ball"
+ },
+ "title": "WHAT IF YOU DROPPED A BOWLING BALL FROM THE BURJ KHALIFA?",
+ "hook_text": "THE PENNY WAS SAFE.\nTHIS ISN'T.",
+ "hook_em": "THIS ISN'T.",
+ "marker_label": "BOWLING BALL",
+ "danger_h": 300,
+ "vmax": 85,
+ "foot": "SIMULATION · SLOW MOTION · STANDARD ATMOSPHERE",
+ "counter": {
+  "label": "ALTITUDE",
+  "field": "h",
+  "unit": "m",
+  "ticks": {
+   "step": 10,
+   "major": 100,
+   "px": 1.4,
+   "max": 900
+  }
+ },
+ "voice_style": "Calm, deep male narrator.",
+ "display": [
+  [
+   "two hundred and fifty kilometers per hour",
+   "250 km/h"
+  ],
+  [
+   "nearly three hundred kilometers per hour",
+   "nearly 300 km/h"
+  ],
+  [
+   "Seven kilograms",
+   "7 kg"
+  ],
+  [
+   "Ten seconds",
+   "10 seconds"
+  ],
+  [
+   "Fifteen seconds",
+   "15 seconds"
+  ],
+  [
+   "about twenty",
+   "about 20"
+  ],
+  [
+   "about six",
+   "about 6"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "hook",
+   "heading": "828 M · BOWLING BALL",
+   "text": "Last time, a penny fell from here. It was harmless. This time, it's a bowling ball.",
+   "sim": [
+    0,
+    1
+   ],
+   "sfx": [
+    "hit_open"
+   ],
+   "event": "Sequel to the penny."
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "camera": "wide",
+   "heading": "HEAVY + ROUND",
+   "text": "Seven kilograms. Round and heavy, so the air can barely push back.",
+   "sim": [
+    1,
+    4
+   ],
+   "sfx": [
+    "wide_atmos"
+   ],
+   "fact": {
+    "title": "MASS",
+    "value": "7.3 kg"
+   },
+   "event": "Terminal ~81 m/s."
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "escalate",
+   "camera": "flutter",
+   "heading": "ACCELERATING",
+   "text": "Ten seconds in, it's already falling at two hundred and fifty kilometers per hour.",
+   "sim": [
+    4,
+    10
+   ],
+   "sfx": [
+    "riser_short",
+    "doppler"
+   ],
+   "fact": {
+    "title": "AT 10 SECONDS",
+    "value": "248 km/h"
+   },
+   "event": "Sim 248 km/h at 10 s."
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "escalate",
+   "camera": "facade",
+   "heading": "20 FLOORS / SECOND",
+   "text": "The tower's floors flash past. About twenty every second.",
+   "sim": [
+    10,
+    13
+   ],
+   "sfx": [
+    "whoosh"
+   ],
+   "event": "78 m/s / ~4 m floors."
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "climax",
+   "camera": "rush",
+   "heading": "IMPACT IN SECONDS",
+   "text": "Fifteen seconds after letting go.",
+   "sim": [
+    13,
+    15.3
+   ],
+   "sfx": [
+    "heartbeat"
+   ],
+   "event": "Total 15.6 s."
+  },
+  {
+   "id": "seg06",
+   "scene": 5,
+   "mood": "climax",
+   "camera": "impact_cut",
+   "heading": "",
+   "text": "",
+   "silent_duration": 1.2,
+   "sim": [
+    15.3,
+    15.62
+   ],
+   "sfx": [
+    "silence",
+    "impact_huge",
+    "debris"
+   ],
+   "event": "Impact 282 km/h."
+  },
+  {
+   "id": "seg07",
+   "scene": 6,
+   "mood": "ending",
+   "camera": "land",
+   "heading": "NOT HARMLESS",
+   "text": "It hits at nearly three hundred kilometers per hour. With the energy of about six rifle bullets.",
+   "sim": [
+    15.62,
+    15.62
+   ],
+   "sfx": [
+    "drone_resolve"
+   ],
+   "fact": {
+    "title": "IMPACT ENERGY",
+    "value": "≈ 22 kJ"
+   },
+   "event": "KE = ½·7.26·78² ≈ 22 kJ; 7.62×51 rifle ≈ 3.5 kJ."
+  },
+  {
+   "id": "seg08",
+   "scene": 7,
+   "mood": "ending",
+   "camera": "rise",
+   "heading": "",
+   "text": "Air saves you from a penny. Not from this.",
+   "sim": [
+    15.62,
+    15.62
+   ],
+   "sfx": [
+    "hit_final"
+   ],
+   "event": "Ending."
+  }
+ ]
+}

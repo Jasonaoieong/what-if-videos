@@ -1,0 +1,4 @@
+- US record hailstone: Vivian, South Dakota, 23 Jul 2010, 8.0 in (20.3 cm) diameter, 1.9375 lb (0.88 kg) — NOAA NCEI: https://www.ncdc.noaa.gov/monitoring-content/extremes/ncec/reports/vivian-hailstone-final.pdf
+- Hail fall speeds: golf-ball to softball 44–72 mph, largest ~100 mph — NWS/NSSL.
+- Sim: h0 1,500 m, Vt 45 m/s → 163 km/h impact, ~900 J; MLB fastball 145 g at 95 mph ≈ 130 J.
+- Scene note: shown over a generic city for scale; the real stone fell in rural South Dakota.

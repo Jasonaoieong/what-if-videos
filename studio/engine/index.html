@@ -1,0 +1,95 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>What If Engine</title>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
+<style>
+  :root { --amber:#FFB020; --red:#FF3B30; --ice:#BFE6FF; }
+  html,body { margin:0; width:1080px; height:1920px; overflow:hidden; background:#000; font-family:Inter, sans-serif; }
+  #gl { position:absolute; inset:0; }
+  #hud { position:absolute; inset:0; pointer-events:none; color:#fff; }
+  #vignette { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(0,0,0,.55) 100%); }
+  #vignette::before { content:''; position:absolute; left:0; right:0; top:0; height:420px; background:linear-gradient(rgba(0,0,0,.45),transparent); }
+  #vignette::after { content:''; position:absolute; left:0; right:0; bottom:0; height:560px; background:linear-gradient(transparent,rgba(0,0,0,.55)); }
+  #danger { position:absolute; inset:0; opacity:0; box-shadow:inset 0 0 220px 60px rgba(255,40,30,.65); }
+  #flash { position:absolute; inset:0; }
+  #hook { position:absolute; left:50%; top:170px; width:960px; text-align:center; transform-origin:50% 50%;
+    font:900 104px/1.0 'Inter Display', Inter, sans-serif; letter-spacing:-2px; text-transform:uppercase;
+    text-shadow:0 6px 30px rgba(0,0,0,.7), 0 0 2px rgba(0,0,0,.9); }
+  #hook em { font-style:normal; color:var(--amber); }
+  #heading { position:absolute; left:50%; top:150px; transform:translate(-50%,0); }
+  #heading span { display:inline-block; padding:14px 30px; border:2px solid rgba(255,176,32,.85); border-radius:6px;
+    background:rgba(10,14,22,.55); font:800 38px/1 Inter, sans-serif; letter-spacing:6px; color:var(--amber); white-space:nowrap; }
+  #tape { position:absolute; right:44px; top:520px; width:300px; }
+  #youMark { position:absolute; display:none; transform:translate(-50%,-50%); }
+  #youMark i { display:block; width:70px; height:70px; border:4px solid var(--amber); border-radius:50%; box-shadow:0 0 24px var(--amber); }
+  #evMark { position:absolute; display:none; transform:translate(-50%,-150%); font:800 30px Inter; letter-spacing:2px; color:var(--ice);
+    white-space:nowrap; text-shadow:0 2px 12px rgba(0,0,0,.8); border-bottom:3px dashed var(--ice); padding-bottom:6px; }
+  #youMark span { position:absolute; left:50%; top:-52px; transform:translateX(-50%); font:900 34px Inter; letter-spacing:4px; color:var(--amber); text-shadow:0 2px 12px #000; }
+  #tapeLabel { font:800 22px Inter; letter-spacing:6px; color:rgba(255,255,255,.8); text-align:right; margin-bottom:10px; }
+  #tapeWin { position:relative; height:420px; overflow:hidden; border-right:4px solid rgba(255,255,255,.85);
+    -webkit-mask-image:linear-gradient(transparent, #000 25%, #000 75%, transparent); }
+  #ticks { position:absolute; right:0; bottom:50%; width:120px; height:0; }
+  .tk { position:absolute; right:0; width:22px; height:2px; background:rgba(255,255,255,.55); font:600 20px Inter; }
+  .tk.mj { width:44px; height:3px; background:#fff; }
+  .tk { color:#fff; text-align:left; text-indent:-60px; line-height:2px; }
+  .evr { position:absolute; right:0; width:150px; border-top:3px dashed var(--ice); color:var(--ice); font:700 16px Inter;
+    padding-top:4px; text-align:right; letter-spacing:1px; }
+  #tapeNeedle { position:absolute; right:-4px; top:50%; width:120px; height:4px; margin-top:-2px; background:var(--amber);
+    box-shadow:0 0 18px var(--amber); }
+  #altNum { text-align:right; font:900 92px/1 Inter; font-variant-numeric:tabular-nums; letter-spacing:-3px; margin-top:16px;
+    text-shadow:0 4px 20px rgba(0,0,0,.6), 0 0 30px rgba(255,176,32,.35); }
+  #altNum small { font-size:40px; letter-spacing:0; color:rgba(255,255,255,.75); }
+  #altNum.red { color:var(--red); text-shadow:0 0 34px rgba(255,59,48,.8); }
+  .ro { display:flex; justify-content:flex-end; align-items:baseline; gap:10px; margin-top:12px; }
+  .ro label { white-space:nowrap; font:700 17px Inter; letter-spacing:3px; color:rgba(255,255,255,.6); margin-right:auto; }
+  .ro b { font:800 40px Inter; font-variant-numeric:tabular-nums; }
+  .ro b.hot { color:var(--amber); } .ro b.decel { color:var(--ice); }
+  .ro small { font:600 17px Inter; color:rgba(255,255,255,.6); width:58px; }
+  #spdBar { height:8px; margin-top:12px; background:rgba(255,255,255,.18); border-radius:4px; overflow:hidden; }
+  #spdBar i { display:block; height:100%; background:linear-gradient(90deg,var(--ice),var(--amber),var(--red)); }
+  #odo { display:inline-flex; align-items:flex-start; }
+  #odo .col { display:inline-block; height:92px; overflow:hidden; width:.6em; text-align:center; }
+  #odo .strip { display:block; }
+  #odo .strip i { display:block; height:92px; font-style:normal; }
+  #odo .sep { display:inline-block; width:.28em; }
+  #altNum { transform-origin:100% 50%; }
+  #caption .w { display:inline-block; transform-origin:50% 80%; }
+  #caption .key { color:#BFE6FF; text-shadow:0 0 24px rgba(120,200,255,.6), 0 4px 20px #000; }
+  #caption .chip { position:relative; padding:0 14px; margin:0 4px; color:#111; }
+  #caption .chip b { position:relative; z-index:1; font-weight:900; color:#1a1206; text-shadow:none; }
+  #caption .chip s { position:absolute; inset:2px -2px 0; background:linear-gradient(180deg,#FFC94A,#FF9F0A); border-radius:14px;
+    box-shadow:0 0 0 4px rgba(255,255,255,.9), 0 0 34px rgba(255,176,32,.8), 0 8px 24px rgba(0,0,0,.5); text-decoration:none; }
+  #sparks { position:absolute; inset:0; pointer-events:none; }
+  #sparks i { position:absolute; width:12px; height:12px; margin:-6px; border-radius:50%; background:#FFE08A; box-shadow:0 0 14px #FFB020; }
+  #fact { position:absolute; left:44px; top:520px; width:520px; padding:22px 26px 18px; border-radius:14px; opacity:0;
+    background:linear-gradient(135deg, rgba(12,16,24,.82), rgba(24,30,42,.72)); border:2px solid rgba(255,176,32,.7);
+    backdrop-filter:blur(8px); }
+  #fact .ft { font:800 24px Inter; letter-spacing:4px; color:#FFB020; }
+  #fact .fv { font:900 50px/1.1 'Inter Display', Inter; color:#fff; margin-top:6px; }
+  #fact .fl { height:5px; margin-top:14px; background:rgba(255,255,255,.15); border-radius:3px; overflow:hidden; }
+  #fact .fl i { display:block; height:100%; background:#FFB020; }
+  .flab { position:absolute; display:none; transform:translate(-50%,-50%); text-align:center; white-space:nowrap;
+    padding:8px 16px; border-radius:10px; background:rgba(8,10,16,.7); font:800 26px Inter; }
+  .flab b { display:block; font-size:18px; letter-spacing:4px; }
+  #fG b, #fG span { color:#FF6A5C; } #fD b, #fD span { color:#7FD3FF; }
+  #forces { position:absolute; left:44px; top:780px; width:470px; padding:20px 24px; border-radius:14px; opacity:0;
+    background:rgba(8,11,18,.72); border:2px solid rgba(255,255,255,.18); }
+  #forces .fh { font:800 20px Inter; letter-spacing:5px; color:rgba(255,255,255,.7); margin-bottom:12px; }
+  #forces .fb { margin:12px 0; }
+  #forces .bar { height:22px; border-radius:11px; background:rgba(255,255,255,.1); overflow:hidden; }
+  #forces .bar i { display:block; height:100%; border-radius:11px; }
+  #forces .g i { background:linear-gradient(90deg,#c9302a,#FF5A4C); box-shadow:0 0 18px rgba(255,80,70,.7); }
+  #forces .d i { background:linear-gradient(90deg,#2a8fd0,#7FD3FF); box-shadow:0 0 18px rgba(120,200,255,.7); }
+  #forces label { display:flex; justify-content:space-between; font:800 20px Inter; letter-spacing:3px; margin-top:6px; color:rgba(255,255,255,.85); }
+  #forces label b { font:900 26px Inter; letter-spacing:0; font-variant-numeric:tabular-nums; }
+  #fNet { margin-top:14px; padding:10px 0; text-align:center; border-radius:10px; font:900 22px Inter; letter-spacing:2px; transform-origin:50% 50%; }
+  #fNet.up { background:rgba(255,80,70,.2); color:#FF8A80; } #fNet.dn { background:rgba(120,200,255,.2); color:#9EDCFF; }
+  #fNet.bal { background:rgba(255,176,32,.22); color:#FFC94A; }
+  #caption { position:absolute; left:50%; top:1440px; width:940px; text-align:center; transform-origin:50% 50%;
+    font:900 72px/1.08 'Inter Display', Inter, sans-serif; letter-spacing:-1px;
+    text-shadow:0 4px 24px rgba(0,0,0,.85), 0 0 3px #000; }
+  #caption em { font-style:normal; color:var(--amber); text-shadow:0 0 26px rgba(255,176,32,.55), 0 4px 20px #000; }
+  #foot { position:absolute; bottom:70px; width:100%; text-align:center; font:600 18px Inter; letter-spacing:4px; color:rgba(255,255,255,.45); }
+</style></head>
+<body><canvas id="gl" width="1080" height="1920"></canvas><div id="hud"></div>
+<script type="module">const e = new URLSearchParams(location.search).get("engine") || "main"; import(`./${e}.js`);</script>
+</body></html>

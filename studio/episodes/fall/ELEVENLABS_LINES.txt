@@ -1,0 +1,28 @@
+VOICE STYLE: Deep, calm male documentary narrator (ElevenLabs Adam/Brian), stability ~50%, natural pace.
+Generate each line separately in ElevenLabs. Download and save as the file name shown,
+into episode/audio/voice/  (mp3 or wav). Then run: python3 scripts/build_timeline.py episode
+
+seg01.mp3   [✘ needed]
+You just fell out of a plane. Ten thousand meters up.
+
+seg02.mp3   [✘ needed]
+Minus fifty degrees. The air is so thin, you can barely breathe.
+
+seg03.mp3   [✘ needed]
+Ten seconds in, you're past two hundred and fifty kilometers per hour.
+
+seg04.mp3   [✘ needed]
+Twenty seconds. Three hundred and fourteen. Your top speed.
+
+seg05.mp3   [✘ needed]
+Then something strange happens. You start slowing down.
+
+seg06.mp3   [✘ needed]
+The air gets thicker as you fall, and drag brakes you.
+
+seg07.mp3   [✘ needed]
+Two hundred kilometers per hour. And the ground is rushing up.
+
+seg09.mp3   [✘ needed]
+Survival is almost impossible. Yet in 1972, a flight attendant fell from even higher, and lived.
+

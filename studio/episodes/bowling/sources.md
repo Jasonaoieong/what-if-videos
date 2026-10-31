@@ -1,0 +1,2 @@
+- 7.26 kg (16 lb) bowling ball, 21.8 cm, Cd 0.47 → Vt ≈ 81 m/s at sea level; sim: 248 km/h at 10 s, 282 km/h impact after 15.6 s from 828 m.
+- 7.62×51 mm rifle muzzle energy ≈ 3.3–3.6 kJ.

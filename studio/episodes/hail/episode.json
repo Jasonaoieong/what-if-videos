@@ -1,0 +1,193 @@
+{
+ "id": "hail",
+ "engine": "penny",
+ "object": {
+  "type": "hail"
+ },
+ "title": "WHAT IF THE BIGGEST HAILSTONE EVER FELL ON YOU?",
+ "hook_text": "THE BIGGEST\nHAILSTONE EVER",
+ "hook_em": "HAILSTONE",
+ "marker_label": "HAILSTONE",
+ "danger_h": 300,
+ "vmax": 46,
+ "counter": {
+  "label": "ALTITUDE",
+  "field": "h",
+  "unit": "m",
+  "ticks": {
+   "step": 50,
+   "major": 500,
+   "px": 0.6,
+   "max": 1600
+  }
+ },
+ "voice_style": "Calm deep narrator.",
+ "display": [
+  [
+   "Twenty centimeters",
+   "20 cm"
+  ],
+  [
+   "a hundred and sixty kilometers per hour",
+   "160 km/h"
+  ],
+  [
+   "seven",
+   "7"
+  ],
+  [
+   "In 2010",
+   "In 2010"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "hook",
+   "heading": "20 CM OF ICE",
+   "text": "This is the biggest hailstone ever recorded in the US. Twenty centimeters across.",
+   "sim": [
+    0,
+    2
+   ],
+   "sfx": [
+    "hit_open"
+   ],
+   "fact": {
+    "title": "SIZE",
+    "value": "like a volleyball"
+   },
+   "event": "Vivian SD 2010: 8 in."
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "camera": "wide",
+   "heading": "BORN IN A STORM",
+   "text": "It grew inside a thunderstorm, until the updraft couldn't hold it anymore.",
+   "sim": [
+    2,
+    8
+   ],
+   "sfx": [
+    "rumble_low"
+   ],
+   "event": "Hail falls when too heavy for the updraft."
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "escalate",
+   "camera": "flutter",
+   "heading": "SPEEDING UP",
+   "text": "Unlike a raindrop, it's heavy enough to reach about a hundred and sixty kilometers per hour.",
+   "sim": [
+    8,
+    18
+   ],
+   "sfx": [
+    "riser_short",
+    "doppler"
+   ],
+   "fact": {
+    "title": "FALL SPEED",
+    "value": "≈ 160 km/h (NWS: ~100 mph)"
+   },
+   "event": "NWS: largest hail ~100 mph."
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "escalate",
+   "camera": "facade",
+   "heading": "HIGHWAY SPEED",
+   "text": "Highway speed. For a block of ice the size of a volleyball.",
+   "sim": [
+    18,
+    28
+   ],
+   "sfx": [
+    "whoosh"
+   ],
+   "event": "Comparison."
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "climax",
+   "camera": "rush",
+   "heading": "IMPACT IN SECONDS",
+   "text": "And it's heading straight down.",
+   "sim": [
+    28,
+    35
+   ],
+   "sfx": [
+    "heartbeat"
+   ],
+   "event": "35 s fall from 1.5 km."
+  },
+  {
+   "id": "seg06",
+   "scene": 5,
+   "mood": "climax",
+   "camera": "impact_cut",
+   "heading": "",
+   "text": "",
+   "silent_duration": 1.2,
+   "sim": [
+    35,
+    35.41
+   ],
+   "sfx": [
+    "silence",
+    "impact_huge",
+    "debris"
+   ],
+   "event": "Impact ~900 J."
+  },
+  {
+   "id": "seg07",
+   "scene": 6,
+   "mood": "ending",
+   "camera": "land",
+   "heading": "DANGEROUS",
+   "text": "It hits as hard as seven pro fastballs at once. Enough to smash a car windshield.",
+   "sim": [
+    35.41,
+    35.41
+   ],
+   "sfx": [
+    "drone_resolve"
+   ],
+   "fact": {
+    "title": "IMPACT ENERGY",
+    "value": "≈ 900 J"
+   },
+   "event": "½·0.88·45² ≈ 900 J vs 145 g fastball at 95 mph ≈ 130 J."
+  },
+  {
+   "id": "seg08",
+   "scene": 7,
+   "mood": "ending",
+   "camera": "rise",
+   "heading": "REAL · 2010",
+   "text": "And this one really fell. In Vivian, South Dakota, in 2010.",
+   "sim": [
+    35.41,
+    35.41
+   ],
+   "sfx": [
+    "hit_final"
+   ],
+   "fact": {
+    "title": "US RECORD",
+    "value": "20.3 cm · 0.88 kg"
+   },
+   "event": "NOAA NCEI Vivian hailstone report."
+  }
+ ]
+}

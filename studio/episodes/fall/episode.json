@@ -1,0 +1,214 @@
+{
+ "id": "episode-001",
+ "title": "WHAT IF YOU FELL FROM 10,000 METERS?",
+ "hook_text": "WHAT IF YOU FELL\nFROM 10,000 METERS?",
+ "counter": {
+  "label": "ALTITUDE",
+  "field": "h",
+  "unit": "m"
+ },
+ "sim_file": "sim.json",
+ "voice_style": "Deep, calm male documentary narrator (ElevenLabs Adam/Brian), stability ~50%, natural pace.",
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "heading": "10,000 M · NO PARACHUTE",
+   "text": "You just fell out of a plane. Ten thousand meters up.",
+   "sim": [
+    0,
+    1.2
+   ],
+   "camera": "drone_dive",
+   "sfx": [
+    "hit_open"
+   ],
+   "event": "Fall begins at cruising-jet altitude."
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "heading": "-50 °C · THIN AIR",
+   "text": "Minus fifty degrees. The air is so thin, you can barely breathe.",
+   "sim": [
+    1.2,
+    6
+   ],
+   "camera": "close_orbit_frost",
+   "sfx": [
+    "ice_crackle"
+   ],
+   "fact": {
+    "title": "AIR PRESSURE",
+    "value": "26 % of sea level"
+   },
+   "event": "Std atmosphere at 10 km: -50 °C, 26.5 kPa."
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "escalate",
+   "heading": "ACCELERATING",
+   "text": "Ten seconds in, you're past two hundred and fifty kilometers per hour.",
+   "sim": [
+    6,
+    11
+   ],
+   "camera": "tracking_side",
+   "sfx": [
+    "riser_short"
+   ],
+   "fact": {
+    "title": "0 → 262 km/h",
+    "value": "in 10 seconds"
+   },
+   "event": "262 km/h at t=10 s."
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "escalate",
+   "heading": "TOP SPEED",
+   "text": "Twenty seconds. Three hundred and fourteen. Your top speed.",
+   "sim": [
+    11,
+    21
+   ],
+   "camera": "face_on_shake",
+   "sfx": [
+    "number_hit"
+   ],
+   "forces": true,
+   "event": "Peak 87.3 m/s (314 km/h) at 20.6 s."
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "reveal",
+   "heading": "THE TWIST",
+   "text": "Then something strange happens. You start slowing down.",
+   "sim": [
+    21,
+    40
+   ],
+   "camera": "slow_push_in",
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "forces": true,
+   "event": "Speed falls while still falling."
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "reveal",
+   "heading": "WHY? THICKER AIR",
+   "text": "The air gets thicker as you fall, and drag brakes you.",
+   "sim": [
+    40,
+    110
+   ],
+   "camera": "through_clouds",
+   "sfx": [
+    "cloud_whoosh",
+    "rumble_low"
+   ],
+   "forces": true,
+   "fact": {
+    "title": "DRAG > GRAVITY",
+    "value": "you decelerate"
+   },
+   "event": "Drag ∝ ρv² exceeds weight."
+  },
+  {
+   "id": "seg07",
+   "scene": 7,
+   "mood": "climax",
+   "heading": "IMPACT IN SECONDS",
+   "text": "Two hundred kilometers per hour. And the ground is rushing up.",
+   "sim": [
+    110,
+    144.5
+   ],
+   "camera": "ground_rush",
+   "sfx": [
+    "riser_long",
+    "heartbeat"
+   ],
+   "event": "Terminal ~55 m/s near ground."
+  },
+  {
+   "id": "seg08",
+   "scene": 7,
+   "mood": "climax",
+   "heading": "",
+   "text": "",
+   "silent_duration": 1.3,
+   "sim": [
+    144.5,
+    146.58
+   ],
+   "camera": "impact_cut",
+   "sfx": [
+    "silence",
+    "impact_huge",
+    "debris"
+   ],
+   "event": "Impact ~200 km/h after 2 min 27 s."
+  },
+  {
+   "id": "seg09",
+   "scene": 8,
+   "mood": "ending",
+   "heading": "BUT… 1972",
+   "text": "Survival is almost impossible. Yet in 1972, a flight attendant fell from even higher, and lived.",
+   "sim": [
+    146.58,
+    146.58
+   ],
+   "camera": "aftermath_rise",
+   "sfx": [
+    "drone_resolve",
+    "hit_final"
+   ],
+   "fact": {
+    "title": "WORLD RECORD",
+    "value": "10,160 m · 1972"
+   },
+   "event": "Vesna Vulović, Guinness record 10,160 m, inside fuselage section."
+  }
+ ],
+ "display": [
+  [
+   "two hundred and fifty kilometers per hour",
+   "250 km/h"
+  ],
+  [
+   "Two hundred kilometers per hour",
+   "200 km/h"
+  ],
+  [
+   "Three hundred and fourteen",
+   "314 km/h"
+  ],
+  [
+   "Ten thousand meters",
+   "10,000 m"
+  ],
+  [
+   "Minus fifty degrees",
+   "−50 °C"
+  ],
+  [
+   "Ten seconds",
+   "10 seconds"
+  ],
+  [
+   "Twenty seconds",
+   "20 seconds"
+  ]
+ ]
+}

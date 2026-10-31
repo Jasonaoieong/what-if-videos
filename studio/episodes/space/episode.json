@@ -1,0 +1,236 @@
+{
+ "id": "space",
+ "engine": "main",
+ "title": "WHAT IF YOU JUMPED FROM THE EDGE OF SPACE?",
+ "hook_text": "WHAT IF YOU JUMPED\nFROM 39 KM UP?",
+ "hook_em": "39 KM",
+ "counter": {
+  "label": "ALTITUDE",
+  "field": "h",
+  "unit": "m",
+  "ticks": {
+   "step": 1000,
+   "major": 5000,
+   "px": 0.06,
+   "max": 40000
+  }
+ },
+ "vmax": 380,
+ "sim_file": "sim.json",
+ "voice_style": "Deep, calm male documentary narrator.",
+ "display": [
+  [
+   "thirty-nine kilometers",
+   "39 km"
+  ],
+  [
+   "Thirty seconds",
+   "30 seconds"
+  ],
+  [
+   "three hundred kilometers per hour",
+   "300 km/h"
+  ],
+  [
+   "two hundred kilometers per hour",
+   "200 km/h"
+  ],
+  [
+   "thirty-nine",
+   "39"
+  ],
+  [
+   "ten",
+   "10"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "heading": "39 KM · EDGE OF SPACE",
+   "text": "You just stepped off a balloon, thirty-nine kilometers above the Earth.",
+   "sim": [
+    0,
+    6
+   ],
+   "camera": "drone_dive",
+   "sfx": [
+    "hit_open"
+   ],
+   "event": "Start 38,969 m (2012 record altitude)."
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "heading": "BLACK SKY · NO AIR",
+   "text": "The sky is black. There's so little air, nothing slows you down.",
+   "sim": [
+    6,
+    18
+   ],
+   "camera": "close_orbit_frost",
+   "sfx": [
+    "ice_crackle"
+   ],
+   "fact": {
+    "title": "AIR LEFT",
+    "value": "0.4 % of sea level"
+   },
+   "event": "rho 0.37% of sea level."
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "escalate",
+   "heading": "FASTER THAN A JET",
+   "text": "Thirty seconds in, you're falling faster than a jet airliner.",
+   "sim": [
+    18,
+    34
+   ],
+   "camera": "tracking_side",
+   "sfx": [
+    "riser_short"
+   ],
+   "fact": {
+    "title": "30 SECONDS",
+    "value": "≈ 1,000 km/h"
+   },
+   "event": "1,007 km/h at 30 s."
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "climax",
+   "heading": "MACH 1.26",
+   "text": "Then you break the sound barrier. With nothing but your body.",
+   "sim": [
+    34,
+    52
+   ],
+   "camera": "face_on_shake",
+   "sfx": [
+    "number_hit",
+    "doppler"
+   ],
+   "fact": {
+    "title": "TOP SPEED",
+    "value": "1,365 km/h"
+   },
+   "event": "Peak 1,365 km/h, Mach 1.26, 50 s."
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "reveal",
+   "heading": "THE TWIST",
+   "text": "And then the air gets thicker, and slams on the brakes.",
+   "sim": [
+    52,
+    110
+   ],
+   "camera": "slow_push_in",
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "event": "Decelerates to 540 km/h by 100 s."
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "reveal",
+   "heading": "THICKER AIR",
+   "text": "By the time you reach the clouds, you're down to under three hundred kilometers per hour.",
+   "sim": [
+    110,
+    190
+   ],
+   "camera": "through_clouds",
+   "sfx": [
+    "cloud_whoosh",
+    "rumble_low"
+   ],
+   "event": "274 km/h at 6 km."
+  },
+  {
+   "id": "seg07",
+   "scene": 7,
+   "mood": "climax",
+   "heading": "IMPACT IN SECONDS",
+   "text": "But here's the strange part.",
+   "sim": [
+    190,
+    277.5
+   ],
+   "camera": "ground_rush",
+   "sfx": [
+    "riser_long",
+    "heartbeat"
+   ],
+   "event": "Final approach."
+  },
+  {
+   "id": "seg08",
+   "scene": 7,
+   "mood": "climax",
+   "heading": "",
+   "text": "",
+   "silent_duration": 1.4,
+   "sim": [
+    277.5,
+    279.51
+   ],
+   "camera": "impact_cut",
+   "sfx": [
+    "silence",
+    "impact_huge",
+    "debris"
+   ],
+   "event": "Impact 200 km/h at 4 min 40 s."
+  },
+  {
+   "id": "seg09",
+   "scene": 8,
+   "mood": "ending",
+   "heading": "SAME SPEED",
+   "text": "You'd hit the ground at about two hundred kilometers per hour. Exactly as fast as falling from a plane.",
+   "sim": [
+    279.51,
+    279.51
+   ],
+   "camera": "aftermath_rise",
+   "sfx": [
+    "drone_resolve"
+   ],
+   "fact": {
+    "title": "IMPACT",
+    "value": "≈ 200 km/h either way"
+   },
+   "event": "Sea-level terminal velocity is the same."
+  },
+  {
+   "id": "seg10",
+   "scene": 8,
+   "mood": "ending",
+   "heading": "2012 · REAL JUMP",
+   "text": "Jumping four times higher changed nothing. Except the view.",
+   "sim": [
+    279.51,
+    279.51
+   ],
+   "camera": "aftermath_rise",
+   "sfx": [
+    "hit_final"
+   ],
+   "fact": {
+    "title": "REAL RECORD",
+    "value": "38,969 m · 2012 · parachute"
+   },
+   "event": "2012 stratosphere jump, landed by parachute."
+  }
+ ]
+}
