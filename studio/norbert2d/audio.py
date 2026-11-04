@@ -71,6 +71,35 @@ def boing():
     return np.sin(2 * np.pi * np.cumsum(f) / SR) * env(len(t), 0.005, 0.25) * 0.5
 
 
+def whoosh():
+    n = int(0.3 * SR)
+    x = rng.standard_normal(n)
+    from scipy.signal import butter, sosfilt
+    out = np.zeros(n)
+    for i, f in enumerate(np.linspace(600, 3000, 6)):
+        seg = slice(i * n // 6, (i + 1) * n // 6)
+        out[seg] = sosfilt(butter(2, [f * 0.7, f * 1.3], "band", fs=SR, output="sos"), x)[seg]
+    return out * np.sin(np.linspace(0, np.pi, n)) * 0.35
+
+
+def ding():
+    t = t_(1.0)
+    return (np.sin(2 * np.pi * 2093 * t) + 0.5 * np.sin(2 * np.pi * 3136 * t)) * env(len(t), 0.002, 0.25) * 0.3
+
+
+def scratch():
+    t = t_(0.45)
+    f = 300 + 900 * np.abs(np.sin(2 * np.pi * 3.5 * t))
+    x = np.sign(np.sin(2 * np.pi * np.cumsum(f) / SR)) * 0.5 + rng.standard_normal(len(t)) * 0.5
+    return x * env(len(t), 0.002, 0.2) * 0.35
+
+
+def vibrate():
+    t = t_(0.9)
+    x = np.sign(np.sin(2 * np.pi * 150 * t)) * (np.sin(2 * np.pi * 2.2 * t) > 0)
+    return x * 0.12
+
+
 def buzz(sec):
     t = t_(sec)
     f = 210 + 25 * np.sin(2 * np.pi * 0.7 * t) + 15 * np.sin(2 * np.pi * 1.9 * t)

@@ -32,6 +32,8 @@
     shocked: { eye: [1.5, 1.45], pupil: 6, brow: [-34, -30], tilt: [0, 0], mouth: 'open', open: 1.3 },
     sad:     { eye: [0.75, 0.7], pupil: 13, brow: [-6, -6], tilt: [16, -16], mouth: 'frown', tear: true },
     smug:    { eye: [0.55, 0.6], pupil: 13, brow: [4, -14], tilt: [-6, 12], mouth: 'smirk' },
+    determined: { eye: [0.8, 0.8], pupil: 12, brow: [12, 10], tilt: [-14, 14], mouth: 'flat' },
+    plead:   { eye: [1.25, 1.2], pupil: 15, brow: [-14, -12], tilt: [18, -18], mouth: 'frown' },
   };
 
   const HC = { x: 0, y: -490 }; // head centre
@@ -175,6 +177,12 @@
     s += A.arm + B.arm;
     s += torso();
     s += A.sleeve + B.sleeve;
+    if (p.phone) {  // phone held in the right hand
+      const h = B.hand;
+      s += `<g transform="translate(${f(h.x)} ${f(h.y - 40)}) rotate(${p.phoneRot || -12})">` +
+        `<rect x="-38" y="-70" width="76" height="140" rx="14" fill="#1A1A22" stroke="${C.line}" stroke-width="5"/>` +
+        `<rect x="-30" y="-60" width="60" height="118" rx="8" fill="${p.phoneGlow ? '#9EE7FF' : '#3B4A6B'}"/></g>` + circ(h.x, h.y, 27, C.skin);
+    }
     // neck + head (head pushed forward/slouched by a slight tilt)
     s += shape('M -22 -372 L 22 -372 L 24 -322 L -24 -322 Z', C.skin);
     s += `<g transform="rotate(${f(p.headTilt || 0)} 0 -360)">`;

@@ -1,0 +1,24 @@
+{
+  "id": "ep01",
+  "title": "Day 1 of 30",
+  "days_left": 30,
+  "glow": 0,
+  "voices": {
+    "NARR": {"voice": "bm_george", "speed": 1.05, "pitch": 1.0},
+    "NORB": {"voice": "am_puck", "speed": 1.12, "pitch": 1.2}
+  },
+  "lines": [
+    {"who": "NARR", "text": "This is Norbert.", "scene": "wide", "gap": 0.35},
+    {"who": "NARR", "text": "He's fifteen. He hasn't showered since Tuesday.", "scene": "face", "gap": 0.2},
+    {"who": "NARR", "text": "And his teeth walk into rooms before he does.", "scene": "teeth", "gap": 0.9, "sfx_end": "buzz_phone"},
+    {"who": "NORB", "text": "Huh? Who's texting me?", "scene": "phone_pull", "gap": 0.25},
+    {"who": "NARR", "text": "The spring dance is in thirty days.", "scene": "flyer", "gap": 0.2},
+    {"who": "NORB", "text": "Thirty days?! And Maya asked if I'm going?!", "scene": "maya", "gap": 0.35},
+    {"who": "NORB", "text": "Okay. Okay. I can totally fix this.", "scene": "determined", "gap": 0.5},
+    {"who": "NARR", "text": "He cannot fix this.", "scene": "mirror", "gap": 0.5},
+    {"who": "NARR", "text": "So every day, you pick one thing he fixes. And every fix stays forever.", "scene": "meter", "gap": 0.3},
+    {"who": "NORB", "text": "Please. Pick something. Anything.", "scene": "plead", "gap": 0.2},
+    {"who": "NARR", "text": "Comment one word. The most votes happens tomorrow.", "scene": "vote", "gap": 1.6}
+  ],
+  "vote": ["HAIR", "TEETH", "SKIN", "ROOM"]
+}

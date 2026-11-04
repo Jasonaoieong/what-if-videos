@@ -15,6 +15,8 @@ const os = require('os');
   const p = await b.newPage({ viewport: { width: 1080, height: 1920 } });
   p.on('pageerror', (e) => console.log('PAGE ERROR', e.message));
   await p.goto('file://' + path.resolve(scene));
+  const di = args.indexOf('--data');
+  if (di >= 0) await p.evaluate((d) => { window.EP = d; }, JSON.parse(fs.readFileSync(args[di + 1], 'utf8')));
   await p.evaluate(() => document.fonts.ready);
   if (si >= 0) {
     for (const t of args[si + 1].split(',')) {
