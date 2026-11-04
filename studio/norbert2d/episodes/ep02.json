@@ -1,0 +1,203 @@
+{
+  "id": "ep02",
+  "title": "Day 2 of 30",
+  "days_left": 29,
+  "glow": 0,
+  "glow_to": 10,
+  "voices": {
+    "NARR": {
+      "voice": "af_heart",
+      "speed": 1.0,
+      "pitch": 1.0
+    },
+    "NORB": {
+      "voice": "am_puck",
+      "speed": 1.05,
+      "pitch": 1.1
+    },
+    "DENT": {
+      "voice": "am_michael",
+      "speed": 0.95,
+      "pitch": 0.93
+    }
+  },
+  "cap_colors": {
+    "NORB": "#FFD23F",
+    "DENT": "#9EE7FF"
+  },
+  "lines": [
+    {
+      "who": "NARR",
+      "text": "Day two. You picked teeth.",
+      "scene": "recap",
+      "gap": 0.35,
+      "sfx": [
+        [
+          "pop",
+          0.3
+        ],
+        [
+          "ding",
+          0.6
+        ]
+      ]
+    },
+    {
+      "who": "DENT",
+      "text": "Okay, Norbert. Say ahh.",
+      "scene": "office_wide",
+      "gap": 0.2
+    },
+    {
+      "who": "NORB",
+      "text": "Ahhhhh.",
+      "scene": "ahh",
+      "gap": 0.3
+    },
+    {
+      "who": "DENT",
+      "text": "Oh no. Oh, that is a lot of tooth.",
+      "scene": "dent_shock",
+      "gap": 0.25,
+      "sfx": [
+        [
+          "boing",
+          0.05
+        ]
+      ]
+    },
+    {
+      "who": "NORB",
+      "text": "Is that bad?",
+      "scene": "norb_worried",
+      "gap": 0.25
+    },
+    {
+      "who": "DENT",
+      "text": "Son, your teeth aren't in your mouth. Your mouth is in your teeth.",
+      "scene": "teeth_zoom",
+      "gap": 0.4,
+      "sfx": [
+        [
+          "ding",
+          1.0
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "Three hours. Two drills. One very tired dentist.",
+      "scene": "montage",
+      "gap": 0.4,
+      "sfx": [
+        [
+          "drill",
+          0.0
+        ],
+        [
+          "tick",
+          1.6
+        ]
+      ]
+    },
+    {
+      "who": "DENT",
+      "text": "Okay. Take a look.",
+      "scene": "mirror_hold",
+      "gap": 0.3
+    },
+    {
+      "who": "NORB",
+      "text": "Whoa! I can close my mouth!",
+      "scene": "reveal",
+      "gap": 0.3,
+      "sfx": [
+        [
+          "chime",
+          0.0
+        ],
+        [
+          "ding",
+          0.2
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "Glow up: ten percent. Twenty nine days to go.",
+      "scene": "meter",
+      "gap": 0.35,
+      "sfx": [
+        [
+          "pop",
+          0.1
+        ],
+        [
+          "chime",
+          0.6
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "But someone was in the waiting room.",
+      "scene": "waiting",
+      "gap": 0.2,
+      "sfx": [
+        [
+          "vibrate",
+          0.9
+        ]
+      ]
+    },
+    {
+      "who": "NORB",
+      "text": "Maya saw me?!",
+      "scene": "maya2",
+      "gap": 0.35,
+      "sfx": [
+        [
+          "boing",
+          0.05
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "What does Norbert fix next? Comment one word.",
+      "scene": "vote",
+      "gap": 1.8,
+      "sfx": [
+        [
+          "pop",
+          0.25
+        ],
+        [
+          "pop",
+          0.47
+        ],
+        [
+          "pop",
+          0.69
+        ],
+        [
+          "pop",
+          0.91
+        ]
+      ]
+    }
+  ],
+  "vote": [
+    "HAIR",
+    "SKIN",
+    "ROOM",
+    "CLOTHES"
+  ],
+  "vote_emoji": [
+    "💇",
+    "✨",
+    "🛏️",
+    "👕"
+  ],
+  "vote_title": "WHAT SHOULD NORBERT FIX NEXT?"
+}

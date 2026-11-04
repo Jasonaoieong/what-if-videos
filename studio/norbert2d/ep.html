@@ -18,6 +18,7 @@ svg { display: block; }
 </svg>
 <script src="norbert.js"></script>
 <script src="lib.js"></script>
+<script src="dentist.js"></script>
 <script>
 // Episode renderer. window.EP is injected by render.js; window.frame(t) draws one frame.
 const N = window.Norbert;
@@ -29,8 +30,8 @@ const TEETH = { x: 540, y: 1290 - 0.92 * 385 };
 function cam(cx, cy, z) { return `translate(540 960) scale(${z.toFixed(4)}) translate(${(-cx).toFixed(1)} ${(-cy).toFixed(1)})`; }
 function lerp(a, b, k) { return a + (b - a) * k; }
 
-function mouthAt(t) {
-  const m = EP.mouth, i = Math.floor(t * EP.fps);
+function mouthAt(t, who = 'NORB') {
+  const m = Array.isArray(EP.mouth) ? EP.mouth : (EP.mouth[who] || []), i = Math.floor(t * EP.fps);
   return i >= 0 && i < m.length ? m[i] : 0;
 }
 function blinkAt(t) {
@@ -44,7 +45,7 @@ function sceneAt(t) {
 }
 
 function norbert(p, t) {
-  return N.svg(Object.assign({ x: 540, y: 1290, scale: 0.92, t, blink: blinkAt(t), talk: mouthAt(t) }, p));
+  return N.svg(Object.assign({ x: 540, y: 1290, scale: 0.92, t, blink: blinkAt(t), talk: mouthAt(t) }, EP.look || {}, p));
 }
 
 function roomShot(t, p, camv, extra = '') {
@@ -193,11 +194,11 @@ window.frame = function (t) {
 
   let ui = '';
   const scn = sc.line.scene;
-  if (scn !== 'flyer' && scn !== 'mirror') ui += L.hud(EP.days_left, EP.glow);
+  if (!(EP.nohud || ['flyer', 'mirror']).includes(scn)) ui += L.hud(EP.days_left, typeof glowAt === 'function' ? glowAt(t) : EP.glow);
   if (scn === 'wide' || scn === 'determined' || scn === 'plead') ui += L.banner(t, '30 DAYS TO THE SPRING DANCE', scn === 'wide' ? 0.15 : sc.t0 + 0.05);
   // word-by-word captions
   const cy = scn === 'vote' ? 1590 : scn === 'meter' ? 1440 : scn === 'flyer' ? 1760 : 1420;
-  for (const c of EP.caps) if (between(t, c.t0, c.t1)) ui += L.caption(t, c.text, c.t0, cy, c.text.length > 14 ? 110 : 132, c.who === 'NORB' ? '#FFD23F' : '#FFFFFF');
+  for (const c of EP.caps) if (between(t, c.t0, c.t1)) ui += L.caption(t, c.text, c.t0, cy, c.text.length > 14 ? 110 : 132, (EP.capColors || { NORB: '#FFD23F' })[c.who] || '#FFFFFF');
   if (scn === 'mirror' && tl > 0.55) ui += `<text x="540" y="300" text-anchor="middle" font-family="Anton" font-size="90" fill="#FFFFFF" stroke="#000" stroke-width="14" paint-order="stroke">*RECORD SCRATCH*</text>`;
   if (scn === 'vote' && tl > 1.6) {
     const b = 1 + Math.sin(t * 7) * 0.05;
@@ -207,4 +208,5 @@ window.frame = function (t) {
 };
 window.EP = window.EP || { lines: [{ scene: 'wide', t0: 0, t1: 3 }], caps: [], mouth: [], fps: 30, dur: 3, days_left: 30, glow: 0, vote: ['A', 'B', 'C', 'D'] };
 </script>
+<script src="scenes_ep02.js"></script>
 </body></html>

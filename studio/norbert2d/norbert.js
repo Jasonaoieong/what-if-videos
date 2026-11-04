@@ -84,9 +84,21 @@
     else if (e.mouth === 'wavy') s += line(`M -46 ${my + 4} Q -24 ${my - 8} -2 ${my + 4} T 44 ${my + 2}`, 7);
     else if (e.mouth === 'smirk') s += line(`M -40 ${my + 6} Q 6 ${my + 10} 46 ${my - 10}`, 7);
     else s += line(`M -44 ${my + 2} Q 0 ${my + 10} 44 ${my}`, 7);
-    // Buck teeth: two huge uneven teeth over the lip, right one chipped
-    s += shape(`M -28 ${my} L -3 ${my + 1} L -4 ${my + 44} Q -16 ${my + 49} -27 ${my + 42} Z`, C.tooth, 5);
-    s += shape(`M 3 ${my + 1} L 26 ${my - 1} L 25 ${my + 26} L 18 ${my + 32} L 4 ${my + 34} Z`, C.tooth, 5);
+    const teeth = p.teeth || 'buck';
+    const isOpen = e.mouth === 'open' || (p.talk && p.talk > 0.15);
+    if (teeth === 'buck') {
+      // Buck teeth: two huge uneven teeth over the lip, right one chipped
+      s += shape(`M -28 ${my} L -3 ${my + 1} L -4 ${my + 44} Q -16 ${my + 49} -27 ${my + 42} Z`, C.tooth, 5);
+      s += shape(`M 3 ${my + 1} L 26 ${my - 1} L 25 ${my + 26} L 18 ${my + 32} L 4 ${my + 34} Z`, C.tooth, 5);
+    } else {
+      // Fixed: a neat row of normal teeth, only visible when smiling or talking
+      if (isOpen) s += shape(`M -34 ${my + 2} Q 0 ${my - 4} 34 ${my + 2} L 30 ${my + 16} Q 0 ${my + 20} -30 ${my + 16} Z`, C.tooth, 4);
+      else if (e.mouth === 'smile') s += shape(`M -40 ${my - 2} Q 0 ${my + 28} 40 ${my - 6} Q 0 ${my + 8} -40 ${my - 2} Z`, C.tooth, 4);
+      if (teeth === 'braces' && (isOpen || e.mouth === 'smile')) {
+        s += line(`M -32 ${my + 8} Q 0 ${my + 14} 32 ${my + 6}`, 4, '#8A93A6');
+        for (const x of [-24, -8, 8, 24]) s += `<rect x="${x - 4}" y="${my + 4}" width="8" height="8" fill="#B8C0D0" stroke="${C.line}" stroke-width="2"/>`;
+      }
+    }
     // Pimples (red with a shine)
     for (const [x, y, r] of [[-104, -440, 10], [-120, -462, 7], [-86, -420, 8], [-112, -414, 6], [-70, -448, 5],
                              [98, -438, 10], [118, -418, 7], [84, -410, 6], [110, -455, 5],
