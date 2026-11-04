@@ -1,0 +1,208 @@
+{
+ "id": "noair",
+ "engine": "penny",
+ "vacuum": true,
+ "object": {
+  "type": "coin",
+  "feather": true,
+  "cam_rad": 0.03
+ },
+ "title": "WHAT IF EARTH HAD NO AIR? PENNY VS FEATHER",
+ "hook_text": "PENNY VS FEATHER\nWITH NO AIR",
+ "hook_em": "NO AIR",
+ "marker_label": "PENNY + FEATHER",
+ "danger_h": 0,
+ "vmax": 130,
+ "foot": "SIMULATION · VACUUM · TIME COMPRESSED",
+ "counter": {
+  "label": "ALTITUDE",
+  "field": "h",
+  "unit": "m",
+  "ticks": {
+   "step": 10,
+   "major": 100,
+   "px": 1.4,
+   "max": 900
+  }
+ },
+ "display": [
+  [
+   "Thirteen seconds",
+   "13 seconds"
+  ],
+  [
+   "over four hundred and fifty kilometers per hour",
+   "over 450 km/h"
+  ],
+  [
+   "about forty",
+   "about 40 km/h"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "hook",
+   "heading": "NO AIR · 828 M",
+   "text": "Earth just lost its air. Now drop a penny and a feather from the tallest building.",
+   "sfx": [
+    "hit_open"
+   ],
+   "event": "Hypothetical: no atmosphere.",
+   "sim": [
+    0,
+    1
+   ]
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "camera": "wide",
+   "heading": "WITH AIR",
+   "text": "With air, the penny tops out at about forty. The feather drifts far behind.",
+   "sfx": [
+    "wide_atmos"
+   ],
+   "event": "Bloomfield via Sci. Am.",
+   "sim": [
+    1,
+    4
+   ],
+   "fact": {
+    "title": "PENNY WITH AIR",
+    "value": "≈ 40 km/h max"
+   }
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "reveal",
+   "camera": "flutter",
+   "heading": "THE TWIST",
+   "text": "Without air, they fall side by side. Exactly together.",
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "event": "No drag: a = g for both.",
+   "sim": [
+    4,
+    7
+   ]
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "explain",
+   "camera": "facade",
+   "heading": "SAME FALL FOR ALL",
+   "text": "Gravity speeds everything up equally. It's air that holds a feather back.",
+   "sfx": [
+    "whoosh"
+   ],
+   "event": "Galileo; equivalence.",
+   "sim": [
+    7,
+    9.5
+   ],
+   "fact": {
+    "title": "ACCELERATION",
+    "value": "9.8 m/s² for both"
+   }
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "escalate",
+   "camera": "topdown",
+   "heading": "FASTER + FASTER",
+   "text": "Thirteen seconds later, both are doing over four hundred and fifty kilometers per hour.",
+   "sfx": [
+    "riser_short",
+    "doppler"
+   ],
+   "event": "sqrt(2·9.81·828)=127.5 m/s.",
+   "sim": [
+    9.5,
+    12.2
+   ],
+   "fact": {
+    "title": "AT THE GROUND",
+    "value": "459 km/h · both"
+   }
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "rush",
+   "heading": "",
+   "text": "And they land at the same instant.",
+   "sfx": [
+    "heartbeat"
+   ],
+   "event": "Approach.",
+   "sim": [
+    12.2,
+    12.75
+   ]
+  },
+  {
+   "id": "seg07",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "impact_cut",
+   "heading": "",
+   "text": "",
+   "sfx": [
+    "silence",
+    "tink"
+   ],
+   "event": "Simultaneous landing at 13.0 s.",
+   "silent_duration": 1.1,
+   "sim": [
+    12.75,
+    13.0
+   ]
+  },
+  {
+   "id": "seg08",
+   "scene": 7,
+   "mood": "ending",
+   "camera": "land",
+   "heading": "BLACK SKY AT NOON",
+   "text": "And with no air to scatter sunlight, the sky turns black, even at noon.",
+   "sfx": [
+    "drone_resolve"
+   ],
+   "event": "No Rayleigh scattering (like the Moon).",
+   "sim": [
+    13.0,
+    13.0
+   ]
+  },
+  {
+   "id": "seg09",
+   "scene": 8,
+   "mood": "ending",
+   "camera": "rise",
+   "heading": "REAL · 1971",
+   "text": "Astronauts tested this on the Moon in 1971, with a hammer and a falcon feather. Both landed together.",
+   "sfx": [
+    "hit_final"
+   ],
+   "event": "NASA NSSDC.",
+   "sim": [
+    13.0,
+    13.0
+   ],
+   "fact": {
+    "title": "APOLLO 15 · 1971",
+    "value": "1.32 kg hammer + falcon feather"
+   }
+  }
+ ]
+}

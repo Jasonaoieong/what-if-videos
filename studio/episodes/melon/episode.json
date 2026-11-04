@@ -1,0 +1,238 @@
+{
+ "id": "melon",
+ "engine": "penny",
+ "object": {
+  "type": "melon"
+ },
+ "title": "WHAT IF YOU DROPPED A WATERMELON FROM THE BURJ KHALIFA?",
+ "hook_text": "A WATERMELON\nFROM 828 M",
+ "hook_em": "WATERMELON",
+ "marker_label": "WATERMELON",
+ "danger_h": 300,
+ "vmax": 70,
+ "foot": "SIMULATION · TIME COMPRESSED · STANDARD ATMOSPHERE",
+ "counter": {
+  "label": "ALTITUDE",
+  "field": "h",
+  "unit": "m",
+  "ticks": {
+   "step": 10,
+   "major": 100,
+   "px": 1.4,
+   "max": 900
+  }
+ },
+ "display": [
+  [
+   "Five kilograms",
+   "5 kg"
+  ],
+  [
+   "Eight seconds",
+   "8 seconds"
+  ],
+  [
+   "two hundred kilometers per hour",
+   "200 km/h"
+  ],
+  [
+   "ninety-two percent",
+   "92%"
+  ],
+  [
+   "Seventeen seconds",
+   "17 seconds"
+  ],
+  [
+   "two hundred and forty kilometers per hour",
+   "240 km/h"
+  ],
+  [
+   "Eleven kilojoules",
+   "11 kJ"
+  ],
+  [
+   "three",
+   "3"
+  ],
+  [
+   "seven floors",
+   "7 floors"
+  ],
+  [
+   "fifty-one meters",
+   "51 m"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "hook",
+   "heading": "828 M · ONE WATERMELON",
+   "text": "This watermelon is about to fall from the top of the tallest building on Earth.",
+   "sfx": [
+    "hit_open"
+   ],
+   "event": "Burj Khalifa 828 m.",
+   "sim": [
+    0,
+    1
+   ]
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "camera": "wide",
+   "heading": "ROUND + HEAVY",
+   "text": "Five kilograms, round and heavy. The air can barely slow it down.",
+   "sfx": [
+    "wide_atmos"
+   ],
+   "event": "Model: sphere 22 cm, Cd 0.47 → Vt 67 m/s.",
+   "sim": [
+    1,
+    4
+   ],
+   "fact": {
+    "title": "OUR MELON",
+    "value": "≈ 5 kg · ≈ 22 cm"
+   }
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "escalate",
+   "camera": "flutter",
+   "heading": "ACCELERATING",
+   "text": "Eight seconds in, it's passing two hundred kilometers per hour.",
+   "sfx": [
+    "riser_short",
+    "doppler"
+   ],
+   "event": "Sim 56.1 m/s at 8 s.",
+   "sim": [
+    4,
+    8
+   ],
+   "fact": {
+    "title": "AT 8 SECONDS",
+    "value": "202 km/h"
+   }
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "reveal",
+   "camera": "facade",
+   "heading": "WATER BOMB",
+   "text": "Inside, it's ninety-two percent water, held in a thin rind. So it won't bounce.",
+   "sfx": [
+    "whoosh"
+   ],
+   "event": "National Watermelon Promotion Board.",
+   "sim": [
+    8,
+    12.5
+   ],
+   "fact": {
+    "title": "WATERMELON",
+    "value": "92% water"
+   }
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "climax",
+   "camera": "topdown",
+   "heading": "IMPACT IN SECONDS",
+   "text": "Seventeen seconds after letting go.",
+   "sfx": [
+    "riser_long"
+   ],
+   "event": "Total 16.9 s.",
+   "sim": [
+    12.5,
+    15.5
+   ]
+  },
+  {
+   "id": "seg06",
+   "scene": 5,
+   "mood": "climax",
+   "camera": "rush",
+   "heading": "",
+   "text": "It bursts.",
+   "sfx": [
+    "heartbeat"
+   ],
+   "event": "Approach.",
+   "sim": [
+    15.5,
+    16.5
+   ]
+  },
+  {
+   "id": "seg07",
+   "scene": 5,
+   "mood": "climax",
+   "camera": "impact_cut",
+   "heading": "",
+   "text": "",
+   "sfx": [
+    "silence",
+    "impact_huge",
+    "splash",
+    "debris"
+   ],
+   "event": "Impact 240 km/h.",
+   "silent_duration": 1.3,
+   "sim": [
+    16.5,
+    16.89
+   ]
+  },
+  {
+   "id": "seg08",
+   "scene": 6,
+   "mood": "ending",
+   "camera": "land",
+   "heading": "SPLAT",
+   "text": "It hits at two hundred and forty kilometers per hour. Eleven kilojoules, like three rifle bullets at once.",
+   "sfx": [
+    "drone_resolve"
+   ],
+   "event": "½·5·66.5² ≈ 11.1 kJ; 7.62×51 ≈ 3.3–3.6 kJ.",
+   "sim": [
+    16.89,
+    16.89
+   ],
+   "fact": {
+    "title": "IMPACT ENERGY",
+    "value": "≈ 11 kJ"
+   }
+  },
+  {
+   "id": "seg09",
+   "scene": 7,
+   "mood": "ending",
+   "camera": "rise",
+   "heading": "REAL · SINCE 1965",
+   "text": "Students in California drop one from just seven floors every year since 1965. Record splat: fifty-one meters.",
+   "sfx": [
+    "hit_final"
+   ],
+   "event": "Watermelon Drop, Urey Hall, since 1965.",
+   "sim": [
+    16.89,
+    16.89
+   ],
+   "fact": {
+    "title": "SPLAT RECORD · 1974",
+    "value": "167 ft 4 in ≈ 51 m"
+   }
+  }
+ ]
+}

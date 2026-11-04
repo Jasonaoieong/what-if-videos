@@ -22,11 +22,11 @@
 - [ ] The highest skydive with a parachute vs without (main)
 
 ## Nov 4
-- [ ] A watermelon from the Burj Khalifa (penny, new object + splat)
-- [ ] What if gravity were twice as strong for a falling skydiver? (main, g×2)
-- [ ] What if Earth had no air? A penny vs a feather (penny, vacuum mode)
-- [ ] Equator vs poles: where you weigh less (spin, latitude)
-- [ ] How fast does a golf ball fall from the Burj? (penny)
+- [x] A watermelon from the Burj Khalifa (penny, new object + splat) → `melon`
+- [x] What if gravity were twice as strong for a falling skydiver? (main, g×2) → `gravity2` (exit 4,000 m, ends at 1,500 m parachute height; no impact)
+- [x] What if Earth had no air? A penny vs a feather (penny, vacuum mode) → `noair`
+- [x] Equator vs poles: where you weigh less (spin, latitude) → `equator` (spin_mode normal)
+- [x] How fast does a golf ball fall from the Burj? (penny) → `golf`
 
 ## Nov 5
 - [ ] What if Earth's oceans drained? (spin, oceans morph)

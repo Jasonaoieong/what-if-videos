@@ -103,6 +103,8 @@ def main(ep):
               frames=int(round(total * FPS)), segments=segs, captions=caps,
               sfx=sfx, engine=spec.get("engine", "main"), hook_em=spec.get("hook_em"), danger_h=spec.get("danger_h"), vmax=spec.get("vmax"), marker_label=spec.get("marker_label"), object=spec.get("object"), spin_mode=spec.get("spin_mode"), morph_sign=spec.get("morph_sign"), foot=spec.get("foot"), counter=spec["counter"], title=spec["title"],
               hook_text=spec["hook_text"], voice_missing=missing)
+    for k, v in spec.items():   # pass any other episode-level options (vacuum, gmul, …) through to the engine
+        if k not in tl and k not in ("segments", "display", "voice_style"): tl[k] = v
     json.dump(tl, open(os.path.join(ep, "timeline.json"), "w"), indent=1)
     print(f"timeline: {total:.2f}s, {tl['frames']} frames, {len(caps)} captions, "
           f"{len(sfx)} sfx; voice missing: {len(missing)}/{sum(1 for s in segs if s['text'])}")

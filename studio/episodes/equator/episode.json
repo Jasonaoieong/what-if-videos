@@ -1,0 +1,210 @@
+{
+ "id": "equator",
+ "engine": "spin",
+ "spin_mode": "normal",
+ "morph_sign": 0,
+ "title": "WHERE ON EARTH DO YOU WEIGH LESS?",
+ "hook_text": "WHERE DO YOU\nWEIGH LESS?",
+ "hook_em": "WEIGH LESS?",
+ "counter": {
+  "label": "YOUR WEIGHT",
+  "unit": "g",
+  "from": 80000,
+  "to": 79580
+ },
+ "display": [
+  [
+   "sixteen hundred and seventy kilometers per hour",
+   "1,670 km/h"
+  ],
+  [
+   "twenty-one kilometers",
+   "21 km"
+  ],
+  [
+   "half a percent",
+   "0.5%"
+  ],
+  [
+   "eighty-kilogram",
+   "80 kg"
+  ],
+  [
+   "four hundred grams",
+   "400 g"
+  ],
+  [
+   "two thirds",
+   "⅔"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "space",
+   "heading": "WHERE YOU WEIGH LESS",
+   "text": "You weigh less at the equator than at the North Pole. Just physics.",
+   "sfx": [
+    "hit_open"
+   ],
+   "event": "Hook.",
+   "counter": {
+    "label": "YOUR WEIGHT",
+    "unit": "g",
+    "from": 80000,
+    "to": 79580
+   }
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "camera": "zoom",
+   "heading": "EARTH SPINS",
+   "text": "Earth spins. At the equator, the ground moves at sixteen hundred and seventy kilometers per hour.",
+   "sfx": [
+    "riser_short"
+   ],
+   "event": "465 m/s.",
+   "counter": {
+    "label": "GROUND SPEED",
+    "unit": "km/h",
+    "from": 0,
+    "to": 1674
+   },
+   "noflash": true
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "reveal",
+   "camera": "oceans",
+   "heading": "SPIN PULLS OUTWARD",
+   "text": "That spin pulls you outward a little, cancelling part of your weight.",
+   "sfx": [
+    "whoosh"
+   ],
+   "event": "ω²a = 0.0339 m/s²; 80 kg → 276 g.",
+   "counter": {
+    "label": "WEIGHT LOST TO SPIN",
+    "unit": "g",
+    "from": 0,
+    "to": 276
+   },
+   "fact": {
+    "title": "FROM THE SPIN",
+    "value": "≈ ⅔ of the difference"
+   }
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "reveal",
+   "camera": "space",
+   "heading": "EARTH BULGES",
+   "text": "And Earth bulges at the middle, putting you twenty-one kilometers farther from its center.",
+   "sfx": [
+    "rumble_low"
+   ],
+   "event": "NASA fact sheet radii.",
+   "counter": {
+    "label": "DISTANCE TO CENTER",
+    "unit": "km",
+    "from": 6357,
+    "to": 6378
+   },
+   "fact": {
+    "title": "EARTH'S RADIUS",
+    "value": "6,378 km eq. · 6,357 km pole"
+   }
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "escalate",
+   "camera": "latitude",
+   "heading": "EQUATOR → POLE",
+   "text": "Walk from the equator to the pole, and a scale would slowly climb.",
+   "sfx": [
+    "rise_tone"
+   ],
+   "event": "g 9.780 → 9.832.",
+   "counter": {
+    "label": "YOUR WEIGHT",
+    "unit": "g",
+    "from": 79580,
+    "to": 80000
+   }
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "reveal",
+   "camera": "oceans",
+   "heading": "ABOUT 0.5%",
+   "text": "In total, about half a percent. Four hundred grams for an eighty-kilogram person.",
+   "sfx": [
+    "number_hit"
+   ],
+   "event": "Wikipedia Gravity of Earth.",
+   "counter": {
+    "label": "YOUR WEIGHT",
+    "unit": "g",
+    "from": 80000,
+    "to": 79580
+   },
+   "fact": {
+    "title": "GRAVITY",
+    "value": "9.832 → 9.780 m/s²"
+   }
+  },
+  {
+   "id": "seg07",
+   "scene": 7,
+   "mood": "ending",
+   "camera": "ending",
+   "heading": "NOT THE EQUATOR",
+   "text": "But the lightest spot on Earth isn't on the equator. It's a mountain summit in Peru.",
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "event": "Hirt et al. 2013 (GGMplus).",
+   "counter": {
+    "label": "YOUR WEIGHT",
+    "unit": "g",
+    "from": 80000,
+    "to": 79432
+   },
+   "fact": {
+    "title": "LOWEST GRAVITY",
+    "value": "Nevado Huascarán · 9.7639 m/s²"
+   }
+  },
+  {
+   "id": "seg08",
+   "scene": 8,
+   "mood": "ending",
+   "camera": "space",
+   "heading": "HEAVIEST: ARCTIC",
+   "text": "And the heaviest? Floating on the Arctic Ocean.",
+   "sfx": [
+    "drone_resolve",
+    "hit_final"
+   ],
+   "event": "Hirt et al. 2013.",
+   "counter": {
+    "label": "YOUR WEIGHT",
+    "unit": "g",
+    "from": 79432,
+    "to": 80000
+   },
+   "fact": {
+    "title": "HIGHEST GRAVITY",
+    "value": "Arctic Ocean · 9.8337 m/s²"
+   }
+  }
+ ]
+}

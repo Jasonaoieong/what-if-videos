@@ -28,16 +28,19 @@ def atmosphere(h):
     return t, p, rho
 
 
-def simulate(h0=10000.0, mass=80.0, vt_sea=55.0, dt=0.01, out_dt=0.1):
+def simulate(h0=10000.0, mass=80.0, vt_sea=55.0, dt=0.01, out_dt=0.1, g=G, h_end=0.0, vacuum=False):
+    """g: gravity used for the motion (CdA is a body property, calibrated at normal G).
+    h_end: stop at this altitude (e.g. parachute deployment). vacuum: no air at all."""
     _, _, rho0 = atmosphere(0)
-    cda = 2 * mass * G / (rho0 * vt_sea ** 2)
+    cda = 0.0 if vacuum else 2 * mass * G / (rho0 * vt_sea ** 2)
     h, v, t = h0, 0.0, 0.0
     rows, next_out = [], 0.0
-    while h > 0:
+    while h > h_end:
         temp, p, rho = atmosphere(h)
+        if vacuum: rho = 0.0
         drag = 0.5 * rho * cda * v * v
-        a = G - drag / mass
-        vt_local = math.sqrt(2 * mass * G / (rho * cda))
+        a = g - drag / mass
+        vt_local = math.sqrt(2 * mass * g / (rho * cda)) if rho * cda > 0 else 0.0
         if t >= next_out - 1e-9:
             rows.append(dict(t=round(t, 2), h=round(h, 1), v=round(v, 2),
                              a=round(a, 3), drag_N=round(drag, 1),
@@ -46,16 +49,17 @@ def simulate(h0=10000.0, mass=80.0, vt_sea=55.0, dt=0.01, out_dt=0.1):
             next_out += out_dt
         # RK2 (midpoint)
         hm, vm = h - v * dt / 2, v + a * dt / 2
-        _, _, rhom = atmosphere(hm)
-        am = G - 0.5 * rhom * cda * vm * vm / mass
+        rhom = 0.0 if vacuum else atmosphere(hm)[2]
+        am = g - 0.5 * rhom * cda * vm * vm / mass
         h -= vm * dt
         v += am * dt
         t += dt
-    rows.append(dict(t=round(t, 2), h=0.0, v=round(v, 2), a=0, drag_N=0,
-                     rho=round(atmosphere(0)[2], 4), temp_C=15.0,
-                     p_kPa=101.3, vt_local=vt_sea))
-    return dict(params=dict(h0=h0, mass_kg=mass, vt_sea_ms=vt_sea,
-                            CdA_m2=round(cda, 4)), samples=rows)
+    temp, p, rho = atmosphere(max(h_end, 0))
+    rows.append(dict(t=round(t, 2), h=round(max(h_end, 0.0), 1), v=round(v, 2), a=0, drag_N=0,
+                     rho=0.0 if vacuum else round(rho, 4), temp_C=round(temp, 1),
+                     p_kPa=0.0 if vacuum else round(p, 2), vt_local=0.0 if vacuum else round(math.sqrt(2 * mass * g / (rho * cda)), 2)))
+    return dict(params=dict(h0=h0, mass_kg=mass, vt_sea_ms=vt_sea, g=g, h_end=h_end, vacuum=vacuum,
+                            CdA_m2=round(cda, 6)), samples=rows)
 
 
 if __name__ == "__main__":

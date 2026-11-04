@@ -1,0 +1,214 @@
+{
+ "id": "golf",
+ "engine": "penny",
+ "object": {
+  "type": "golf"
+ },
+ "title": "WHAT IF YOU DROPPED A GOLF BALL FROM THE BURJ KHALIFA?",
+ "hook_text": "A GOLF BALL\nFROM 828 M",
+ "hook_em": "828 M",
+ "marker_label": "GOLF BALL",
+ "danger_h": 300,
+ "vmax": 50,
+ "foot": "SIMULATION \u00b7 TIME COMPRESSED \u00b7 STANDARD ATMOSPHERE",
+ "counter": {
+  "label": "ALTITUDE",
+  "field": "h",
+  "unit": "m",
+  "ticks": {
+   "step": 10,
+   "major": 100,
+   "px": 1.4,
+   "max": 900
+  }
+ },
+ "display": [
+  [
+   "Forty-six grams",
+   "46 g"
+  ],
+  [
+   "a hundred and sixty kilometers per hour",
+   "160 km/h"
+  ],
+  [
+   "a hundred and fifteen",
+   "115 km/h"
+  ],
+  [
+   "Twenty-one seconds",
+   "21 seconds"
+  ],
+  [
+   "a hundred and sixty-five kilometers per hour",
+   "165 km/h"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "hook",
+   "heading": "828 M \u00b7 ONE GOLF BALL",
+   "text": "This golf ball is about to fall from the top of the tallest building on Earth.",
+   "sim": [
+    0,
+    1.5
+   ],
+   "sfx": [
+    "hit_open"
+   ],
+   "event": "Burj Khalifa 828 m."
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "camera": "wide",
+   "heading": "SMALL BUT DENSE",
+   "text": "Forty-six grams. Small, round and dense, so it picks up speed fast.",
+   "sim": [
+    1.5,
+    5
+   ],
+   "sfx": [
+    "wide_atmos"
+   ],
+   "event": "USGA/R&A limits.",
+   "fact": {
+    "title": "REGULATION BALL",
+    "value": "45.9 g \u00b7 42.7 mm"
+   }
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "escalate",
+   "camera": "flutter",
+   "heading": "ACCELERATING",
+   "text": "Ten seconds in, it's already past a hundred and sixty kilometers per hour.",
+   "sim": [
+    5,
+    10
+   ],
+   "sfx": [
+    "riser_short",
+    "doppler"
+   ],
+   "event": "Sim 45.3 m/s at 10 s.",
+   "fact": {
+    "title": "AT 10 SECONDS",
+    "value": "163 km/h"
+   }
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "reveal",
+   "camera": "facade",
+   "heading": "THE TWIST",
+   "text": "And here's the twist. Its dimples make it fall faster.",
+   "sim": [
+    10,
+    13.5
+   ],
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "event": "Dimples trip the boundary layer \u2192 Cd ~0.25 vs ~0.5."
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "explain",
+   "camera": "topdown",
+   "heading": "SMOOTH BALL: SLOWER",
+   "text": "A smooth ball the same size would top out around a hundred and fifteen. The dimples help the air slip past.",
+   "sim": [
+    13.5,
+    18
+   ],
+   "sfx": [
+    "whoosh"
+   ],
+   "event": "Vt smooth 32 m/s vs dimpled 45 m/s.",
+   "fact": {
+    "title": "SMOOTH BALL, SAME SIZE",
+    "value": "\u2248 115 km/h max"
+   }
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "rush",
+   "heading": "IMPACT IN SECONDS",
+   "text": "Twenty-one seconds after letting go.",
+   "sim": [
+    18,
+    20.8
+   ],
+   "sfx": [
+    "heartbeat"
+   ],
+   "event": "Total 21.2 s."
+  },
+  {
+   "id": "seg07",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "impact_cut",
+   "heading": "",
+   "text": "",
+   "sim": [
+    20.8,
+    21.16
+   ],
+   "sfx": [
+    "silence",
+    "impact_huge",
+    "debris"
+   ],
+   "event": "Impact 164 km/h.",
+   "silent_duration": 1.2
+  },
+  {
+   "id": "seg08",
+   "scene": 7,
+   "mood": "ending",
+   "camera": "land",
+   "heading": "FASTER THAN TRAFFIC",
+   "text": "It hits at about a hundred and sixty-five kilometers per hour. Faster than highway traffic.",
+   "sim": [
+    21.16,
+    21.16
+   ],
+   "sfx": [
+    "drone_resolve"
+   ],
+   "event": "\u00bd\u00b70.0459\u00b745.5\u00b2\u224848 J.",
+   "fact": {
+    "title": "IMPACT",
+    "value": "\u2248 165 km/h \u00b7 \u2248 48 J"
+   }
+  },
+  {
+   "id": "seg09",
+   "scene": 8,
+   "mood": "ending",
+   "camera": "rise",
+   "heading": "",
+   "text": "The same dimples that help it fly off the tee help it fall faster.",
+   "sim": [
+    21.16,
+    21.16
+   ],
+   "sfx": [
+    "hit_final"
+   ],
+   "event": "Ending."
+  }
+ ]
+}

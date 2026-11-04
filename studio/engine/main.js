@@ -225,7 +225,7 @@ function updateWorld(t) {
   const fin = Math.min(1, (t - seg.start) / .5), fout = Math.min(1, (seg.end - t) / .5);
   let fop = fOn(seg) * Math.min(fin + fOn(tl.segments[segIdx - 1]), 1) * Math.min(fout + fOn(tl.segments[segIdx + 1]), 1);
   if (impactAge >= 0) fop = 0;
-  const weight = MASS * G, drag = st.drag_N ?? (0.5 * st.rho * 0.4229 * st.v * st.v);
+  const weight = MASS * G * (tl.gmul || 1), drag = st.drag_N ?? (0.5 * st.rho * 0.4229 * st.v * st.v);
   st.weight = weight; st.drag = drag;
   st.forces = fop > 0 ? { op: fop } : null;
 

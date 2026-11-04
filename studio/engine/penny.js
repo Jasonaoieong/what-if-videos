@@ -59,9 +59,13 @@ patch.rotation.x = -Math.PI / 2; patch.position.set(84, .0004, 6); scene.add(pat
 const sunDir = V(.55, .62, .55).normalize();
 const sun = new THREE.DirectionalLight(0xfff0d8, 3.4); scene.add(sun, sun.target);
 const hemi = new THREE.HemisphereLight(0xcfe2ff, 0xb59a74, 1.3); scene.add(hemi);
+
+// ---- vacuum mode: Earth without air — black sky at noon, no haze, nothing slows anything down
+const VAC = !!tl.vacuum;
+if (VAC) { scene.fog = null; sky.material.uniforms.uVac.value = 1; hemi.intensity = .45; sun.intensity = 4.2; }
 // environment map from the sky (for metal + glass reflections)
 { const pm = new THREE.PMREMGenerator(renderer), es = new THREE.Scene(), sk = makeSky();
-  sk.material.uniforms.uAlt.value = 400; es.add(sk);
+  sk.material.uniforms.uAlt.value = 400; if (VAC) sk.material.uniforms.uVac.value = 1; es.add(sk);
   const gp = new THREE.Mesh(new THREE.PlaneGeometry(2e5, 2e5), new THREE.MeshBasicMaterial({ color: 0x9c8466 })); gp.rotation.x = -Math.PI / 2; gp.position.y = -400; es.add(gp);
   scene.environment = pm.fromScene(es, .02, .1, 2e6).texture; }
 
@@ -131,8 +135,8 @@ const coin = new THREE.Mesh(new THREE.CylinderGeometry(.009525, .009525, .00152,
   [new THREE.MeshStandardMaterial({ color: 0xb06a3c, metalness: .92, roughness: .4 }), copper(faceTex(false)), copper(faceTex(true))]);
 // object: coin (default), bowling ball or raindrop — cameras scale with its size
 const OBJ = tl.object?.type || 'coin';
-const RAD = { coin: .009525, ball: .109, drop: .0021, hail: .1015 }[OBJ];
-const K = RAD / .009525;
+const RAD = { coin: .009525, ball: .109, drop: .0021, hail: .1015, golf: .021335, melon: .11 }[OBJ];
+const K = (tl.object?.cam_rad || RAD) / .009525;          // camera scale (cam_rad frames a pair of objects)
 let obj = coin;
 if (OBJ === 'ball') {
   const c = document.createElement('canvas'); c.width = 1024; c.height = 512; const x = c.getContext('2d'), r = rng(12);
@@ -155,6 +159,28 @@ if (OBJ === 'ball') {
   for (let i = 0; i < 900; i++) { x.fillStyle = `rgba(255,255,255,${r() * .5})`; x.fillRect(r() * 512, r() * 256, 2 + r() * 4, 1 + r() * 2); }
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
   obj = new THREE.Mesh(g, new THREE.MeshPhysicalMaterial({ map: tex, roughness: .28, clearcoat: .8, clearcoatRoughness: .2, transmission: .0, envMapIntensity: 1.5, sheen: .5 }));
+} else if (OBJ === 'golf') {                          // regulation-size golf ball (42.67 mm): white, ~330 shallow dimples (bump map)
+  const c = document.createElement('canvas'); c.width = 1024; c.height = 512; const x = c.getContext('2d');
+  x.fillStyle = '#fff'; x.fillRect(0, 0, 1024, 512);
+  const rows = 15;
+  for (let i = 0; i < rows; i++) { const lat = (i + .5) / rows * Math.PI, ring = Math.max(1, Math.round(Math.sin(lat) * 30)), y = (i + .5) / rows * 512;
+    for (let j = 0; j < ring; j++) { const xx = (j + (i % 2) * .5) / ring * 1024, rx = 1024 / ring * .42, ry = 512 / rows * .42;
+      const g = x.createRadialGradient(xx, y, 0, xx, y, Math.max(rx, ry)); g.addColorStop(0, '#5a5a5a'); g.addColorStop(.75, '#c8c8c8'); g.addColorStop(1, '#fff');
+      x.fillStyle = g; x.beginPath(); x.ellipse(xx, y, rx, ry, 0, 0, 7); x.fill(); } }
+  const bump = new THREE.CanvasTexture(c);
+  obj = new THREE.Mesh(new THREE.SphereGeometry(RAD, 128, 96), new THREE.MeshPhysicalMaterial({ color: 0xf7f7f2, roughness: .35, clearcoat: .6, clearcoatRoughness: .25, bumpMap: bump, bumpScale: 8, envMapIntensity: 1.1 }));
+} else if (OBJ === 'melon') {                         // round watermelon ~22 cm: dark-green stripes on light rind
+  const g = new THREE.SphereGeometry(RAD, 96, 64), pa = g.attributes.position;
+  for (let i = 0; i < pa.count; i++) pa.setY(i, pa.getY(i) * .94);
+  g.computeVertexNormals();
+  const c = document.createElement('canvas'); c.width = 1024; c.height = 512; const x = c.getContext('2d'), r = rng(41);
+  x.fillStyle = '#7fa65a'; x.fillRect(0, 0, 1024, 512);
+  for (let k = 0; k < 16; k++) { x.fillStyle = '#1f4a1c'; x.beginPath(); const x0 = k * 64; x.moveTo(x0, 0);
+    for (let yy = 0; yy <= 512; yy += 16) x.lineTo(x0 + 18 * Math.sin(yy * .05 + k) + (r() - .5) * 8 - 14, yy);
+    for (let yy = 512; yy >= 0; yy -= 16) x.lineTo(x0 + 18 * Math.sin(yy * .05 + k) + (r() - .5) * 8 + 16, yy); x.fill(); }
+  for (let i = 0; i < 2500; i++) { x.fillStyle = `rgba(${r() < .5 ? '200,230,160' : '10,40,10'},${r() * .15})`; x.fillRect(r() * 1024, r() * 512, 3, 3); }
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+  obj = new THREE.Mesh(g, new THREE.MeshPhysicalMaterial({ map: tex, roughness: .42, clearcoat: .5, clearcoatRoughness: .3, envMapIntensity: 1.1 }));
 } else if (OBJ === 'drop') {
   const g = new THREE.SphereGeometry(RAD, 64, 48), pa = g.attributes.position;
   for (let i = 0; i < pa.count; i++) { const y = pa.getY(i); pa.setY(i, y < 0 ? y * .55 : y * .92); }   // flattened "bun" shape of a falling 4 mm drop
@@ -173,6 +199,43 @@ const crown = new THREE.InstancedMesh(OBJ === 'hail' ? new THREE.DodecahedronGeo
 const puddle = new THREE.Mesh(new THREE.CircleGeometry(1, 48), new THREE.MeshPhysicalMaterial({ color: 0x6f8794, roughness: .05, metalness: .3, transparent: true, opacity: .2, envMapIntensity: 1.2 }));
 puddle.rotation.x = -Math.PI / 2; puddle.visible = false; scene.add(puddle);
 const dustI = makeDust(90); dustI.visible = false; scene.add(dustI);
+
+// feather that falls beside the coin (vacuum episode): tapered vane + quill, ~14 cm
+const FEATHER = tl.object?.feather ? (() => {
+  const c = document.createElement('canvas'); c.width = 128; c.height = 512; const x = c.getContext('2d'), r = rng(52);
+  x.clearRect(0, 0, 128, 512);
+  for (let yy = 20; yy < 500; yy += 2) { const w = 58 * Math.sin(Math.PI * Math.pow((yy - 20) / 480, .8)) * (yy > 470 ? (500 - yy) / 30 : 1);
+    const gap = r() < .04;
+    if (gap) continue;
+    x.strokeStyle = `rgba(${235 + r() * 20},${232 + r() * 20},${225 + r() * 20},${.85 + r() * .15})`; x.lineWidth = 2;
+    x.beginPath(); x.moveTo(64, yy); x.quadraticCurveTo(64 - w * .5, yy - 10, 64 - w, yy - 26); x.stroke();
+    x.beginPath(); x.moveTo(64, yy); x.quadraticCurveTo(64 + w * .45, yy - 9, 64 + w * .8, yy - 22); x.stroke(); }
+  const gr = x.createLinearGradient(0, 380, 0, 512); gr.addColorStop(0, 'rgba(120,110,100,0)'); gr.addColorStop(1, 'rgba(120,110,100,.6)');
+  x.globalCompositeOperation = 'source-atop'; x.fillStyle = gr; x.fillRect(0, 0, 128, 512);
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+  const grp = new THREE.Group();
+  const vane = new THREE.Mesh(new THREE.PlaneGeometry(.035, .14, 1, 8), new THREE.MeshStandardMaterial({ map: tex, transparent: true, alphaTest: .05, side: THREE.DoubleSide, roughness: .9 }));
+  const pg = vane.geometry.attributes.position; for (let i = 0; i < pg.count; i++) pg.setZ(i, .004 * Math.sin(pg.getY(i) / .14 * Math.PI)); vane.geometry.computeVertexNormals();
+  const quill = new THREE.Mesh(new THREE.CylinderGeometry(.0005, .0011, .17, 8), new THREE.MeshStandardMaterial({ color: 0xe8e2d6, roughness: .5 }));
+  quill.position.y = -.012; grp.add(vane, quill); scene.add(grp); return grp; })() : null;
+const FOFF = V(.05, .006, -.045);                 // feather offset from the coin
+// watermelon splat: red flesh chunks + rind shards + juice stain
+const MELON = OBJ === 'melon';
+const chunks = MELON ? new THREE.InstancedMesh(new THREE.DodecahedronGeometry(1, 0), new THREE.MeshStandardMaterial({ roughness: .6, color: 0xffffff }), 60) : null;
+if (chunks) { const c = new THREE.Color(); for (let i = 0; i < 60; i++) chunks.setColorAt(i, i % 4 === 0 ? c.set(0x2f5d22) : i % 4 === 1 ? c.set(0xe8f0c8) : c.setHSL(.985, .75, .45 + (i % 3) * .05)); chunks.visible = false; scene.add(chunks); }
+const stain = MELON ? (() => { const c = document.createElement('canvas'); c.width = c.height = 512; const x = c.getContext('2d'), r = rng(63);
+  x.lineCap = 'round';
+  for (let i = 0; i < 46; i++) { const a = r() * 6.28, L = 40 + r() * 210, w0 = 6 + r() * 16;            // juice streaks radiating out
+    x.strokeStyle = `rgba(${170 + r() * 50},${20 + r() * 25},${40 + r() * 20},${.5 + r() * .35})`;
+    for (let k = 0; k < 10; k++) { const d0 = k / 10 * L, d1 = (k + 1) / 10 * L; x.lineWidth = w0 * (1 - k / 11);
+      x.beginPath(); x.moveTo(256 + Math.cos(a) * d0, 256 + Math.sin(a) * d0); x.lineTo(256 + Math.cos(a) * d1, 256 + Math.sin(a) * d1); x.stroke(); }
+    x.fillStyle = x.strokeStyle; x.beginPath(); x.arc(256 + Math.cos(a) * (L + 8), 256 + Math.sin(a) * (L + 8), 2 + r() * 5, 0, 7); x.fill(); }
+  for (let i = 0; i < 140; i++) { const a = r() * 6.28, d = Math.pow(r(), .6) * 235, rr = 2 + r() * 9;      // droplets
+    x.fillStyle = `rgba(${180 + r() * 50},${25 + r() * 30},${45 + r() * 20},${.5 + r() * .4})`; x.beginPath(); x.arc(256 + Math.cos(a) * d, 256 + Math.sin(a) * d, rr, 0, 7); x.fill(); }
+  const cg = x.createRadialGradient(256, 256, 5, 256, 256, 70); cg.addColorStop(0, 'rgba(200,35,55,.9)'); cg.addColorStop(1, 'rgba(200,35,55,0)'); x.fillStyle = cg; x.fillRect(0, 0, 512, 512);
+  for (let i = 0; i < 70; i++) { const a = r() * 6.28, d = 20 + r() * 190; x.fillStyle = '#1a1210'; x.beginPath(); x.ellipse(256 + Math.cos(a) * d, 256 + Math.sin(a) * d, 4, 2.5, a, 0, 7); x.fill(); }
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(3, 3), new THREE.MeshLambertMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false, opacity: 0, color: 0x9a9a9a }));
+  m.material.map.colorSpace = THREE.SRGBColorSpace; m.rotation.x = -Math.PI / 2; scene.add(m); return m; })() : null;
 const coinLight = new THREE.PointLight(0xfff2e0, 0, .6); scene.add(coinLight);
 
 buildHud(document.getElementById('hud'), tl);
@@ -182,8 +245,9 @@ const LAND = V(84, 0, 6);
 const sV = (x, y, z) => V(x * K, y * K, z * K);
 function coinPos(simT, h) {
   const out = sm((H0 - h) / 650);
-  const flutter = clamp(simT / 2) * (OBJ === 'coin' ? .8 : .15);
-  return V(1.6 + (LAND.x - 1.6) * out + Math.sin(simT * 2.3) * .35 * flutter, Math.max(h, 0) + (OBJ === 'coin' ? .00076 : RAD), LAND.z * out + Math.cos(simT * 1.7) * .3 * flutter);
+  const flutter = VAC ? 0 : clamp(simT / 2) * (OBJ === 'coin' ? .8 : .15);
+  const X0 = 1.6 + (OBJ === 'melon' || VAC ? 1.2 : 0);       // big objects start clear of the spire
+  return V(X0 + (LAND.x - X0) * out + Math.sin(simT * 2.3) * .35 * flutter, Math.max(h, 0) + (OBJ === 'coin' ? .00076 : RAD), LAND.z * out + Math.cos(simT * 1.7) * .3 * flutter);
 }
 
 // ---- cameras (metres; the coin is 19 mm across)
@@ -192,12 +256,16 @@ function cam(shot, P, u, t, st) {
   switch (shot) {
     case 'hook': return { pos: orbit(.085 * K, .6, 1.2 + t * .12), look: P.clone().add(sV(0, .022, 0)), fov: 42 };
     case 'wide': { const e = sm(u), d0 = .09 * K, d = d0 * Math.pow(990 / d0, e);         // log dolly out to ~1 km: whole tower in frame
-      return { pos: P.clone().add(V(d * .7, d * .3 + .02 * K, d * .62)), look: P.clone().lerp(V(0, 430, 0), e * .85), fov: lerp(42, 52, e) }; }
+      // aim swings from the object to the tower at a rate tied to the dolly distance, so the object never leaves frame early
+      const toT = V(0, 430, 0).sub(P), L = toT.length();
+      return { pos: P.clone().add(V(d * .7, d * .3 + .02 * K, d * .62)), look: P.clone().addScaledVector(toT.normalize(), Math.min(L * .85, d * .35 * e * e + d * .25 * e * e * e)), fov: lerp(42, 52, e) }; }
     case 'flutter': return { pos: orbit(.07 * K, .15 + .1 * Math.sin(t * .4), 2.4 + t * .35), look: P, fov: 40 };
-    case 'facade': if (OBJ === 'drop') return { pos: P.clone().add(sV(.1, .012, .05)), look: P.clone().add(sV(0, .004, 0)), fov: 38 };
+    case 'facade': if (OBJ === 'golf' || OBJ === 'melon' || VAC) return { pos: P.clone().add(sV(.16, .05, .2)), look: P.clone().add(sV(-.03, -.01, -.01)), fov: 50 };
+      if (OBJ === 'drop') return { pos: P.clone().add(sV(.1, .012, .05)), look: P.clone().add(sV(0, .004, 0)), fov: 38 };
       return { pos: P.clone().add(sV(.16, .05, .2)), look: P.clone().add(sV(-1.2, -.35, -.25)), fov: 50 };
     case 'topdown': return { pos: P.clone().add(sV(.03, .22, .07)), look: P.clone().add(sV(0, -6, -.6)), fov: lerp(50, 58, u) };
-    case 'rush': return { pos: P.clone().add(sV(.09, .06, .14)), look: P.clone().add(sV(1.2, -1.6, .6)), fov: lerp(55, 68, u * u) };
+    case 'rush': if (OBJ === 'golf' || OBJ === 'melon' || VAC) return { pos: P.clone().add(sV(.09, .06, .14)), look: P.clone().add(sV(0, -.04, 0)), fov: lerp(55, 68, u * u) };
+      return { pos: P.clone().add(sV(.09, .06, .14)), look: P.clone().add(sV(1.2, -1.6, .6)), fov: lerp(55, 68, u * u) };
     case 'land': case 'impact_cut': return { pos: LAND.clone().add(sV(.11, .03, .15)), look: LAND.clone().add(sV(0, .004, 0)), fov: 42 };
     case 'rise': { const k = sm(u);
       const g = Math.pow(1000, k) / 1000;              // log dolly: .19 m → 190 m
@@ -215,13 +283,35 @@ function update(t) {
   let P = coinPos(simT, smp.h);
   // coin attitude: rests flat on the ledge, tips off, then flutters/tumbles
   const fall = clamp(simT / .6);
-  if (OBJ === 'coin') coin.rotation.set(Math.sin(simT * 5.1) * 1.3 * fall + .02, simT * 2.2 * fall, Math.sin(simT * 3.4 + 1) * .9 * fall);
+  if (OBJ === 'coin' && VAC) coin.rotation.set(.45 + .3 * Math.sin(simT * .7) * fall, simT * .6, .25);   // no air: a slow, steady tumble — no flutter
+  else if (OBJ === 'coin') coin.rotation.set(Math.sin(simT * 5.1) * 1.3 * fall + .02, simT * 2.2 * fall, Math.sin(simT * 3.4 + 1) * .9 * fall);
+  else if (OBJ === 'golf') obj.rotation.set(simT * .5 + .4, simT * .8, simT * .2);
+  else if (OBJ === 'melon') obj.rotation.set(.25 + simT * .2, .6 + simT * .35, Math.PI / 2);   // stem axis sideways: stripes read as a melon
   else if (OBJ === 'ball') obj.rotation.set(simT * .7, simT * 1.1, simT * .3);
   else obj.rotation.set(Math.sin(simT * 9) * .05, 0, Math.cos(simT * 7) * .05);
   crack.material.opacity = 0; crown.visible = false; puddle.visible = false; dustI.visible = false; obj.visible = true;
+  if (chunks) chunks.visible = false; if (stain) stain.material.opacity = 0;
   if (impactAge >= 0 && OBJ !== 'coin') {
     st.h = 0; st.v = 0; st.a = 0;
-    if (OBJ === 'ball') {                                  // slams in, sinks a little, cracks the stone, dust
+    if (OBJ === 'golf') {                                   // hits the stone and bounces (illustrative hops, decaying)
+      const hops = [[0, .5, .25], [.55, .32, .1], [.9, .2, .04], [1.13, .12, .015]]; let y = 0, dx = 0;
+      for (const [t0, dur, hgt] of hops) if (impactAge >= t0 && impactAge < t0 + dur) { const k = (impactAge - t0) / dur; y = 4 * hgt * k * (1 - k) * .4; }
+      dx = Math.min(impactAge, 1.3) * .06;
+      P = LAND.clone().add(V(dx, RAD + y, dx * .3)); obj.rotation.set(impactAge * 6, 1, impactAge * 2);
+      dustI.visible = impactAge < .8; updateDust(dustI, LAND.clone().add(V(0, .02, 0)), impactAge * .06);
+      st.shake = .006 * Math.exp(-impactAge * 8);
+    } else if (MELON) {                                   // bursts: flesh + rind chunks fly, juice stain spreads
+      obj.visible = false; P = LAND.clone().add(V(0, .05, 0));
+      const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), r = rng(71);
+      for (let i = 0; i < 60; i++) { const a = r() * 6.283, sp = 1.2 + r() * 4.5, up = .6 + r() * 3.5, tt = Math.min(impactAge, 1.6), sz = RAD * (.12 + r() * .35);
+        const tl0 = Math.min(tt, up / 9.81 * 2);            // stops when it comes back down
+        const y = Math.max(.02, .05 + up * tl0 - 4.9 * tl0 * tl0);
+        const dh = sp * (1 - Math.exp(-tt * 2.5)) / 2.5;   // spreads out, slowed by friction once it lands
+        q.setFromEuler(new THREE.Euler(tt * 8 * (i % 5), tt * 6, 0)); m4.compose(V(LAND.x + Math.cos(a) * dh, y, LAND.z + Math.sin(a) * dh), q, V(sz, sz * .7, sz * .9)); chunks.setMatrixAt(i, m4); }
+      chunks.instanceMatrix.needsUpdate = true; chunks.visible = true;
+      stain.position.set(LAND.x, .003, LAND.z); stain.material.opacity = clamp(impactAge * 10); stain.scale.setScalar(.35 + .65 * (1 - Math.exp(-impactAge * 6)));
+      st.shake = .02 * Math.exp(-impactAge * 6);
+    } else if (OBJ === 'ball') {                                  // slams in, sinks a little, cracks the stone, dust
       P = LAND.clone().add(V(0, RAD * .8 - .03 * clamp(impactAge * 20), 0));
       obj.rotation.set(1.6, 2.1, .3);
       crack.position.set(LAND.x, .002, LAND.z); crack.material.opacity = clamp(impactAge * 25);
@@ -246,6 +336,9 @@ function update(t) {
     coin.rotation.set(Math.sin(impactAge * 24) * .5 * wob, 1.1, Math.cos(impactAge * 24) * .5 * wob);
   } else if (t > IMPACT_T - 2) P = P.clone().lerp(LAND.clone().setY(P.y), sm((t - (IMPACT_T - 2)) / 2));
   obj.position.copy(P);
+  if (FEATHER) { const lan = impactAge >= 0;              // falls exactly with the coin (same sim), lands flat beside it
+    FEATHER.position.copy(lan ? LAND.clone().add(V(.045, .0012, -.035)) : P.clone().add(FOFF));
+    if (lan) FEATHER.rotation.set(-Math.PI / 2, 0, .7); else FEATHER.rotation.set(.4 + simT * .35, simT * .5, .3 + simT * .15); }
   coinLight.position.copy(P).add(V(.05, .06, .08)); coinLight.intensity = .02;
 
   // shot + smooth blend (direction slerp + log distance) between consecutive shots
@@ -274,7 +367,7 @@ function update(t) {
   sun.position.copy(P).addScaledVector(sunDir, 30); sun.target.position.copy(P);
   sky.position.copy(camera.position); sky.material.uniforms.uAlt.value = Math.max(camera.position.y, 0); sky.material.uniforms.uDanger.value = 0;
   ground.material.uniforms.uCam.value.copy(camera.position); ground.material.uniforms.uHaze.value.copy(haze);
-  ground.material.uniforms.uHazeDist.value = 9000 + camera.position.y * 4;
+  ground.material.uniforms.uHazeDist.value = VAC ? 1e7 : 9000 + camera.position.y * 4;
   // marker when the object is too small to see
   if (impactAge < 0 && dist > 3 * K) { const sp = P.clone().project(camera);
     st.marker = { x: (sp.x + 1) / 2 * 1080, y: (1 - sp.y) / 2 * 1920, o: clamp((dist - 3 * K) / (6 * K)) }; }

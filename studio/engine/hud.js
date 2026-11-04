@@ -198,7 +198,7 @@ export function updateHud(t, tl, st, seg) {
   if (st.forces) {
     fp.style.opacity = st.forces.op;
     fp.style.transform = `translateX(${(1 - easeOut(st.forces.op)) * -60}px)`;
-    const mx = 1000;
+    const mx = tl.force_max || 1000;
     fp.querySelector('.g i').style.width = clamp(st.weight / mx, 0, 1) * 100 + '%';
     fp.querySelector('.d i').style.width = clamp(st.drag / mx, 0, 1) * 100 + '%';
     $('fGv').textContent = fmt(st.weight) + ' N'; $('fDv').textContent = fmt(st.drag) + ' N';

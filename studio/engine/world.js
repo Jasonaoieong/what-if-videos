@@ -19,11 +19,11 @@ export function makeSky() {
     side: THREE.BackSide, depthWrite: false, fog: false,
     uniforms: {
       uAlt: { value: 10000 }, uSun: { value: new THREE.Vector3(0.45, 0.55, -0.7).normalize() },
-      uDanger: { value: 0 },
+      uDanger: { value: 0 }, uVac: { value: 0 },
     },
     vertexShader: `varying vec3 vDir; void main(){ vDir = normalize(position);
       vec4 p = modelViewMatrix*vec4(position,1.); gl_Position = projectionMatrix*p; gl_Position.z = gl_Position.w; }`,
-    fragmentShader: `varying vec3 vDir; uniform float uAlt; uniform vec3 uSun; uniform float uDanger;
+    fragmentShader: `varying vec3 vDir; uniform float uAlt; uniform vec3 uSun; uniform float uDanger; uniform float uVac;
       void main(){
         float k = clamp(uAlt/10000.,0.,1.);
         vec3 zenith = mix(vec3(.24,.48,.86), vec3(.03,.10,.32), k);
@@ -37,6 +37,8 @@ export function makeSky() {
         vec3 space = mix(vec3(.25,.45,.85)*smoothstep(.25,-.02,e), vec3(.004,.006,.02), smoothstep(-.02,.35,e));
         c = mix(c, space + vec3(1.,.95,.85)*pow(sd,900.)*6., sp*smoothstep(-.2,.05,e));
         c = mix(c, c*vec3(1.15,.75,.7), uDanger*.35);
+        // no atmosphere at all: black sky at noon, bare sun disk, no horizon glow
+        c = mix(c, vec3(.004,.005,.012) + vec3(1.,.97,.9)*pow(sd,1400.)*8., uVac);
         gl_FragColor = vec4(c,1.);
       }`,
   });

@@ -159,8 +159,10 @@ buildHud(document.getElementById('hud'));
 // ---------------------------------------------------------------- time → world state
 const SPIN_STOP = 1.35;   // hook: the planet halts here
 const FASTER = tl.spin_mode === 'faster';
+const NORMAL = tl.spin_mode === 'normal';    // Earth just spins as it does today (no stop, no spin-up)
 function spinAngle(t) {   // fast (stylised) spin decelerating to a dead stop
   const w0 = 1.2;          // rad/s on screen
+  if (NORMAL) return .12 * t;
   if (FASTER) {           // spin-up: slow → ever faster, eases back down in the ending
     const es = segs.find((s) => s.shot === 'ending'), te = es ? es.start : 1e9;
     const a = (x) => .15 * x + .004 * x * x * x / 3;      // ∫(.15 + .004 x²)
@@ -209,7 +211,7 @@ function update(t) {
   const s = segAt(t), u = segU(s, t), shot = s.shot;
   const st = { simT: t, impactAge: -1, h: counterAt(t, s), v: s.wind || 0, label: s.counter.label, unit: s.counter.unit, ro: [], a: 0 };
   // readouts
-  if (FASTER) st.ro.push(['DAY LENGTH', (s.dayH ?? 24) + '', 'h']); else st.ro.push(['EARTH SPIN', t < SPIN_STOP ? Math.round(V_EQ * (1 - t / SPIN_STOP)).toLocaleString('en-US') : '0', 'km/h']);
+  if (FASTER) st.ro.push(['DAY LENGTH', (s.dayH ?? 24) + '', 'h']); else if (NORMAL) st.ro.push(['SPIN AT EQUATOR', '1,674', 'km/h']); else st.ro.push(['EARTH SPIN', t < SPIN_STOP ? Math.round(V_EQ * (1 - t / SPIN_STOP)).toLocaleString('en-US') : '0', 'km/h']);
   if (shot === 'latitude') st.ro.push(['LATITUDE', Math.round(90 * sm(u * 1.1)) + '°', 'N']);
   if (shot === 'flung' || shot === 'wind') st.ro.push(['SPEED OF SOUND', '1,235', 'km/h']);
   if (shot === 'day') st.ro.push(['DAYLIGHT', Math.round(lerp(12, 4383, sm(u))).toLocaleString('en-US'), 'h']);
@@ -220,10 +222,10 @@ function update(t) {
     scene = space;
     // earth rotation: hook spin → stop; resumes gently at the ending
     let ang = spinAngle(t);
-    const es = segBy('ending'); if (es && t > es.start && !FASTER) ang += .03 * Math.pow(t - es.start, 2);
+    const es = segBy('ending'); if (es && t > es.start && !FASTER && !NORMAL) ang += .03 * Math.pow(t - es.start, 2);
     earth.rotation.y = ang;
     // the atmosphere keeps going after the stop (clouds drift on)
-    cloudShell.rotation.y = FASTER ? ang * .97 : t < SPIN_STOP ? ang : ang + (t - SPIN_STOP) * .09;
+    cloudShell.rotation.y = FASTER || NORMAL ? ang * .97 : t < SPIN_STOP ? ang : ang + (t - SPIN_STOP) * .09;
     // sun: sweeps around during the "1 day = 1 year" beat
     const ds = segBy('day'); let sd = sunDir.clone();
     if (ds && t > ds.start) sd.applyAxisAngle(new THREE.Vector3(0, 1, 0), -1.9 * sm((Math.min(t, ds.end) - ds.start) / (ds.end - ds.start)));
@@ -252,11 +254,11 @@ function update(t) {
       c = { pos: d.multiplyScalar(Math.exp(lerp(Math.log(r0), Math.log(r1), k))), look: p.look.clone().lerp(c.look, k), fov: lerp(p.fov, c.fov, k) };
     }
     // hook jolt when the planet stops
-    const jolt = t > SPIN_STOP ? Math.exp(-(t - SPIN_STOP) * 5) * Math.sin((t - SPIN_STOP) * 60) : 0;
+    const jolt = t > SPIN_STOP && !NORMAL ? Math.exp(-(t - SPIN_STOP) * 5) * Math.sin((t - SPIN_STOP) * 60) : 0;
     c.pos.add(new THREE.Vector3(jolt * 140, jolt * 90, 0));
     camera.position.copy(c.pos); camera.up.set(0, 1, 0); camera.fov = c.fov; camera.near = Math.max(1, (c.pos.length() - R * 1.06) * .5); camera.far = c.pos.length() + R * 4; camera.lookAt(c.look);
     // atmosphere entry flash at the end of the zoom; flash back out of the surface
-    if (shot === 'zoom') st.flashW = clamp((u - .86) / .14);
+    if (shot === 'zoom' && !s.noflash) st.flashW = clamp((u - .86) / .14);
     if (prev && !GLOBE.has(prev.shot)) st.flashW = 1 - clamp((t - s.start) / .45);
   } else {
     scene = surf;
