@@ -80,7 +80,7 @@
         `<line x1="0" y1="0" x2="0" y2="-80" stroke="#000" stroke-width="10" stroke-linecap="round" transform="rotate(${ca.toFixed(0)})"/>` +
         `<line x1="0" y1="0" x2="0" y2="-55" stroke="#E25B4A" stroke-width="12" stroke-linecap="round" transform="rotate(${(ca / 12).toFixed(0)})"/>` +
         `<circle r="10" fill="#000"/></g>`;
-      if (k > 0.55) s += L.banner(t, '3 HOURS LATER...', sceneStart(t) + (sceneAt(t).t1 - sceneStart(t)) * 0.55, 860, 80);
+      if (k > 0.55) s += L.banner(t, '3 HOURS LATER...', sceneStart(t) + (sceneAt(t).t1 - sceneStart(t)) * 0.55, 420, 80);
       return s;
     },
     mirror_hold(t, k, tl) {

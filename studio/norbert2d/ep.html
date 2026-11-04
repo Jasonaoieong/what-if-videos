@@ -198,9 +198,10 @@ window.frame = function (t) {
   if (scn === 'wide' || scn === 'determined' || scn === 'plead') ui += L.banner(t, '30 DAYS TO THE SPRING DANCE', scn === 'wide' ? 0.15 : sc.t0 + 0.05);
   // word-by-word captions
   const cy = scn === 'vote' ? 1590 : scn === 'meter' ? 1440 : scn === 'flyer' ? 1760 : 1420;
-  for (const c of EP.caps) if (between(t, c.t0, c.t1)) ui += L.caption(t, c.text, c.t0, cy, c.text.length > 14 ? 110 : 132, (EP.capColors || { NORB: '#FFD23F' })[c.who] || '#FFFFFF');
+  const capNow = EP.caps.filter((c) => between(t, c.t0, c.t1)).slice(-1);
+  for (const c of capNow) ui += L.caption(t, c.text, c.t0, cy, c.text.length > 14 ? 110 : 132, (EP.capColors || { NORB: '#FFD23F' })[c.who] || '#FFFFFF');
   if (scn === 'mirror' && tl > 0.55) ui += `<text x="540" y="300" text-anchor="middle" font-family="Anton" font-size="90" fill="#FFFFFF" stroke="#000" stroke-width="14" paint-order="stroke">*RECORD SCRATCH*</text>`;
-  if (scn === 'vote' && tl > 1.6) {
+  if (scn === 'vote' && tl > 1.6 && !EP.caps.some((c) => between(t, c.t0, c.t1))) {
     const b = 1 + Math.sin(t * 7) * 0.05;
     ui += `<g transform="translate(540 1790) scale(${b.toFixed(3)})"><text x="0" y="0" text-anchor="middle" font-family="Anton" font-size="78" fill="#FFD23F" stroke="#000" stroke-width="14" paint-order="stroke">COMMENT ONE WORD 👇</text></g>`;
   }

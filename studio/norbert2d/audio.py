@@ -100,6 +100,30 @@ def vibrate():
     return x * 0.12
 
 
+def drill():
+    t = t_(3.0)
+    f = 2400 + 300 * np.sin(2 * np.pi * 5 * t) + 200 * np.sin(2 * np.pi * 0.7 * t)
+    x = np.sin(2 * np.pi * np.cumsum(f) / SR) + 0.3 * np.sign(np.sin(2 * np.pi * np.cumsum(f * 0.5) / SR))
+    am = np.clip(np.sin(np.pi * t / 3.0) * 3, 0, 1) * (0.7 + 0.3 * (np.sin(2 * np.pi * 1.3 * t) > 0))
+    return x * am * 0.12
+
+
+def tick():
+    out = np.zeros(int(1.6 * SR))
+    for i in range(8):
+        tt = t_(0.03)
+        add(out, np.sin(2 * np.pi * 3000 * tt) * env(len(tt), 0.001, 0.006) * 0.25, i * 0.2)
+    return out
+
+
+def chime():
+    out = np.zeros(int(1.4 * SR))
+    for i, f in enumerate((1568, 2093, 2637, 3136)):
+        tt = t_(0.9)
+        add(out, np.sin(2 * np.pi * f * tt) * env(len(tt), 0.002, 0.3) * 0.18, i * 0.07)
+    return out
+
+
 def buzz(sec):
     t = t_(sec)
     f = 210 + 25 * np.sin(2 * np.pi * 0.7 * t) + 15 * np.sin(2 * np.pi * 1.9 * t)

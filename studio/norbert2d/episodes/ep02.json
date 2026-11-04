@@ -50,9 +50,9 @@
     },
     {
       "who": "NORB",
-      "text": "Ahhhhh.",
+      "text": "Ahhhhhhhhhh.",
       "scene": "ahh",
-      "gap": 0.3
+      "gap": 0.9
     },
     {
       "who": "DENT",
@@ -76,7 +76,7 @@
       "who": "DENT",
       "text": "Son, your teeth aren't in your mouth. Your mouth is in your teeth.",
       "scene": "teeth_zoom",
-      "gap": 0.4,
+      "gap": 0.6,
       "sfx": [
         [
           "ding",
@@ -88,7 +88,7 @@
       "who": "NARR",
       "text": "Three hours. Two drills. One very tired dentist.",
       "scene": "montage",
-      "gap": 0.4,
+      "gap": 1.3,
       "sfx": [
         [
           "drill",
@@ -110,7 +110,7 @@
       "who": "NORB",
       "text": "Whoa! I can close my mouth!",
       "scene": "reveal",
-      "gap": 0.3,
+      "gap": 0.7,
       "sfx": [
         [
           "chime",
@@ -126,7 +126,7 @@
       "who": "NARR",
       "text": "Glow up: ten percent. Twenty nine days to go.",
       "scene": "meter",
-      "gap": 0.35,
+      "gap": 0.6,
       "sfx": [
         [
           "pop",

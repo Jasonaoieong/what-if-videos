@@ -34,8 +34,8 @@ def tts(lines, voices, work):
         sf.write(raw, a, sr)
         fixed = os.path.join(work, f"l{i}.wav")
         p = v.get("pitch", 1.0)
-        filt = f"asetrate={int(sr * p)},aresample={SR},atempo={1 / p:.4f}" if p != 1.0 else f"aresample={SR}"
-        filt += ",highpass=f=90,acompressor=threshold=-18dB:ratio=3:attack=5:release=80,loudnorm=I=-16:TP=-2,aresample=48000"
+        filt = f"aresample={SR},rubberband=pitch={p}:pitchq=quality:formant=shifted" if p != 1.0 else f"aresample={SR}"
+        filt += ",highpass=f=90,acompressor=threshold=-18dB:ratio=3:attack=5:release=80,deesser,equalizer=f=3200:t=q:w=1.2:g=2.5,aecho=0.8:0.6:18|31:0.10|0.06,loudnorm=I=-16:TP=-2,aresample=48000"
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", raw, "-af", filt, "-ac", "1", "-ar", "48000", fixed], check=True)
         x, xsr = sf.read(fixed)
         assert xsr == SR, xsr
@@ -84,23 +84,21 @@ def build(ep_path, out_mp4, stills=None):
             caps.append({"t0": round(c, 3), "t1": round(c + d + 0.08, 3), "text": g, "who": ln["who"]})
             c += d
 
-    # lip sync from Norbert's voice envelope
+    # lip sync: one mouth envelope per speaking character
     n = int(dur * FPS) + 1
-    mouth = np.zeros(n)
     voice = np.zeros(int(dur * SR) + SR)
-    norb = np.zeros_like(voice)
+    tracks = {}
     for ln, x in zip(ep["lines"], clips):
         i = int(ln["t0"] * SR)
         voice[i:i + len(x)] += x
-        if ln["who"] == "NORB":
-            norb[i:i + len(x)] += x
+        tracks.setdefault(ln["who"], np.zeros_like(voice))[i:i + len(x)] += x
     hop = SR // FPS
-    for f in range(n):
-        seg = norb[f * hop:(f + 1) * hop]
-        mouth[f] = np.sqrt(np.mean(seg ** 2)) if len(seg) else 0
-    if mouth.max() > 0:
-        mouth = np.clip(mouth / (np.percentile(mouth[mouth > 0], 90) + 1e-9), 0, 1)
-    mouth = np.where(mouth > 0.12, mouth, 0)
+    mouths = {}
+    for who, tr in tracks.items():
+        m = np.array([np.sqrt(np.mean(tr[f * hop:(f + 1) * hop] ** 2)) for f in range(n)])
+        if m.max() > 0:
+            m = np.clip(m / (np.percentile(m[m > 0], 90) + 1e-9), 0, 1)
+        mouths[who] = [round(float(v), 3) for v in np.where(m > 0.12, m, 0)]
 
     # sound design
     music = audio.music(dur + 1)[: len(voice)]
@@ -115,6 +113,8 @@ def build(ep_path, out_mp4, stills=None):
         scene_t0.setdefault(ln["scene"], st)
         if i > 0:
             audio.add(sfx, audio.whoosh() * 0.8, max(0, st - 0.05))
+        for name, at in ln.get("sfx", []):
+            audio.add(sfx, getattr(audio, name)(), st + at)
         if ln.get("sfx_end") == "buzz_phone":
             audio.add(sfx, audio.vibrate(), ln["t1"] + 0.1)
     if "teeth" in scene_t0:
@@ -130,7 +130,7 @@ def build(ep_path, out_mp4, stills=None):
         music[a:b] = 0  # dead silence after the record scratch
     if "meter" in scene_t0:
         audio.add(sfx, audio.pop(), scene_t0["meter"] + 0.1)
-    if "vote" in scene_t0:
+    if "vote" in scene_t0 and not any(l.get("sfx") for l in ep["lines"] if l["scene"] == "vote"):
         for i in range(4):
             audio.add(sfx, audio.pop(), scene_t0["vote"] + 0.25 + i * 0.22)
     for c in caps:
@@ -142,8 +142,12 @@ def build(ep_path, out_mp4, stills=None):
     wav = os.path.join(work, "mix.wav")
     sf.write(wav, np.stack([mix, mix], 1), SR)
 
-    data = {"lines": ep["lines"], "caps": caps, "mouth": [round(float(m), 3) for m in mouth], "fps": FPS,
-            "dur": dur, "days_left": ep["days_left"], "glow": ep["glow"], "vote": ep["vote"]}
+    data = {"lines": ep["lines"], "caps": caps, "mouth": mouths, "fps": FPS, "dur": dur}
+    for key in ("days_left", "glow", "glow_to", "vote", "vote_emoji", "vote_title", "look", "nohud"):
+        if key in ep:
+            data[key] = ep[key]
+    if "cap_colors" in ep:
+        data["capColors"] = ep["cap_colors"]
     dj = os.path.join(work, "ep.json")
     json.dump(data, open(dj, "w"))
     page = os.path.join(HERE, "ep.html")
