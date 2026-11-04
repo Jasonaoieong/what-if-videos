@@ -1,0 +1,35 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face { font-family: Anton; src: url(fonts/Anton.ttf); }
+html, body { margin: 0; background: #E6EAF0; }
+svg { display: block; }
+</style></head>
+<body>
+<svg id="s" width="2400" height="1560" viewBox="0 0 2400 1560"></svg>
+<script src="norbert.js"></script>
+<script>
+const N = window.Norbert;
+let s = `<rect width="2400" height="1560" fill="#E6EAF0"/>
+<text x="60" y="110" font-family="Anton" font-size="90" fill="#1B2238">NORBERT</text>
+<text x="420" y="104" font-family="Anton" font-size="44" fill="#6A7385">MODEL SHEET v2 · FLAT 2D · DAY 1 "BEFORE" LOOK</text>`;
+const poses = [
+  ['NEUTRAL', { expr: 'neutral' }],
+  ['AWKWARD WAVE', { expr: 'awkward', armR: 2.7, bendR: -0.6, headTilt: -4 }],
+  ['PANIC', { expr: 'panic', armL: 2.6, armR: 2.6, bendL: 0.5, bendR: 0.5 }],
+  ['HAPPY', { expr: 'happy', armL: 2.3, armR: 2.3, bendL: -0.3, bendR: -0.3 }],
+];
+poses.forEach(([label, p], i) => {
+  const x = 330 + i * 580;
+  s += N.svg(Object.assign({ x, y: 820, scale: 0.62, t: 0.3, bob: 0 }, p));
+  s += `<text x="${x}" y="1045" text-anchor="middle" font-family="Anton" font-size="44" fill="#1B2238">${label}</text>`;
+});
+const ex = ['neutral', 'awkward', 'happy', 'panic', 'shocked', 'sad', 'smug'];
+ex.forEach((e, i) => {
+  const x = 170 + i * 340;
+  s += `<g clip-path="url(#c${i})">` + N.svg({ x, y: 1500, scale: 0.42, expr: e, t: 0.3, bob: 0 }) + `</g>`;
+  s += `<text x="${x}" y="1400" text-anchor="middle" font-family="Anton" font-size="34" fill="#1B2238">${e.toUpperCase()}</text><clipPath id="c${i}"><rect x="${x - 160}" y="1120" width="320" height="230"/></clipPath>`;
+});
+document.getElementById('s').innerHTML = s;
+</script>
+</body></html>

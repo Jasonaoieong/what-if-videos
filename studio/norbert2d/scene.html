@@ -1,0 +1,157 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face { font-family: Anton; src: url(fonts/Anton.ttf); }
+html, body { margin: 0; background: #000; overflow: hidden; }
+svg { display: block; }
+</style></head>
+<body>
+<svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+<script src="norbert.js"></script>
+<script>
+// Day 1 test. window.frame(t) draws the frame at time t seconds.
+const N = window.Norbert;
+const ease = (x) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
+const pop = (t, t0, d = 0.18) => { const x = (t - t0) / d; if (x < 0) return 0; if (x > 1) return 1; return 1 + Math.sin(x * Math.PI) * 0.25; };
+const between = (t, a, b) => t >= a && t < b;
+
+function room(t) {
+  let s = '';
+  // Wall with stripes
+  s += `<rect y="-400" width="1080" height="1900" fill="#2E5B63"/>`;
+  for (let x = 0; x < 1080; x += 60) s += `<rect x="${x}" y="-400" width="26" height="1900" fill="#2A535A"/>`;
+  // Window with night sky
+  s += `<rect x="90" y="560" width="300" height="260" rx="10" fill="#14233F" stroke="#1A1410" stroke-width="10"/>`;
+  s += `<line x1="240" y1="560" x2="240" y2="820" stroke="#1A1410" stroke-width="8"/><line x1="90" y1="690" x2="390" y2="690" stroke="#1A1410" stroke-width="8"/>`;
+  s += `<circle cx="320" cy="620" r="26" fill="#F6E7A1"/>`;
+  for (const [x, y] of [[130, 600], [180, 760], [350, 760], [280, 720], [150, 650]]) s += `<circle cx="${x}" cy="${y}" r="3" fill="#fff" opacity="${0.5 + 0.5 * Math.sin(t * 3 + x)}"/>`;
+  // Posters
+  s += `<g transform="rotate(-4 840 640)"><rect x="740" y="540" width="200" height="250" fill="#E25B4A" stroke="#1A1410" stroke-width="8"/>` +
+       `<path d="M 840 580 L 880 690 L 800 690 Z" fill="#F7C548" stroke="#1A1410" stroke-width="6"/><rect x="775" y="720" width="130" height="18" fill="#1A1410"/></g>`;
+  s += `<rect x="470" y="470" width="150" height="110" fill="#7FB3D5" stroke="#1A1410" stroke-width="7" transform="rotate(5 545 525)"/>`;
+  // Floor
+  s += `<rect y="1400" width="1080" height="700" fill="#6B4E3D"/>`;
+  for (let i = 0; i < 6; i++) s += `<rect y="${1400 + i * 90}" width="1080" height="4" fill="#5B4133"/>`;
+  s += `<rect y="1392" width="1080" height="14" fill="#3E2C22"/>`;
+  // Bed (left)
+  s += `<rect x="-40" y="1180" width="330" height="200" rx="18" fill="#7C6BC4" stroke="#1A1410" stroke-width="8"/>`;
+  s += `<path d="M -40 1200 Q 120 1150 290 1210 L 290 1300 Q 140 1330 -40 1290 Z" fill="#9B8BE0" stroke="#1A1410" stroke-width="7"/>`;
+  s += `<rect x="-40" y="1360" width="330" height="40" fill="#4E3F8F" stroke="#1A1410" stroke-width="7"/>`;
+  // Desk + monitor (right)
+  s += `<rect x="770" y="1150" width="360" height="26" fill="#8A6A4F" stroke="#1A1410" stroke-width="7"/>`;
+  s += `<rect x="800" y="1176" width="20" height="220" fill="#8A6A4F" stroke="#1A1410" stroke-width="6"/>`;
+  s += `<rect x="800" y="950" width="300" height="190" rx="10" fill="#1A1410"/>`;
+  s += `<rect x="814" y="962" width="272" height="160" rx="6" fill="#62C4F0"/>`;
+  s += `<path d="M 814 1122 L 880 1050 L 930 1100 L 980 1040 L 1086 1122 Z" fill="#3E9B5A"/>`;
+  s += `<rect x="930" y="1140" width="40" height="12" fill="#1A1410"/>`;
+  // Floor clutter: pizza box, cans, sock, crumpled paper
+  s += `<g transform="rotate(-8 170 1500)"><rect x="70" y="1470" width="220" height="40" fill="#D9B27C" stroke="#1A1410" stroke-width="6"/><circle cx="180" cy="1488" r="10" fill="#C0392B"/></g>`;
+  for (const [x, y, c] of [[880, 1460, '#C0392B'], [940, 1480, '#2E86C1'], [330, 1560, '#27AE60']]) {
+    s += `<rect x="${x}" y="${y}" width="34" height="56" rx="6" fill="${c}" stroke="#1A1410" stroke-width="5"/>`;
+  }
+  s += `<path d="M 700 1600 q 30 -20 60 0 q 10 30 -20 40 q -40 0 -40 -40 Z" fill="#EEE" stroke="#1A1410" stroke-width="5"/>`;
+  s += `<circle cx="990" cy="1580" r="22" fill="#F4F4F2" stroke="#1A1410" stroke-width="5"/>`;
+  return s;
+}
+
+function stink(t, cx, cy) {
+  let s = '';
+  for (let i = 0; i < 5; i++) {
+    const ph = (t * 0.6 + i / 5) % 1;
+    const x = cx + (i % 2 ? 1 : -1) * (190 + (i * 37) % 60), y = cy - ph * 320;
+    const o = Math.sin(ph * Math.PI) * 0.8;
+    s += `<path d="M ${x} ${y} q -16 -24 0 -48 q 16 -24 0 -48" fill="none" stroke="#9BD15A" stroke-width="9" stroke-linecap="round" opacity="${o.toFixed(2)}"/>`;
+  }
+  return s;
+}
+
+function flies(t, cx, cy) {
+  let s = '';
+  for (let i = 0; i < 3; i++) {
+    const a = t * (2 + i * 0.7) + i * 2.1;
+    const x = cx + Math.cos(a) * (170 + i * 30), y = cy + Math.sin(a * 1.3) * 90 - i * 40;
+    const w = Math.abs(Math.sin(t * 60 + i)) * 10 + 4;
+    s += `<ellipse cx="${x - 6}" cy="${y - 8}" rx="9" ry="${w}" fill="#E8F4FF" opacity="0.8"/><ellipse cx="${x + 6}" cy="${y - 8}" rx="9" ry="${w}" fill="#E8F4FF" opacity="0.8"/>`;
+    s += `<ellipse cx="${x}" cy="${y}" rx="11" ry="8" fill="#1A1410"/>`;
+  }
+  return s;
+}
+
+function hud(t, days, glow) {
+  let s = '';
+  s += `<rect x="24" y="120" width="230" height="180" rx="22" fill="#141B2D" stroke="#0B0F1A" stroke-width="6"/>`;
+  s += `<text x="139" y="178" text-anchor="middle" font-family="Anton" font-size="38" fill="#C9D1E3">DAYS LEFT</text>`;
+  s += `<text x="139" y="276" text-anchor="middle" font-family="Anton" font-size="100" fill="#FFD23F">${days}</text>`;
+  s += `<rect x="274" y="120" width="782" height="180" rx="22" fill="#141B2D" stroke="#0B0F1A" stroke-width="6"/>`;
+  s += `<text x="306" y="178" font-family="Anton" font-size="38" fill="#C9D1E3">GLOW-UP</text>`;
+  s += `<text x="1026" y="182" text-anchor="end" font-family="Anton" font-size="54" fill="#5BE37D">${Math.round(glow)}%</text>`;
+  s += `<rect x="306" y="216" width="718" height="44" rx="22" fill="#2A3350"/>`;
+  s += `<rect x="306" y="216" width="${Math.max(44, 718 * glow / 100)}" height="44" rx="22" fill="#5BE37D"/>`;
+  return s;
+}
+
+function banner(t, text, t0) {
+  const k = pop(t, t0, 0.25);
+  if (!k) return '';
+  return `<g transform="translate(540 420) scale(${k.toFixed(3)})">` +
+    `<rect x="-470" y="-62" width="940" height="124" rx="26" fill="#141B2D" stroke="#FFD23F" stroke-width="8"/>` +
+    `<text x="0" y="30" text-anchor="middle" font-family="Anton" font-size="70" fill="#FFFFFF" letter-spacing="1">${text}</text></g>`;
+}
+
+function caption(t, words, t0, y = 1330, size = 150, color = '#FFFFFF') {
+  const k = pop(t, t0, 0.16);
+  if (!k) return '';
+  return `<g transform="translate(540 ${y}) scale(${k.toFixed(3)})">` +
+    `<text x="0" y="0" text-anchor="middle" font-family="Anton" font-size="${size}" fill="${color}" stroke="#000" stroke-width="22" stroke-linejoin="round" paint-order="stroke">${words}</text></g>`;
+}
+
+// Timeline (seconds)
+const CAPS = [
+  [0.3, 2.0, 'MEET NORBERT'],
+  [2.0, 3.8, 'HE HAS 30 DAYS'],
+  [3.8, 5.6, 'UNTIL THE SCHOOL DANCE'],
+  [5.6, 8.0, 'YOU PICK THE FIX'],
+];
+
+window.frame = function (t) {
+  // camera: punch-in at start, small zoom on panic
+  const z = 1.12 - 0.12 * ease(t / 0.5) + (between(t, 3.8, 5.6) ? 0.06 * ease((t - 3.8) / 0.2) : 0);
+  // Norbert's acting
+  let p = { x: 540, y: 1290, scale: 0.92, t, expr: 'neutral', look: { x: Math.sin(t * 0.9) * 0.6, y: 0 } };
+  const blinkAt = [1.4, 3.3, 6.4];
+  p.blink = Math.max(...blinkAt.map(b => Math.max(0, 1 - Math.abs(t - b) / 0.07)));
+  if (between(t, 0.3, 2.0)) {             // awkward wave
+    p.expr = 'awkward';
+    p.armR = 2.6 + Math.sin(t * 14) * 0.25; p.bendR = -0.5;
+    p.headTilt = -4;
+  } else if (between(t, 2.0, 3.8)) {      // proud, holds up "30"
+    p.expr = 'smug'; p.armL = 2.2; p.bendL = -0.3;
+  } else if (between(t, 3.8, 5.6)) {      // panic
+    p.expr = 'panic';
+    const sh = Math.sin(t * 40) * 3;
+    p.x += sh; p.armL = 2.55 + Math.sin(t * 18) * 0.12; p.armR = 2.55 - Math.sin(t * 18) * 0.12;
+    p.bendL = p.bendR = 0.5; p.look = { x: 0, y: 0 };
+    p.squash = Math.max(0, 1 - (t - 3.8) / 0.25);
+  } else if (t >= 5.6) {                  // points at the viewer
+    p.expr = 'happy'; p.armR = 1.45; p.bendR = 0.1; p.armL = 0.3;
+  }
+  // talking flaps during captions
+  const talking = CAPS.some(([a, b]) => between(t, a + 0.1, b - 0.4));
+  if (talking && p.expr !== 'panic' && p.expr !== 'happy') p.talk = Math.abs(Math.sin(t * 15)) * 0.8;
+
+  let s = `<g transform="translate(540 960) scale(${z.toFixed(4)}) translate(-540 -960)">`;
+  s += `<g transform="translate(0 150)">` + room(t) + `</g>`;
+  s += stink(t, 540, 1150) + N.svg(p) + flies(t, 560, 760);
+  s += `</g>`;
+  s += hud(t, 30, 0);
+  s += banner(t, '30 DAYS TO THE SCHOOL DANCE', 0.15);
+  for (const [a, b, w] of CAPS) if (between(t, a, b)) s += caption(t, w, a, 1420, w.length > 16 ? 112 : 150);
+  if (t >= 5.6) {
+    s += caption(t, 'HAIR · TEETH · SKIN · ROOM', 5.9, 1560, 70, '#FFD23F');
+    s += caption(t, 'COMMENT ONE WORD 👇', 6.3, 1650, 64);
+  }
+  document.getElementById('s').innerHTML = s;
+};
+window.frame(0);
+</script>
+</body></html>
