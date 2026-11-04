@@ -10,13 +10,14 @@ Each day the comments pick ONE thing he fixes. Every fix is permanent, and some 
 Why this beats the reference accounts (James / Kevin): the goal isn't only looks. He needs a speech, a suit, a date
 and a dance, and he has to face Rachel. That gives choices with consequences, not just which body part to fix.
 
-## Locked character: Bernie
-Reference: ElevenLabs flow `8po1rkhQSxP0a4vY3vOB`, node `Ykq6MfAWbhW5pfEfYQht` (model sheet v1). Every shot is generated
-with that node wired in as the reference image. Never describe him differently.
-- Very tall and lanky, slight hunch, noodle limbs
-- Bright ginger mullet with a cowlick, patchy ginger mustache, freckles, pale skin
-- Huge thick square glasses that make his pale-blue eyes look twice their size
-- Faded orange hoodie with sleeves too short and one drawstring missing, cargo shorts, green-striped tube socks, velcro sandals, a lanyard of keys
+## Locked character: Bernie (v2: simple everyman)
+Reference: ElevenLabs flow `8po1rkhQSxP0a4vY3vOB`, node `37NGOYb60CDPycs82V0m` (model sheet v2,
+`keyframes/bernie-model-sheet-v2.jpg`). Every shot is generated with that node wired in as the reference image.
+v1 (ginger, glasses) is retired.
+- Simple 2D cartoon style: bold clean outlines, flat colors with soft shading
+- Tall, skinny, slightly slouched; oval head; simple black oval eyes; small line nose
+- Messy dark-brown hair sticking up, scruffy stubble, tired eye bags
+- Stretched-out grey hoodie with a stain, faded blue jeans, beat-up white sneakers
 - Voice: ElevenLabs "Quinn - Soft Nerd Boy" (`2t3wubVNRseKNVjtlWx1`), model eleven_v4
 
 The glow-up changes are cumulative. Keep a "current look" line below and add it to every prompt.
@@ -25,7 +26,7 @@ The glow-up changes are cumulative. Keep a "current look" line below and add it 
 
 ## Supporting cast
 - **Duchess**: tiny tan chihuahua, pink knitted sweater, bulging eyes, permanently furious. Bites his socks.
-- **Gabby**: sister, 26, bright ginger bob, freckles, huge smile. Voice: "Margot" (`tAtHhBlA3E0eKZJKNSKE`).
+- **Gabby**: sister, 26, brown bob, huge smile. Voice: "Margot" (`tAtHhBlA3E0eKZJKNSKE`).
 - **Rachel**: the ex, maid of honor. Dark curly hair, effortlessly put-together. Seen only in photos until about Day 7.
 - **Marcus**: the groom. Perfect at everything, kind, which makes it worse.
 - To add as needed: a barber, a gym coach, a wedding planner who hates Bernie, the supermarket security guard.
@@ -34,8 +35,8 @@ The glow-up changes are cumulative. Keep a "current look" line below and add it 
 Camper van (main set), supermarket car park, barbershop, gym, suit shop, wedding venue.
 
 ## Look
-Stylized 3D, feature-animation quality: hand-painted textures, soft skin, volumetric light, warm light from sources
-in the scene (fairy lights, dawn, the phone screen) against cool shadows. Every prompt starts with the style line in
+Clean 2D cartoon TV style: bold outlines, flat colors with soft shading, simple characters in detailed backgrounds
+drawn the same way. No brand names or logos. Every prompt starts with the style line in
 `episodes/ep01.md`.
 
 ## Episode beats (about 40 s)
