@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Edit",
+      "Write",
+      "WebFetch",
+      "WebSearch",
+      "mcp__ElevenLabs",
+      "mcp__Composio",
+      "mcp__Firecrawl",
+      "mcp__github",
+      "mcp__Metricool_Social_Media_Management",
+      "mcp__Context7"
+    ]
+  }
+}
