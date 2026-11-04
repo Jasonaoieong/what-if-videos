@@ -33,7 +33,7 @@ H = 150 + vh + 70 + fs + 90
 sheet = Image.new("RGB", (W, H), BG)
 d = ImageDraw.Draw(sheet)
 d.text((pad, 40), "NORBERT", font=font(64, True), fill=INK)
-d.text((pad + 330, 62), "MODEL SHEET v1  ·  3D stickman hero  ·  Blender", font=font(30), fill=MUTED)
+d.text((pad + 360, 62), "MODEL SHEET v1  ·  3D stickman hero  ·  Blender", font=font(30), fill=MUTED)
 
 y = 150
 for i, (im, label) in enumerate(zip(views, ("FRONT", "SIDE", "BACK"))):
