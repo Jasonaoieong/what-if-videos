@@ -1,0 +1,163 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face { font-family: Anton; src: url(fonts/Anton.ttf); }
+@font-face { font-family: SpecialElite; src: url(fonts/SpecialElite.ttf); }
+html, body { margin: 0; background: #000; overflow: hidden; }
+svg { display: block; }
+</style></head>
+<body>
+<svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <radialGradient id="holeGrad"><stop offset="0" stop-color="#000"/><stop offset="0.55" stop-color="#000" stop-opacity="0.85"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <filter id="coneblur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>
+    <filter id="fogblur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="30"/></filter>
+    <filter id="grain"><feTurbulence id="turb" type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="1"/><feColorMatrix type="saturate" values="0"/></filter>
+    <radialGradient id="vig" cx="50%" cy="50%" r="75%"><stop offset="0.55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.85"/></radialGradient>
+  </defs>
+  <g id="world"></g>
+  <rect width="1080" height="1920" fill="url(#vig)"/>
+  <rect width="1080" height="1920" filter="url(#grain)" opacity="0.10"/>
+  <g id="ui"></g>
+</svg>
+<script src="stick.js"></script>
+<script src="set.js"></script>
+<script src="house.js"></script>
+<script>
+const B = window.Bunker, ST = window.Stick;
+const ease = (x) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
+const lerp = (a, b, k) => a + (b - a) * k;
+const between = (t, a, b) => t >= a && t < b;
+const pop = (t, t0, d = 0.16) => { const x = (t - t0) / d; if (x < 0) return 0; if (x > 1) return 1; return ease(x) + Math.sin(x * Math.PI) * 0.15; };
+function cam(cx, cy, z) { return `translate(540 960) scale(${z.toFixed(4)}) translate(${(-cx).toFixed(1)} ${(-cy).toFixed(1)})`; }
+function mouth(t, who) { const m = (EP.mouth || {})[who] || [], i = Math.floor(t * EP.fps); return i >= 0 && i < m.length ? m[i] : 0; }
+function blink(t, off = 0) { const ph = (t + off) % 3.7; return Math.max(0, 1 - Math.abs(ph - 3.5) / 0.07); }
+function flick(t, amt = 0.08) { return (Math.sin(t * 37) * Math.sin(t * 13.3) > 0.82 ? amt * 3 : 0) + Math.sin(t * 61) * amt * 0.2; }
+function sceneAt(t) {
+  const ls = EP.lines;
+  for (let i = ls.length - 1; i >= 0; i--) { const t0 = i === 0 ? 0 : ls[i].t0 - 0.12; if (t >= t0) return { i, line: ls[i], t0, t1: i + 1 < ls.length ? ls[i + 1].t0 - 0.12 : EP.dur }; }
+}
+function who(p, t) {
+  const sp = p.who.toUpperCase();
+  return ST.svg(Object.assign({ t, talk: mouth(t, sp), blink: blink(t, p.x * 0.01) }, p));
+}
+const CAPCOL = { AVA: '#D9B3FF', MOM: '#9FE7C9', THING: '#FF4A3D',  MAE: '#CDB2FF', MILO: '#FFD23F', HAL: '#A8D17E', JUNE: '#FF7A6E', DANTE: '#FFA552', PRIYA: '#F2F2F2', TEDDY: '#9FD3FF', NARR: '#F2F2F2' };
+
+
+const HS = window.House;
+function feedNursery(t, o = {}) {
+  let s = HS.nursery(t, { rock: o.rock || 0 });
+  if (o.ava) s += ST.svg({ who: 'ava', x: 560, y: 1500, t, expr: 'terror', prop: 'monitor', armR: 1.0, bendR: 0.7, flip: true, look: { x: -1, y: 0 } });
+  if (o.tall) s += HS.tall(t, 820, 1500, 1.15, 1);
+  return s;
+}
+const SCENES = {
+  monitor_open(t, k, tl) {
+    return HS.monitor(t, feedNursery(t), { sound: 1, static: tl < 0.4 ? 0.6 : 0.12 });
+  },
+  couch(t, k, tl) {
+    const up = L_ease((tl - 0.5) / 0.8);
+    let s = `<g transform="${cam(lerp(330, 380, k), 1060, 1.25)}">` + HS.living(t);
+    s += who({ who: 'ava', x: 300, y: lerp(1390, 1500, up), expr: 'neutral', prop: 'monitor', armR: 1.1, bendR: 0.8, look: { x: 1, y: 0.4 } }, t);
+    s += B.dark(0.55 + flick(t, 0.04), [{ x: 920, y: 1160, r: 520 }, { x: 660, y: 1140, r: 300 }], [], '#04060C');
+    return s + `</g>`;
+  },
+  hall(t, k, tl) {
+    const ax = lerp(200, 1500, k);
+    let s = `<g transform="${cam(ax + 200, 1040, 1.0)}">` + HS.hall(t);
+    s += who({ who: 'ava', x: ax, y: 1500, expr: 'scared', prop: 'monitor', armR: 1.0, bendR: 0.7, walk: tl * 1.6 }, t);
+    s += B.dark(0.82 + flick(t), [{ x: ax + 60, y: 1000, r: 380 }, { x: 2250, y: 1460, r: 260 }]);
+    return s + `</g>`;
+  },
+  crib_lean(t, k, tl) {
+    let s = `<g transform="${cam(420, 1080, 1.3)}">` + HS.nursery(t);
+    s += who({ who: 'ava', x: 660, y: 1500, expr: 'hope', prop: 'monitor', armR: 0.9, bendR: 0.8, armL: 0.9, bendL: -0.6, flip: true, lean: -10, look: { x: -1, y: 0.5 } }, t);
+    s += B.dark(0.7 + flick(t, 0.04), [{ x: 800, y: 620, r: 480 }, { x: 560, y: 1420, r: 200 }], [], '#04060C');
+    return s + `</g>`;
+  },
+  crib_empty(t, k, tl) {
+    let s = `<g transform="${cam(300, 1250, lerp(2.0, 2.5, L_ease(k)))}">` + HS.nursery(t);
+    s += B.dark(0.62, [{ x: 300, y: 1260, r: 420 }], [], '#04060C');
+    return s + `</g>`;
+  },
+  phone(t, k, tl) {
+    let s = `<g transform="${cam(600, 900, 1.9)}">` + HS.nursery(t);
+    s += who({ who: 'ava', x: 600, y: 1500, expr: tl > 0.3 ? 'scared' : 'neutral', prop: 'phone', phoneGlow: true, armR: 2.2, bendR: 0.9, propRot: -20, look: { x: 0.6, y: 0 } }, t);
+    s += B.dark(0.72, [{ x: 640, y: 860, r: 360 }], [], '#04060C');
+    return s + `</g>`;
+  },
+  panic(t, k, tl) {
+    const sh = tl < 0.4 ? Math.sin(t * 60) * 6 : 0;
+    let s = `<g transform="translate(${sh.toFixed(1)} 0)"><g transform="${cam(600, 880, 2.2)}">` + HS.nursery(t);
+    s += who({ who: 'ava', x: 600, y: 1500, expr: 'terror', prop: 'phone', phoneGlow: true, armR: 2.2, bendR: 0.9, propRot: -20 }, t);
+    s += B.dark(0.7, [{ x: 640, y: 860, r: 360 }], [], '#04060C');
+    return s + `</g></g>`;
+  },
+  mom_line(t, k, tl) {
+    let s = `<g transform="${cam(600, 860, lerp(2.4, 3.2, L_ease(k)))}">` + HS.nursery(t);
+    s += who({ who: 'ava', x: 600, y: 1500, expr: 'terror', prop: 'phone', phoneGlow: true, armR: 2.2, bendR: 0.9, propRot: -20, look: { x: 0, y: 0 } }, t);
+    s += B.dark(0.78, [{ x: 600, y: 860, r: 260 }], [], '#000');
+    return s + `</g>`;
+  },
+  who_crying(t, k, tl) {
+    let s = `<g transform="${cam(560, 900, 1.6)}">` + HS.nursery(t);
+    s += who({ who: 'ava', x: 560, y: 1500, expr: 'terror', prop: 'monitor', armR: 1.5, bendR: 0.4, look: { x: 1, y: 0.2 } }, t);
+    s += B.dark(0.72 + flick(t, 0.1), [{ x: 640, y: 920, r: 400 }], [], '#000');
+    return s + `</g>`;
+  },
+  feed_reveal(t, k, tl) {
+    const tallIn = tl > 1.2;
+    return HS.monitor(t, feedNursery(t, { ava: true, tall: tallIn }), { sound: 0.2, static: tallIn && tl < 1.35 ? 0.8 : 0.15 });
+  },
+  turn(t, k, tl) {
+    const dur = sceneAt(t).t1 - sceneAt(t).t0;
+    if (tl > 1.0) {
+      let s = `<g transform="${cam(700, 520, 2.4)}">` + HS.nursery(t) + HS.tall(t, 700, 1500, 1.1, 1.6) + `</g>`;
+      s += `<rect width="1080" height="1920" fill="#000" opacity="${tl > 1.5 ? 1 : 0}"/>`;
+      if (between(tl, 1.0, 1.25)) s += `<rect width="1080" height="1920" fill="#FFFFFF" opacity="0.8"/>`;
+      return s;
+    }
+    let s = `<g transform="${cam(560, 880, lerp(1.8, 2.3, tl))}">` + HS.nursery(t);
+    s += who({ who: 'ava', x: 560, y: 1500, expr: 'terror', prop: 'monitor', armR: 1.2, bendR: 0.6, headTilt: lerp(0, 12, tl), look: { x: 1, y: 0 } }, t);
+    s += B.dark(0.85, [{ x: 560, y: 880, r: 300 }]);
+    return s + `</g>`;
+  },
+  outro(t, k, tl) {
+    let s = `<rect width="1080" height="1920" fill="#070708"/>`;
+    const t0 = sceneAt(t).t0;
+    const a = pop(t, t0 + 0.2, 0.3);
+    if (a) s += `<g transform="translate(540 760) scale(${a.toFixed(3)})"><text x="0" y="0" text-anchor="middle" font-family="SpecialElite" font-size="72" fill="#D2443A">WOULD YOU TURN AROUND?</text></g>`;
+    const b = pop(t, t0 + 0.8, 0.25);
+    if (b) s += `<g transform="translate(540 980) scale(${b.toFixed(3)})"><rect x="-420" y="-90" width="380" height="180" rx="10" fill="#141518" stroke="#D2443A" stroke-width="5"/><text x="-230" y="34" text-anchor="middle" font-family="Anton" font-size="96" fill="#EDEAE3">YES</text>` +
+      `<rect x="40" y="-90" width="380" height="180" rx="10" fill="#141518" stroke="#D2443A" stroke-width="5"/><text x="230" y="34" text-anchor="middle" font-family="Anton" font-size="96" fill="#EDEAE3">NO</text></g>`;
+    if (tl > 1.4) s += `<text x="540" y="1300" text-anchor="middle" font-family="Anton" font-size="70" fill="#FFFFFF">COMMENT 👇  FOLLOW FOR MORE</text>`;
+    return s;
+  },
+};
+const L_ease = ease;
+window.frame = function (t) {
+  const sc = sceneAt(t), tl = t - sc.t0, k = Math.min(1, tl / Math.max(0.01, sc.t1 - sc.t0));
+  document.getElementById('turb').setAttribute('seed', String(Math.floor(t * 24) % 97));
+  document.getElementById('world').innerHTML = SCENES[sc.line.scene](t, k, tl);
+  let ui = '';
+  const scn = sc.line.scene;
+  if (scn === 'monitor_open' || scn === 'couch') ui += `<text x="540" y="230" text-anchor="middle" font-family="SpecialElite" font-size="46" fill="#9A958C">THE BABYSITTER · 11:47 PM</text>`;
+  if (false) {
+    const g = pop(t, sc.t0 + (sc.t1 - sc.t0) * 0.82, 0.25);
+    ui += `<rect width="1080" height="1920" fill="rgba(0,0,0,${(0.55 * g).toFixed(2)})"/>` +
+      `<g transform="translate(540 900) scale(${g.toFixed(3)})"><text x="0" y="0" text-anchor="middle" font-family="SpecialElite" font-size="112" fill="#D2443A">DON'T LET</text>` +
+      `<text x="0" y="120" text-anchor="middle" font-family="SpecialElite" font-size="112" fill="#D2443A">THEM IN</text></g>`;
+  }
+  const cap = EP.caps.filter((c) => between(t, c.t0, c.t1)).slice(-1)[0];
+  if (cap && scn !== 'outro' && !(scn === 'turn' && t - sc.t0 > 1.0)) {
+    const g = pop(t, cap.t0, 0.12), col = CAPCOL[cap.who] || '#fff';
+    const name = { THING: '??? (MONITOR)', MOM: 'MOM (PHONE)', NARR: '' }[cap.who] ?? cap.who;
+    ui += `<g transform="translate(540 1560) scale(${g.toFixed(3)})">`;
+    if (name) ui += `<text x="0" y="-108" text-anchor="middle" font-family="SpecialElite" font-size="38" fill="${col}" opacity="0.85">${name}</text>`;
+    ui += `<text x="0" y="0" text-anchor="middle" font-family="Anton" font-size="${cap.text.length > 15 ? 92 : 112}" fill="${col}" stroke="#000" stroke-width="18" stroke-linejoin="round" paint-order="stroke">${cap.text}</text></g>`;
+  }
+  document.getElementById('ui').innerHTML = ui;
+};
+window.EP = window.EP || { lines: [{ scene: 'title_pan', t0: 0, t1: 4 }], caps: [], mouth: {}, fps: 30, dur: 4 };
+</script>
+</body></html>

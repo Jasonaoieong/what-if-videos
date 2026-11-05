@@ -17,6 +17,7 @@
     priya: { top: '#DCE6EA', topSh: '#B9C7CD', pants: '#DCE6EA', shoe: '#F2F2F2', hair: '#1C1410', body: 'scrubs' },
     teddy: { top: '#3E7CC0', topSh: '#2F619A', pants: '#2E3542', shoe: '#E9C33A', hair: '#3A2A1E', body: 'raincoat' },
     dante: { top: '#E07B2A', topSh: '#B9611E', pants: '#E07B2A', shoe: '#2B2620', hair: '#1A1412', body: 'overalls' },
+    ava:   { top: '#7D4FB3', topSh: '#62398F', pants: '#2E3542', shoe: '#EDEDED', hair: '#C98A3A', body: 'hoodie' },
   };
 
   const EXPR = {
@@ -70,6 +71,7 @@
     if (w === 'priya') return shape('M -72 -646 Q -70 -722 0 -724 Q 70 -722 72 -646 Q 40 -686 0 -686 Q -40 -686 -72 -646 Z', c.hair) +
       shape('M 60 -690 Q 118 -660 104 -590 Q 92 -620 74 -650 Z', c.hair);
     if (w === 'teddy') return shape('M -84 -620 Q -92 -742 0 -748 Q 92 -742 84 -620 Q 70 -700 0 -704 Q -70 -700 -84 -620 Z', c.top);
+    if (w === 'ava') return shape('M -74 -640 Q -80 -730 0 -734 Q 80 -730 74 -640 Q 84 -560 66 -500 L 50 -640 Q 0 -690 -50 -640 L -66 -500 Q -84 -560 -74 -640 Z', c.hair);
     if (w === 'dante') return shape('M -72 -650 Q -70 -726 0 -728 Q 70 -726 72 -650 Z', '#2B2B33') + shape('M -72 -660 L -120 -650 Q -118 -640 -70 -642 Z', '#2B2B33');
     return '';
   }
@@ -105,6 +107,8 @@
       shape('M 30 -12 L 52 -18 L 52 18 L 30 12 Z', '#2E3038') + `<circle cx="-20" cy="-10" r="5" fill="${(p.t * 2) % 1 < 0.5 ? '#FF3B30' : '#5A1A16'}"/></g>`;
     if (p.prop === 'flashlight') return `<g transform="translate(${f(x)} ${f(y)}) rotate(${p.propRot || 0})">` + shape('M -10 -12 L 44 -12 L 44 12 L -10 12 Z', '#2B2B33') + shape('M 44 -16 L 58 -16 L 58 16 L 44 16 Z', '#C9CED6') + `</g>`;
     if (p.prop === 'logbook') return `<g transform="translate(${f(x)} ${f(y - 20)}) rotate(-8)">` + shape('M -40 -50 L 40 -50 L 40 50 L -40 50 Z', '#6B3A2A') + line('M -30 -30 L 30 -30 M -30 -14 L 30 -14 M -30 2 L 20 2', 3, '#E9DCC2') + `</g>`;
+    if (p.prop === 'phone') return `<g transform="translate(${f(x)} ${f(y - 30)}) rotate(${p.propRot || -10})">` + shape('M -18 -34 L 18 -34 L 18 34 L -18 34 Z', '#16171B', 4) + `<rect x="-13" y="-28" width="26" height="52" fill="${p.phoneGlow ? '#BFE3FF' : '#2A3550'}"/></g>`;
+    if (p.prop === 'monitor') return `<g transform="translate(${f(x)} ${f(y - 30)}) rotate(-6)">` + shape('M -34 -46 L 34 -46 L 34 46 L -34 46 Z', '#E9E6DF', 4) + `<rect x="-26" y="-38" width="52" height="40" fill="#6FAE8E"/>` + `<circle cx="0" cy="24" r="7" fill="#3A3E45"/></g>`;
     if (p.prop === 'rabbit') return `<g transform="translate(${f(x)} ${f(y + 10)})">` + shape('M -10 -60 Q -18 -96 -6 -98 Q 4 -96 0 -62 Z', '#CFC7BA', 3) + shape('M 8 -60 Q 12 -96 22 -94 Q 30 -88 14 -60 Z', '#CFC7BA', 3) +
       circ(4, -44, 22, '#CFC7BA', 3) + `<circle cx="-4" cy="-48" r="3" fill="${INK}"/><circle cx="12" cy="-48" r="3" fill="${INK}"/>` + shape('M -18 -26 Q 4 -16 26 -26 L 22 10 L -14 10 Z', '#CFC7BA', 3) + `</g>`;
     return '';

@@ -176,6 +176,36 @@ def clock3():
     return out
 
 
+def cry(sec=3.0):
+    """Synthetic baby cry: vibrato 'waah' bursts through two formant bands."""
+    from scipy.signal import butter, sosfilt
+    out = np.zeros(int(sec * SR))
+    at = 0.0
+    while at < sec - 0.5:
+        d = 0.55 + 0.25 * rng.random()
+        tt = t_(d)
+        f0 = 480 + 120 * np.sin(np.pi * tt / d) + 25 * np.sin(2 * np.pi * 7 * tt)
+        x = np.sign(np.sin(2 * np.pi * np.cumsum(f0) / SR)) * 0.6 + np.sin(2 * np.pi * np.cumsum(f0) / SR)
+        x = sosfilt(butter(2, [900, 1500], "band", fs=SR, output="sos"), x) + 0.6 * sosfilt(butter(2, [2600, 3400], "band", fs=SR, output="sos"), x)
+        add(out, x * np.sin(np.pi * tt / d) ** 0.6 * 0.5, at)
+        at += d + 0.18
+    return out
+
+
+def ring():
+    out = np.zeros(int(2.6 * SR))
+    for k in range(2):
+        tt = t_(0.9)
+        add(out, (np.sin(2 * np.pi * 440 * tt) + np.sin(2 * np.pi * 480 * tt)) * 0.12 * (np.sin(2 * np.pi * 20 * tt) > 0), k * 1.3)
+    return out
+
+
+def static(sec=0.8):
+    from scipy.signal import butter, sosfilt
+    x = sosfilt(butter(2, 1500, "high", fs=SR, output="sos"), rng.standard_normal(int(sec * SR)))
+    return x * env(len(x), 0.005, sec * 0.6) * 0.35
+
+
 def buzz(sec):
     t = t_(sec)
     f = 210 + 25 * np.sin(2 * np.pi * 0.7 * t) + 15 * np.sin(2 * np.pi * 1.9 * t)

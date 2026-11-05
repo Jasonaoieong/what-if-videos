@@ -1,0 +1,29 @@
+{
+  "id": "oneshot-babysitter",
+  "page": "babysitter.html",
+  "music": "drone",
+  "caption_pops": false,
+  "flies": false,
+  "whoosh": false,
+  "start": 1.2,
+  "voices": {
+    "NARR":  {"voice": "bm_george", "speed": 0.95, "pitch": 0.9},
+    "AVA":   {"voice": "af_bella", "speed": 1.02, "pitch": 1.05},
+    "MOM":   {"voice": "af_sarah", "speed": 1.0, "pitch": 1.0, "fx": "highpass=f=400,lowpass=f=3200"},
+    "THING": {"voice": "am_onyx", "speed": 0.8, "pitch": 0.78, "fx": "lowpass=f=2600,aecho=0.8:0.7:60|120:0.4|0.3"}
+  },
+  "lines": [
+    {"who": "NARR", "text": "The parents said the baby would sleep all night.", "scene": "monitor_open", "gap": 0.5, "sfx": [["static", 0.0], ["cry", 0.1]]},
+    {"who": "AVA", "text": "Okay, okay. I'm coming.", "scene": "couch", "gap": 0.4},
+    {"who": "NARR", "text": "The nursery was at the end of the hall.", "scene": "hall", "gap": 0.9, "sfx": [["creak", 1.2]]},
+    {"who": "AVA", "text": "Shh. It's okay, I'm here.", "scene": "crib_lean", "gap": 0.6},
+    {"who": "NARR", "text": "The crib was empty.", "scene": "crib_empty", "gap": 1.2, "sfx": [["heartbeat", 0.4]]},
+    {"who": "MOM", "text": "Hi Ava! Just checking in. Did you find the snacks?", "scene": "phone", "gap": 0.3, "sfx": [["ring", 0.0]]},
+    {"who": "AVA", "text": "The baby isn't in her crib!", "scene": "panic", "gap": 0.6},
+    {"who": "MOM", "text": "Ava... we took the baby with us.", "scene": "mom_line", "gap": 1.2, "sfx": [["heartbeat", 0.2]]},
+    {"who": "AVA", "text": "Then who's crying?", "scene": "who_crying", "gap": 0.4, "sfx": [["cry", 0.0]]},
+    {"who": "THING", "text": "Shhh. She's asleep now.", "scene": "feed_reveal", "gap": 1.6, "sfx": [["static", 1.2]]},
+    {"who": "NARR", "text": "Don't turn around.", "scene": "turn", "gap": 1.4, "sfx_end": "stinger", "sfx_end_at": 0.05},
+    {"who": "NARR", "text": "Would you turn around? Comment yes or no.", "scene": "outro", "gap": 2.4}
+  ]
+}
