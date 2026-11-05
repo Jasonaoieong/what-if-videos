@@ -35,6 +35,8 @@ def tts(lines, voices, work):
         fixed = os.path.join(work, f"l{i}.wav")
         p = v.get("pitch", 1.0)
         filt = f"aresample={SR},rubberband=pitch={p}:pitchq=quality:formant=shifted" if p != 1.0 else f"aresample={SR}"
+        if v.get("fx"):
+            filt += "," + v["fx"]
         filt += ",highpass=f=90,acompressor=threshold=-18dB:ratio=3:attack=5:release=80,deesser,equalizer=f=3200:t=q:w=1.2:g=2.5,aecho=0.8:0.6:18|31:0.10|0.06,loudnorm=I=-16:TP=-2,aresample=48000"
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", raw, "-af", filt, "-ac", "1", "-ar", "48000", fixed], check=True)
         x, xsr = sf.read(fixed)
@@ -66,7 +68,7 @@ def build(ep_path, out_mp4, stills=None):
     work = tempfile.mkdtemp(prefix="ep-")
     clips = tts(ep["lines"], ep["voices"], work)
 
-    t = 0.35
+    t = ep.get("start", 0.35)
     for ln, x in zip(ep["lines"], clips):
         ln["t0"] = round(t, 3)
         ln["t1"] = round(t + len(x) / SR, 3)
@@ -117,6 +119,8 @@ def build(ep_path, out_mp4, stills=None):
             audio.add(sfx, getattr(audio, name)(), st + at)
         if ln.get("sfx_end") == "buzz_phone":
             audio.add(sfx, audio.vibrate(), ln["t1"] + 0.1)
+        elif ln.get("sfx_end"):
+            audio.add(sfx, getattr(audio, ln["sfx_end"])(), ln["t1"] + ln.get("sfx_end_at", 0.2))
     if "teeth" in scene_t0:
         audio.add(sfx, audio.ding(), scene_t0["teeth"] + 0.6)
     if "maya" in scene_t0:

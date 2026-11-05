@@ -1,0 +1,158 @@
+{
+  "id": "bunker9-ep01",
+  "page": "ep01.html",
+  "music": "drone",
+  "caption_pops": false,
+  "flies": false,
+  "whoosh": false,
+  "start": 0.95,
+  "voices": {
+    "MAE": {
+      "voice": "af_sky",
+      "speed": 0.92,
+      "pitch": 1.22,
+      "fx": "lowpass=f=1900,aecho=0.8:0.6:45|80:0.35|0.2"
+    },
+    "MILO": {
+      "voice": "am_puck",
+      "speed": 1.05,
+      "pitch": 1.06
+    },
+    "HAL": {
+      "voice": "am_fenrir",
+      "speed": 0.9,
+      "pitch": 0.9
+    },
+    "JUNE": {
+      "voice": "af_bella",
+      "speed": 1.02,
+      "pitch": 1.05
+    },
+    "DANTE": {
+      "voice": "am_michael",
+      "speed": 1.05,
+      "pitch": 0.95
+    },
+    "PRIYA": {
+      "voice": "af_heart",
+      "speed": 0.98,
+      "pitch": 1.0
+    },
+    "TEDDY": {
+      "voice": "af_nicole",
+      "speed": 0.85,
+      "pitch": 1.3
+    },
+    "NARR": {
+      "voice": "bm_george",
+      "speed": 0.95,
+      "pitch": 0.9
+    }
+  },
+  "lines": [
+    {
+      "who": "MAE",
+      "text": "Milo? It's cold. Let me in.",
+      "scene": "black_knock",
+      "gap": 0.6,
+      "sfx": [
+        [
+          "knock",
+          0.0
+        ]
+      ]
+    },
+    {
+      "who": "MILO",
+      "text": "Bunker Nine. Night nineteen. Six of us left.",
+      "scene": "title_pan",
+      "gap": 1.6
+    },
+    {
+      "who": "MILO",
+      "text": "That's Mae. That's my sister!",
+      "scene": "run_door",
+      "gap": 0.4
+    },
+    {
+      "who": "HAL",
+      "text": "Read the door, son.",
+      "scene": "rule",
+      "gap": 1.1
+    },
+    {
+      "who": "MILO",
+      "text": "Never open after dark. They only sound like us.",
+      "scene": "rule_read",
+      "gap": 0.8
+    },
+    {
+      "who": "JUNE",
+      "text": "Every voice out there belongs to someone dead.",
+      "scene": "june",
+      "gap": 0.4
+    },
+    {
+      "who": "DANTE",
+      "text": "Then why does she sound so real?",
+      "scene": "bolt",
+      "gap": 1.0,
+      "sfx": [
+        [
+          "creak",
+          0.6
+        ]
+      ]
+    },
+    {
+      "who": "MAE",
+      "text": "I'm wearing my purple dress. The one with the moon on it.",
+      "scene": "door_close",
+      "gap": 0.9,
+      "sfx": [
+        [
+          "heartbeat",
+          0.0
+        ]
+      ]
+    },
+    {
+      "who": "MILO",
+      "text": "That's the dress she wore that night.",
+      "scene": "milo_cry",
+      "gap": 0.4
+    },
+    {
+      "who": "PRIYA",
+      "text": "Milo. Step away from the door.",
+      "scene": "priya",
+      "gap": 0.5
+    },
+    {
+      "who": "TEDDY",
+      "text": "She isn't cold.",
+      "scene": "teddy",
+      "gap": 1.4
+    },
+    {
+      "who": "MAE",
+      "text": "Milo... hold my hand.",
+      "scene": "hand",
+      "gap": 3.2,
+      "sfx": [
+        [
+          "knock",
+          0.0
+        ]
+      ],
+      "sfx_end": "stinger",
+      "sfx_end_at": 2.5
+    },
+    {
+      "who": "NARR",
+      "text": "Grab the hand. Slam the slot. Or ask what only Mae would know.",
+      "scene": "vote",
+      "gap": 2.6
+    }
+  ]
+}

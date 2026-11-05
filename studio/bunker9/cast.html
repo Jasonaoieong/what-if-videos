@@ -1,0 +1,9 @@
+<!doctype html><html><head><meta charset="utf-8"><style>@font-face{font-family:Anton;src:url(../norbert2d/fonts/Anton.ttf)}html,body{margin:0;background:#15181D}</style></head><body>
+<svg id="s" width="2400" height="1100" viewBox="0 0 2400 1100"></svg>
+<script src="stick.js"></script><script>
+const who=[['milo','scared',{prop:'camcorder',armR:1.2,bendR:0.6}],['june','stern',{prop:'logbook',armR:1.0,bendR:0.6}],['hal','neutral',{prop:'flashlight',armR:1.5,bendR:0.2}],['priya','hope',{}],['teddy','blank',{prop:'rabbit',armR:0.9,bendR:0.8,glow:true}],['dante','angry',{armL:2.6,armR:2.6,bendL:.4,bendR:.4}]];
+let s='<rect width="2400" height="1100" fill="#20252D"/>';
+who.forEach(([w,e,o],i)=>{const x=220+i*390;s+=Stick.svg(Object.assign({who:w,expr:e,x,y:980,scale:w==='teddy'?0.82:1.08,t:0.4},o));
+s+=`<text x="${x}" y="1060" text-anchor="middle" font-family="Anton" font-size="44" fill="#E4E1DA">${w.toUpperCase()}</text>`});
+document.getElementById('s').innerHTML=s;
+</script></body></html>
