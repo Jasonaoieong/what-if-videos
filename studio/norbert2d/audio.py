@@ -206,6 +206,34 @@ def static(sec=0.8):
     return x * env(len(x), 0.005, sec * 0.6) * 0.35
 
 
+def siren(sec=6.0):
+    t = t_(sec)
+    f = 620 + 280 * np.sin(2 * np.pi * 0.25 * t - np.pi / 2)
+    x = np.sin(2 * np.pi * np.cumsum(f) / SR) + 0.3 * np.sin(4 * np.pi * np.cumsum(f) / SR)
+    return x * 0.16 * np.clip(t * 2, 0, 1) * np.clip((sec - t) * 1.5, 0, 1)
+
+
+def rumble(sec=4.0):
+    from scipy.signal import butter, sosfilt
+    n = sosfilt(butter(3, 120, "low", fs=SR, output="sos"), rng.standard_normal(int(sec * SR)))
+    t = t_(sec)
+    hit = np.sin(2 * np.pi * (45 - 20 * t / sec) * t)
+    return (n * 6 + hit) * env(len(t), 0.01, sec * 0.45) * 0.9
+
+
+def slam():
+    tt = t_(0.6)
+    x = np.sin(2 * np.pi * (70 - 30 * tt) * tt) + rng.standard_normal(len(tt)) * np.exp(-tt * 40) * 0.8
+    return x * env(len(tt), 0.001, 0.15) * 0.9
+
+
+def crowd(sec=5.0):
+    from scipy.signal import butter, sosfilt
+    x = sosfilt(butter(2, [300, 2500], "band", fs=SR, output="sos"), rng.standard_normal(int(sec * SR)))
+    am = 0.6 + 0.4 * np.sin(2 * np.pi * 3.3 * t_(sec)) * np.sin(2 * np.pi * 0.7 * t_(sec))
+    return x * am * 0.18 * np.clip((sec - t_(sec)) * 2, 0, 1)
+
+
 def buzz(sec):
     t = t_(sec)
     f = 210 + 25 * np.sin(2 * np.pi * 0.7 * t) + 15 * np.sin(2 * np.pi * 1.9 * t)

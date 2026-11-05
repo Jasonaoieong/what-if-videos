@@ -23,6 +23,7 @@ svg { display: block; }
 <script src="stick.js"></script>
 <script src="set.js"></script>
 <script>
+const L_ease = (x) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
 const B = window.Bunker, ST = window.Stick;
 const ease = (x) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
 const lerp = (a, b, k) => a + (b - a) * k;
@@ -40,9 +41,63 @@ function who(p, t) {
   const sp = { milo: 'MILO', june: 'JUNE', hal: 'HAL', priya: 'PRIYA', teddy: 'TEDDY', dante: 'DANTE' }[p.who];
   return ST.svg(Object.assign({ t, talk: mouth(t, sp), blink: blink(t, p.x * 0.01) }, p));
 }
-const CAPCOL = { MAE: '#CDB2FF', MILO: '#FFD23F', HAL: '#A8D17E', JUNE: '#FF7A6E', DANTE: '#FFA552', PRIYA: '#F2F2F2', TEDDY: '#9FD3FF', NARR: '#F2F2F2' };
+const CAPCOL = { RADIO: '#FFB86B',  MAE: '#CDB2FF', MILO: '#FFD23F', HAL: '#A8D17E', JUNE: '#FF7A6E', DANTE: '#FFA552', PRIYA: '#F2F2F2', TEDDY: '#9FD3FF', NARR: '#F2F2F2' };
 
 const SCENES = {
+  alert(t, k, tl) { return B.alert(t, k); },
+  street_run(t, k, tl) {
+    const mx = lerp(150, 760, k);
+    let s = `<g transform="${cam(lerp(360, 760, k), 1040, 1.0)}">` + B.city(t, { missile: lerp(0.15, 0.6, k) });
+    const npcs = [['npc1', 1400, -1, 0.95], ['npc2', 1700, -1, 0.9], ['npc3', -200, 1, 1.0], ['npc4', 1100, -1, 0.85], ['npc2', 300, 1, 0.8]];
+    npcs.forEach(([w, x0, dir, sc], i) => { s += ST.svg({ who: w, x: x0 + dir * tl * 420, y: 1500 + (i % 2) * 40, scale: sc, t, expr: 'terror', walk: tl * 3 + i * 0.3, flip: dir < 0, armL: 2.4, armR: 2.6, bendL: 0.4, bendR: 0.4 }); });
+    s += ST.svg({ who: 'mae', x: mx - 150, y: 1560, scale: 0.62, t, expr: 'terror', walk: tl * 3.4, armR: 2.0, bendR: -0.2 });
+    s += who({ who: 'milo', x: mx, y: 1560, expr: 'terror', walk: tl * 3, armL: 1.25, bendL: 0.3, lean: 8 }, t);
+    s += B.dark(0.25, [], [], '#2A0A05');
+    return s + `</g>`;
+  },
+  garage_rush(t, k, tl) {
+    let s = `<g transform="${cam(620, 1060, 1.05)}">` + B.garage(t, { open: 1 });
+    s += who({ who: 'hal', x: 920, y: 1500, expr: 'stern', armR: 2.5 + Math.sin(t * 9) * 0.3, bendR: -0.3, flip: true }, t);
+    [['npc3', 200], ['npc1', 360], ['npc4', 80]].forEach(([w, x0], i) => { const x = x0 + tl * 300; if (x < 640) s += ST.svg({ who: w, x, y: 1500, scale: 0.9, t, expr: 'terror', walk: tl * 3 + i, armL: 2.3, armR: 2.3 }); });
+    s += ST.svg({ who: 'mae', x: lerp(-60, 260, k) - 140, y: 1600, scale: 0.68, t, expr: 'terror', walk: tl * 3.4, armR: 2.0, bendR: -0.2 });
+    s += who({ who: 'milo', x: lerp(-60, 260, k), y: 1600, expr: 'terror', walk: tl * 3, armL: 1.25, bendL: 0.3, lean: 6 }, t);
+    s += B.dark(0.45, [{ x: 630, y: 1100, r: 600 }], [], '#05050A');
+    return s + `</g>`;
+  },
+  separation(t, k, tl) {
+    const pull = L_ease((tl - 0.3) / 0.9);
+    let s = `<g transform="${cam(540, 1080, 1.5)}">` + B.garage(t, { open: 1 });
+    for (let i = 0; i < 3; i++) s += ST.svg({ who: ['npc1', 'npc2', 'npc4'][i], x: 330 + i * 200 + Math.sin(t * 6 + i) * 20, y: 1470, scale: 0.85, t, expr: 'terror', walk: tl * 3 + i, armL: 2.2, armR: 2.2 });
+    s += who({ who: 'milo', x: 760, y: 1560, expr: 'terror', armL: lerp(1.3, 1.65, pull), bendL: 0.1, lean: -6 }, t);
+    s += ST.svg({ who: 'mae', x: lerp(560, 240, pull), y: 1600, scale: 0.72, t, expr: 'terror', armR: 2.0, bendR: -0.1, talk: mouth(t, 'MAE') });
+    s += B.dark(0.45 + flick(t), [{ x: 600, y: 1060, r: 520 }], [], '#05050A');
+    return s + `</g>`;
+  },
+  door_slam(t, k, tl) {
+    const close = L_ease(tl / 1.0);
+    let s = `<g transform="${cam(560, 1100, 1.25)}">` + B.garage(t, { open: 1 - close });
+    s += ST.svg({ who: 'mae', x: 300, y: 1560, scale: 0.72, t, expr: 'sad', armR: 1.9, bendR: -0.2, look: { x: 1, y: -0.3 } });
+    s += B.dark(0.6, [{ x: 630, y: 1100, r: 520 * (1 - close) + 120 }], [], '#05050A');
+    return s + `</g>`;
+  },
+  flash(t, k, tl) {
+    if (tl < 1.2) {
+      let s = `<g transform="${cam(540, 1000, 1.0 + tl * 0.05)}">` + B.city(t, { missile: 1 }) + `</g>`;
+      return s + `<rect width="1080" height="1920" fill="#FFFFFF" opacity="${Math.max(0, 1 - tl / 1.2).toFixed(2)}"/>`;
+    }
+    const sh = Math.sin(t * 80) * 14 * Math.max(0, 1 - (tl - 1.2) / 1.5);
+    let s = `<g transform="translate(${sh.toFixed(1)} ${(sh * 0.6).toFixed(1)})"><g transform="${cam(1000, 1010, 1.0)}">` + B.bunkroom(t * 4);
+    s += B.dust(t, 60, 1) + B.dark(0.7 + flick(t, 0.3), [{ x: 1020, y: 600, r: 520 }]) + `</g></g>`;
+    return s;
+  },
+  radio(t, k, tl) {
+    if (tl < 1.3) return `<rect width="1080" height="1920" fill="#000"/><text x="540" y="980" text-anchor="middle" font-family="SpecialElite" font-size="96" fill="#E4E1DA" opacity="${Math.min(1, tl * 2).toFixed(2)}">19 DAYS LATER</text>`;
+    let s = `<g transform="${cam(540, 1100, 1.35)}">` + B.bunkroom(t) + B.radioTable(t);
+    s += who({ who: 'hal', x: 240, y: 1500, expr: 'stern', armR: 1.0, bendR: 0.5, look: { x: 1, y: 0.4 } }, t);
+    s += who({ who: 'priya', x: 860, y: 1500, expr: 'scared', flip: true, look: { x: -1, y: 0.4 } }, t);
+    s += B.dark(0.8 + flick(t), [{ x: 540, y: 1180, r: 420 }]);
+    return s + `</g>`;
+  },
   black_knock(t, k, tl) {
     const kn = [0.0, 0.32, 0.64].some((a) => between(tl, a, a + 0.12)) ? 1 : 0;
     let s = `<rect x="-200" y="-200" width="1480" height="2320" fill="#000"/>`;
@@ -171,7 +226,8 @@ window.frame = function (t) {
   document.getElementById('world').innerHTML = SCENES[sc.line.scene](t, k, tl);
   let ui = '';
   const scn = sc.line.scene;
-  if (scn === 'black_knock' || scn === 'title_pan') ui += `<text x="540" y="230" text-anchor="middle" font-family="SpecialElite" font-size="46" fill="#9A958C">NIGHT 19 · 3:04 AM</text>`;
+  const stamp = { street_run: 'DAY 0 · 6:42 PM', garage_rush: 'DAY 0 · 6:49 PM', separation: 'DAY 0 · 6:52 PM', door_slam: 'DAY 0 · 6:52 PM', black_knock: 'NIGHT 19 · 3:04 AM' }[scn];
+  if (stamp) ui += `<text x="540" y="230" text-anchor="middle" font-family="SpecialElite" font-size="46" fill="#C9C1B0">${stamp}</text>`;
   if (scn === 'title_pan' && k > 0.82) {
     const g = pop(t, sc.t0 + (sc.t1 - sc.t0) * 0.82, 0.25);
     ui += `<rect width="1080" height="1920" fill="rgba(0,0,0,${(0.55 * g).toFixed(2)})"/>` +
@@ -181,7 +237,7 @@ window.frame = function (t) {
   const cap = EP.caps.filter((c) => between(t, c.t0, c.t1)).slice(-1)[0];
   if (cap && scn !== 'vote') {
     const g = pop(t, cap.t0, 0.12), col = CAPCOL[cap.who] || '#fff';
-    const name = { MAE: '??? (OUTSIDE)', NARR: '' }[cap.who] ?? cap.who;
+    const name = (scn === 'separation' && cap.who === 'MAE') ? 'MAE' : ({ MAE: '??? (OUTSIDE)', NARR: '', RADIO: 'EMERGENCY BROADCAST' }[cap.who] ?? cap.who);
     ui += `<g transform="translate(540 1560) scale(${g.toFixed(3)})">`;
     if (name) ui += `<text x="0" y="-108" text-anchor="middle" font-family="SpecialElite" font-size="38" fill="${col}" opacity="0.85">${name}</text>`;
     ui += `<text x="0" y="0" text-anchor="middle" font-family="Anton" font-size="${cap.text.length > 15 ? 92 : 112}" fill="${col}" stroke="#000" stroke-width="18" stroke-linejoin="round" paint-order="stroke">${cap.text}</text></g>`;

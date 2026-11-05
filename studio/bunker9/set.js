@@ -121,5 +121,85 @@
     return s + `</g>`;
   };
 
+  // City street at dusk: burning sky, skyline, a missile trail.
+  S.city = function (t, o = {}) {
+    let s = `<defs><linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A1630"/><stop offset="0.55" stop-color="#B4472E"/><stop offset="1" stop-color="#F0A04B"/></linearGradient></defs>`;
+    s += `<rect x="-800" y="-400" width="3000" height="1900" fill="url(#dusk)"/>`;
+    // missile trail
+    const mk = o.missile != null ? o.missile : 0.5;
+    s += `<path d="M 1300 -200 Q 900 ${f(200 + mk * 100)} ${f(1300 - mk * 900)} ${f(-200 + mk * 900)}" stroke="#FFF2D6" stroke-width="10" fill="none" opacity="0.8"/>`;
+    s += `<circle cx="${f(1300 - mk * 900)}" cy="${f(-200 + mk * 900)}" r="14" fill="#FFFFFF"/>`;
+    // skyline layers
+    const B1 = [[-700, 700], [-520, 520], [-380, 760], [-200, 600], [-40, 820], [140, 560], [300, 720], [470, 640], [640, 800], [820, 580], [980, 700], [1150, 620], [1320, 760], [1500, 600], [1680, 740]];
+    for (const [x, h] of B1) {
+      s += `<rect x="${x}" y="${1500 - h}" width="170" height="${h}" fill="#1E1420" stroke="${INK}" stroke-width="4"/>`;
+      for (let wy = 1500 - h + 40; wy < 1400; wy += 70) for (let wx = x + 22; wx < x + 150; wx += 44)
+        if (((wx * 7 + wy * 3) % 5) < 2) s += `<rect x="${wx}" y="${wy}" width="22" height="30" fill="#F2C76B" opacity="${(0.5 + 0.5 * Math.sin(t * 3 + wx + wy)).toFixed(2)}"/>`;
+    }
+    s += `<rect x="-800" y="1500" width="3000" height="800" fill="#26242A"/>`;
+    for (let x = -800; x < 2200; x += 200) s += `<rect x="${x}" y="1640" width="110" height="14" fill="#E8D27A"/>`;
+    // abandoned car
+    s += shape('M 820 1500 L 840 1420 Q 900 1380 1000 1380 L 1080 1420 L 1120 1500 Z', '#7A2E2A') + `<circle cx="880" cy="1504" r="30" fill="#111" stroke="${INK}" stroke-width="4"/><circle cx="1070" cy="1504" r="30" fill="#111" stroke="${INK}" stroke-width="4"/>`;
+    s += `<rect x="900" y="1395" width="70" height="30" fill="#9FC6E0" opacity="0.6"/>`;
+    s += `<circle cx="1110" cy="1460" r="10" fill="${(t * 3) % 1 < 0.5 ? '#FFB020' : '#5A3A10'}"/>`;
+    return s;
+  };
+
+  // Parking garage with the bunker hatch, light spilling out.
+  S.garage = function (t, o = {}) {
+    let s = `<rect x="-800" y="-400" width="3000" height="1900" fill="#2C2B2E"/>`;
+    s += `<rect x="-800" y="200" width="3000" height="60" fill="#3A393D" stroke="${INK}" stroke-width="4"/>`;
+    for (const x of [-500, 100, 1300, 1900]) s += `<rect x="${x}" y="260" width="120" height="1240" fill="#3E3D42" stroke="${INK}" stroke-width="5"/><rect x="${x}" y="1100" width="120" height="40" fill="#C9A227"/>`;
+    s += `<text x="160" y="900" font-family="Anton" font-size="90" fill="#C9A227" opacity="0.6">P2</text>`;
+    // hatch / steel door in the far wall
+    const op = o.open != null ? o.open : 1;
+    s += `<rect x="460" y="700" width="340" height="800" fill="#FFE2A0"/>`;
+    s += `<rect x="${f(460 - op * 300)}" y="700" width="340" height="800" fill="#4A4F57" stroke="${INK}" stroke-width="6"/>`;
+    s += `<rect x="440" y="680" width="380" height="20" fill="#1E2024"/>`;
+    s += `<text x="630" y="650" text-anchor="middle" font-family="SpecialElite" font-size="56" fill="#E0473C">BUNKER 9</text>`;
+    s += `<rect x="-800" y="1500" width="3000" height="800" fill="#1E1D21"/>`;
+    for (let x = -800; x < 2200; x += 260) s += `<rect x="${x}" y="1560" width="12" height="200" fill="#E8E2C4" transform="skewX(-30)"/>`;
+    return s;
+  };
+
+  // Dust falling (after the blast).
+  S.dust = function (t, n = 40, amt = 1) {
+    let s = '';
+    for (let i = 0; i < n; i++) {
+      const x = (i * 97) % 1200 - 60, y = ((t * (120 + (i % 7) * 30) + i * 53) % 1700) + 100;
+      s += `<circle cx="${x}" cy="${f(y)}" r="${2 + (i % 3)}" fill="#C9C1B0" opacity="${(0.4 * amt).toFixed(2)}"/>`;
+    }
+    return s;
+  };
+
+  // Emergency alert on a phone screen.
+  S.alert = function (t, k) {
+    const sh = Math.sin(t * 70) * 6;
+    let s = `<rect width="1080" height="1920" fill="${(t * 2) % 1 < 0.5 ? '#3A0606' : '#140303'}"/>`;
+    s += `<g transform="translate(${f(540 + sh)} 980) rotate(${f(Math.sin(t * 50) * 1.5)})">`;
+    s += `<rect x="-330" y="-640" width="660" height="1280" rx="70" fill="#0E0F12" stroke="#000" stroke-width="10"/>`;
+    s += `<rect x="-298" y="-600" width="596" height="1200" rx="44" fill="#1B1D22"/>`;
+    s += `<rect x="-270" y="-420" width="540" height="560" rx="30" fill="#ECECEC"/>`;
+    s += `<text x="-230" y="-350" font-family="Anton" font-size="44" fill="#C8372D">⚠ EMERGENCY ALERT</text>`;
+    s += `<text x="-230" y="-260" font-family="Anton" font-size="64" fill="#111">BALLISTIC MISSILE</text>`;
+    s += `<text x="-230" y="-185" font-family="Anton" font-size="64" fill="#111">THREAT INBOUND.</text>`;
+    s += `<text x="-230" y="-100" font-family="Anton" font-size="46" fill="#333">SEEK IMMEDIATE SHELTER.</text>`;
+    s += `<text x="-230" y="-30" font-family="Anton" font-size="56" fill="#C8372D">THIS IS NOT A DRILL.</text>`;
+    s += `<text x="-230" y="90" font-family="SpecialElite" font-size="36" fill="#555">Impact estimate: 11 min</text>`;
+    s += `</g>`;
+    return s;
+  };
+
+  // Table with a glowing radio.
+  S.radioTable = function (t) {
+    let s = `<rect x="320" y="1260" width="440" height="30" fill="#5A4632" stroke="${INK}" stroke-width="5"/><rect x="340" y="1290" width="20" height="210" fill="#5A4632"/><rect x="720" y="1290" width="20" height="210" fill="#5A4632"/>`;
+    s += shape('M 420 1130 L 660 1130 L 660 1260 L 420 1260 Z', '#3A3E45');
+    s += `<rect x="440" y="1150" width="120" height="60" fill="#F2C76B" opacity="${(0.6 + 0.4 * Math.sin(t * 8)).toFixed(2)}"/><circle cx="610" cy="1190" r="28" fill="#2B2E34" stroke="${INK}" stroke-width="4"/>`;
+    s += `<path d="M 640 1130 L 700 1000" stroke="${INK}" stroke-width="6"/>`;
+    // a few cans
+    for (const [x, c] of [[300, '#B3271F'], [770, '#3E7CC0'], [810, '#9AA1AB']]) s += `<rect x="${x}" y="1205" width="40" height="55" rx="5" fill="${c}" stroke="${INK}" stroke-width="4"/>`;
+    return s;
+  };
+
   window.Bunker = S;
 })();

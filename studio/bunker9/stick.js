@@ -17,6 +17,11 @@
     priya: { top: '#DCE6EA', topSh: '#B9C7CD', pants: '#DCE6EA', shoe: '#F2F2F2', hair: '#1C1410', body: 'scrubs' },
     teddy: { top: '#3E7CC0', topSh: '#2F619A', pants: '#2E3542', shoe: '#E9C33A', hair: '#3A2A1E', body: 'raincoat' },
     dante: { top: '#E07B2A', topSh: '#B9611E', pants: '#E07B2A', shoe: '#2B2620', hair: '#1A1412', body: 'overalls' },
+    mae:   { top: '#B5A7E0', topSh: '#9384C4', pants: '#EFE6D6', shoe: '#E9C33A', hair: '#E2B33C', body: 'dress' },
+    npc1:  { top: '#6A7B8C', topSh: '#56646F', pants: '#2E3542', shoe: '#222', hair: '#2A1F18', body: 'jacket', npc: 1 },
+    npc2:  { top: '#8C5A6A', topSh: '#704756', pants: '#3B3A40', shoe: '#222', hair: '#6B4A33', body: 'hoodie', npc: 2 },
+    npc3:  { top: '#4F7A5A', topSh: '#3E6147', pants: '#2B2B33', shoe: '#222', hair: '#B0A090', body: 'jacket', npc: 1 },
+    npc4:  { top: '#A07A3A', topSh: '#80612E', pants: '#3A3027', shoe: '#222', hair: '#1A1412', body: 'hoodie', npc: 2 },
     ava:   { top: '#7D4FB3', topSh: '#62398F', pants: '#2E3542', shoe: '#EDEDED', hair: '#C98A3A', body: 'hoodie' },
   };
 
@@ -71,6 +76,9 @@
     if (w === 'priya') return shape('M -72 -646 Q -70 -722 0 -724 Q 70 -722 72 -646 Q 40 -686 0 -686 Q -40 -686 -72 -646 Z', c.hair) +
       shape('M 60 -690 Q 118 -660 104 -590 Q 92 -620 74 -650 Z', c.hair);
     if (w === 'teddy') return shape('M -84 -620 Q -92 -742 0 -748 Q 92 -742 84 -620 Q 70 -700 0 -704 Q -70 -700 -84 -620 Z', c.top);
+    if (w === 'mae') return shape('M -70 -650 Q -68 -722 0 -724 Q 68 -722 70 -650 Q 40 -690 0 -690 Q -40 -690 -70 -650 Z', c.hair) + shape('M -66 -660 Q -110 -640 -104 -580 Q -92 -610 -70 -630 Z', c.hair) + shape('M 66 -660 Q 110 -640 104 -580 Q 92 -610 70 -630 Z', c.hair);
+    if (c.npc === 1) return shape('M -70 -656 Q -64 -720 0 -720 Q 64 -720 70 -656 Q 36 -690 0 -690 Q -36 -690 -70 -656 Z', c.hair);
+    if (c.npc === 2) return shape('M -72 -646 Q -76 -726 0 -730 Q 76 -726 72 -646 L 56 -672 L 30 -656 L 0 -676 L -30 -656 L -56 -672 Z', c.hair);
     if (w === 'ava') return shape('M -74 -640 Q -80 -730 0 -734 Q 80 -730 74 -640 Q 84 -560 66 -500 L 50 -640 Q 0 -690 -50 -640 L -66 -500 Q -84 -560 -74 -640 Z', c.hair);
     if (w === 'dante') return shape('M -72 -650 Q -70 -726 0 -728 Q 70 -726 72 -650 Z', '#2B2B33') + shape('M -72 -660 L -120 -650 Q -118 -640 -70 -642 Z', '#2B2B33');
     return '';
@@ -79,7 +87,8 @@
   function torso(p, c) {
     const w = p.who;
     let s = '';
-    if (c.body === 'raincoat') s += shape('M -58 -560 Q 0 -578 58 -560 L 76 -300 Q 0 -286 -76 -300 Z', c.top);
+    if (c.body === 'dress') s += shape('M -40 -560 Q 0 -574 40 -560 L 90 -300 Q 0 -280 -90 -300 Z', c.top) + `<circle cx="0" cy="-470" r="16" fill="#F4E7A1" stroke="${INK}" stroke-width="3"/><circle cx="7" cy="-474" r="13" fill="${c.top}"/>`;
+    else if (c.body === 'raincoat') s += shape('M -58 -560 Q 0 -578 58 -560 L 76 -300 Q 0 -286 -76 -300 Z', c.top);
     else if (c.body === 'overalls') {
       s += shape('M -52 -556 Q 0 -572 52 -556 L 58 -300 L -58 -300 Z', '#EAE2D2');
       s += shape('M -50 -470 L 50 -470 L 58 -300 L -58 -300 Z', c.top) + line('M -40 -470 L -30 -556 M 40 -470 L 30 -556', 9, c.top);

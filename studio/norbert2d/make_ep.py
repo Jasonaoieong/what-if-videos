@@ -28,7 +28,7 @@ def tts(lines, voices, work):
     k = Kokoro(os.path.join(KOKORO, "kokoro-v1.0.onnx"), os.path.join(KOKORO, "voices-v1.0.bin"))
     out = []
     for i, ln in enumerate(lines):
-        v = voices[ln["who"]]
+        v = voices[ln.get("voice_override", ln["who"])]
         a, sr = k.create(ln["text"], voice=v["voice"], speed=v["speed"], lang="en-gb" if v["voice"].startswith("b") else "en-us")
         raw = os.path.join(work, f"l{i}_raw.wav")
         sf.write(raw, a, sr)
