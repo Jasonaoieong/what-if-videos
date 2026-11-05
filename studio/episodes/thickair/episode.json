@@ -1,0 +1,240 @@
+{
+ "id": "thickair",
+ "engine": "main",
+ "rho_mul": 10,
+ "force_max": 1000,
+ "title": "WHAT IF EARTH'S AIR WERE 10 TIMES THICKER?",
+ "hook_text": "WHAT IF AIR WERE\n10× THICKER?",
+ "hook_em": "10× THICKER?",
+ "danger_h": 300,
+ "vmax": 70,
+ "sim_file": "sim.json",
+ "foot": "SIMULATION · AIR DENSITY × 10 · STANDARD ATMOSPHERE",
+ "counter": {
+  "label": "ALTITUDE",
+  "field": "h",
+  "unit": "m",
+  "ticks": {
+   "step": 100,
+   "major": 1000,
+   "px": 0.5,
+   "max": 4500
+  }
+ },
+ "display": [
+  [
+   "ten times thicker",
+   "10× thicker"
+  ],
+  [
+   "four thousand meters",
+   "4,000 m"
+  ],
+  [
+   "two hundred and thirty kilometers per hour",
+   "230 km/h"
+  ],
+  [
+   "five seconds",
+   "5 seconds"
+  ],
+  [
+   "Seventy-five kilometers per hour",
+   "75 km/h"
+  ],
+  [
+   "Ten times",
+   "10×"
+  ],
+  [
+   "three times",
+   "3×"
+  ],
+  [
+   "three and a half minutes",
+   "3.5 minutes"
+  ],
+  [
+   "seventy seconds",
+   "70 seconds"
+  ],
+  [
+   "sixty-three kilometers per hour",
+   "63 km/h"
+  ],
+  [
+   "fifteen meters",
+   "15 m"
+  ],
+  [
+   "fifty times",
+   "50×"
+  ],
+  [
+   "twenty-five kilometers per hour",
+   "25 km/h"
+  ],
+  [
+   "two percent",
+   "2%"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "drone_dive",
+   "heading": "AIR × 10",
+   "text": "What if the air were ten times thicker? You just jumped from four thousand meters.",
+   "sim": [
+    0,
+    1
+   ],
+   "sfx": [
+    "hit_open"
+   ],
+   "event": "Exit 4,000 m, ρ × 10."
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "camera": "close_orbit_frost",
+   "heading": "NORMAL AIR",
+   "text": "In normal air, you'd hit about two hundred and thirty kilometers per hour.",
+   "sim": [
+    1,
+    3
+   ],
+   "sfx": [
+    "bass_hit"
+   ],
+   "event": "Normal-air sim from 4,000 m: 231 km/h.",
+   "fact": {
+    "title": "NORMAL AIR, SAME JUMP",
+    "value": "max ≈ 231 km/h"
+   }
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "escalate",
+   "camera": "tracking_side",
+   "heading": "THICK AIR",
+   "text": "In this air, you stop speeding up after about five seconds. Seventy-five kilometers per hour.",
+   "sim": [
+    3,
+    8
+   ],
+   "sfx": [
+    "riser_short"
+   ],
+   "event": "Sim 74.8 km/h at 5 s, peak 76.0 at 8 s.",
+   "fact": {
+    "title": "TOP SPEED, AIR × 10",
+    "value": "≈ 76 km/h"
+   },
+   "forces": true
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "reveal",
+   "camera": "face_on_shake",
+   "heading": "THE TWIST",
+   "text": "Ten times the air, but only three times slower.",
+   "sim": [
+    8,
+    20
+   ],
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "event": "Vt ∝ 1/√ρ; 231/76 = 3.0 ≈ √10.",
+   "fact": {
+    "title": "WHY",
+    "value": "√10 ≈ 3.2"
+   },
+   "forces": true
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "explain",
+   "camera": "slow_push_in",
+   "heading": "SLOW-MOTION FALL",
+   "text": "The jump now lasts three and a half minutes, instead of seventy seconds.",
+   "sim": [
+    20,
+    110
+   ],
+   "sfx": [
+    "cloud_whoosh"
+   ],
+   "event": "Sim 210 s vs 70.1 s.",
+   "fact": {
+    "title": "FREEFALL TIME",
+    "value": "70 s → 3.5 min"
+   }
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "ground_rush",
+   "heading": "STILL TOO FAST",
+   "text": "But you'd still hit at sixty-three kilometers per hour. Like a fall from fifteen meters.",
+   "sim": [
+    110,
+    208.5
+   ],
+   "sfx": [
+    "riser_long",
+    "heartbeat"
+   ],
+   "event": "Impact 62.7 km/h; v²/2g = 15.5 m."
+  },
+  {
+   "id": "seg07",
+   "scene": 7,
+   "mood": "climax",
+   "camera": "impact_cut",
+   "heading": "",
+   "text": "",
+   "sim": [
+    208.5,
+    209.99
+   ],
+   "sfx": [
+    "silence",
+    "impact_huge",
+    "debris"
+   ],
+   "event": "Impact 63 km/h.",
+   "silent_duration": 1.3
+  },
+  {
+   "id": "seg08",
+   "scene": 8,
+   "mood": "ending",
+   "camera": "aftermath_rise",
+   "heading": "VENUS",
+   "text": "On Venus, the air is over fifty times thicker. You'd fall at about twenty-five kilometers per hour.",
+   "sim": [
+    209.99,
+    209.99
+   ],
+   "sfx": [
+    "drone_resolve",
+    "hit_final"
+   ],
+   "event": "NASA: 65 kg/m³, g 8.87 → ≈ 7 m/s.",
+   "fact": {
+    "title": "VENUS SURFACE AIR",
+    "value": "≈ 65 kg/m³ · 53× Earth"
+   }
+  }
+ ]
+}

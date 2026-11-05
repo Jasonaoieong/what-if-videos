@@ -28,15 +28,17 @@ def atmosphere(h):
     return t, p, rho
 
 
-def simulate(h0=10000.0, mass=80.0, vt_sea=55.0, dt=0.01, out_dt=0.1, g=G, h_end=0.0, vacuum=False):
+def simulate(h0=10000.0, mass=80.0, vt_sea=55.0, dt=0.01, out_dt=0.1, g=G, h_end=0.0, vacuum=False, rho_mul=1.0):
     """g: gravity used for the motion (CdA is a body property, calibrated at normal G).
-    h_end: stop at this altitude (e.g. parachute deployment). vacuum: no air at all."""
+    h_end: stop at this altitude (e.g. parachute deployment). vacuum: no air at all.
+    rho_mul: scale the air density everywhere (what-if thicker/thinner air); CdA stays calibrated to real air."""
     _, _, rho0 = atmosphere(0)
     cda = 0.0 if vacuum else 2 * mass * G / (rho0 * vt_sea ** 2)
     h, v, t = h0, 0.0, 0.0
     rows, next_out = [], 0.0
     while h > h_end:
         temp, p, rho = atmosphere(h)
+        rho *= rho_mul
         if vacuum: rho = 0.0
         drag = 0.5 * rho * cda * v * v
         a = g - drag / mass
@@ -49,16 +51,17 @@ def simulate(h0=10000.0, mass=80.0, vt_sea=55.0, dt=0.01, out_dt=0.1, g=G, h_end
             next_out += out_dt
         # RK2 (midpoint)
         hm, vm = h - v * dt / 2, v + a * dt / 2
-        rhom = 0.0 if vacuum else atmosphere(hm)[2]
+        rhom = 0.0 if vacuum else atmosphere(hm)[2] * rho_mul
         am = g - 0.5 * rhom * cda * vm * vm / mass
         h -= vm * dt
         v += am * dt
         t += dt
     temp, p, rho = atmosphere(max(h_end, 0))
+    rho *= rho_mul
     rows.append(dict(t=round(t, 2), h=round(max(h_end, 0.0), 1), v=round(v, 2), a=0, drag_N=0,
                      rho=0.0 if vacuum else round(rho, 4), temp_C=round(temp, 1),
                      p_kPa=0.0 if vacuum else round(p, 2), vt_local=0.0 if vacuum else round(math.sqrt(2 * mass * g / (rho * cda)), 2)))
-    return dict(params=dict(h0=h0, mass_kg=mass, vt_sea_ms=vt_sea, g=g, h_end=h_end, vacuum=vacuum,
+    return dict(params=dict(h0=h0, mass_kg=mass, vt_sea_ms=vt_sea, g=g, h_end=h_end, vacuum=vacuum, rho_mul=rho_mul,
                             CdA_m2=round(cda, 6)), samples=rows)
 
 

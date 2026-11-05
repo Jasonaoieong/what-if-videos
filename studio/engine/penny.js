@@ -135,7 +135,7 @@ const coin = new THREE.Mesh(new THREE.CylinderGeometry(.009525, .009525, .00152,
   [new THREE.MeshStandardMaterial({ color: 0xb06a3c, metalness: .92, roughness: .4 }), copper(faceTex(false)), copper(faceTex(true))]);
 // object: coin (default), bowling ball or raindrop — cameras scale with its size
 const OBJ = tl.object?.type || 'coin';
-const RAD = { coin: .009525, ball: .109, drop: .0021, hail: .1015, golf: .021335, melon: .11 }[OBJ];
+const RAD = { coin: .009525, ball: .109, drop: .0021, hail: .1015, golf: .021335, melon: .11, bball: .121, balloon: .05 }[OBJ];
 const K = (tl.object?.cam_rad || RAD) / .009525;          // camera scale (cam_rad frames a pair of objects)
 let obj = coin;
 if (OBJ === 'ball') {
@@ -181,6 +181,27 @@ if (OBJ === 'ball') {
   for (let i = 0; i < 2500; i++) { x.fillStyle = `rgba(${r() < .5 ? '200,230,160' : '10,40,10'},${r() * .15})`; x.fillRect(r() * 1024, r() * 512, 3, 3); }
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
   obj = new THREE.Mesh(g, new THREE.MeshPhysicalMaterial({ map: tex, roughness: .42, clearcoat: .5, clearcoatRoughness: .3, envMapIntensity: 1.1 }));
+} else if (OBJ === 'bball') {                         // size-7 basketball (≈ 24 cm): orange, pebbled, black seams, no markings
+  const c = document.createElement('canvas'); c.width = 1024; c.height = 512; const x = c.getContext('2d'), r = rng(23);
+  x.fillStyle = '#d4621f'; x.fillRect(0, 0, 1024, 512);
+  for (let i = 0; i < 9000; i++) { x.fillStyle = `rgba(${r() < .5 ? '255,170,110' : '90,30,5'},${.08 + r() * .1})`; x.fillRect(r() * 1024, r() * 512, 2, 2); }
+  x.strokeStyle = '#141010'; x.lineWidth = 9;
+  x.beginPath(); x.moveTo(0, 256); x.lineTo(1024, 256); x.stroke();                          // equator seam
+  for (const xx of [256, 768]) { x.beginPath(); x.moveTo(xx, 0); x.lineTo(xx, 512); x.stroke(); }  // meridian seams
+  for (const x0 of [0, 512]) { x.beginPath(); for (let yy = 0; yy <= 512; yy += 8) { const xx = x0 + 128 + 95 * Math.sin(yy / 512 * Math.PI); yy ? x.lineTo(xx, yy) : x.moveTo(xx, yy); } x.stroke();
+    x.beginPath(); for (let yy = 0; yy <= 512; yy += 8) { const xx = x0 + 384 - 95 * Math.sin(yy / 512 * Math.PI); yy ? x.lineTo(xx, yy) : x.moveTo(xx, yy); } x.stroke(); }
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+  const bc = document.createElement('canvas'); bc.width = 1024; bc.height = 512; const bx = bc.getContext('2d'); bx.fillStyle = '#888'; bx.fillRect(0, 0, 1024, 512);
+  for (let i = 0; i < 26000; i++) { bx.fillStyle = r() < .5 ? '#bbb' : '#555'; bx.beginPath(); bx.arc(r() * 1024, r() * 512, 1.2 + r(), 0, 7); bx.fill(); }
+  obj = new THREE.Mesh(new THREE.SphereGeometry(RAD, 128, 96), new THREE.MeshPhysicalMaterial({ map: tex, bumpMap: new THREE.CanvasTexture(bc), bumpScale: 3, roughness: .62, clearcoat: .15, envMapIntensity: .9 }));
+} else if (OBJ === 'balloon') {                      // water balloon ≈ 10 cm: glossy translucent latex, small knot on top
+  const g = new THREE.SphereGeometry(RAD, 96, 64), pa = g.attributes.position;
+  for (let i = 0; i < pa.count; i++) { const y = pa.getY(i); pa.setY(i, y > 0 ? y * (1 + .25 * y / RAD) : y * .9); }   // slight teardrop
+  g.computeVertexNormals();
+  obj = new THREE.Group();
+  obj.add(new THREE.Mesh(g, new THREE.MeshPhysicalMaterial({ color: 0xe8384f, roughness: .12, clearcoat: 1, clearcoatRoughness: .05, transmission: .35, thickness: .05, ior: 1.33, envMapIntensity: 1.6, sheen: .4 })));
+  const knot = new THREE.Mesh(new THREE.TorusGeometry(RAD * .1, RAD * .05, 10, 20), new THREE.MeshStandardMaterial({ color: 0xc02035, roughness: .35 }));
+  knot.position.y = RAD * 1.27; knot.rotation.x = Math.PI / 2; obj.add(knot);
 } else if (OBJ === 'drop') {
   const g = new THREE.SphereGeometry(RAD, 64, 48), pa = g.attributes.position;
   for (let i = 0; i < pa.count; i++) { const y = pa.getY(i); pa.setY(i, y < 0 ? y * .55 : y * .92); }   // flattened "bun" shape of a falling 4 mm drop
@@ -220,10 +241,16 @@ const FEATHER = tl.object?.feather ? (() => {
   quill.position.y = -.012; grp.add(vane, quill); scene.add(grp); return grp; })() : null;
 const FOFF = V(.05, .006, -.045);                 // feather offset from the coin
 // watermelon splat: red flesh chunks + rind shards + juice stain
-const MELON = OBJ === 'melon';
-const chunks = MELON ? new THREE.InstancedMesh(new THREE.DodecahedronGeometry(1, 0), new THREE.MeshStandardMaterial({ roughness: .6, color: 0xffffff }), 60) : null;
-if (chunks) { const c = new THREE.Color(); for (let i = 0; i < 60; i++) chunks.setColorAt(i, i % 4 === 0 ? c.set(0x2f5d22) : i % 4 === 1 ? c.set(0xe8f0c8) : c.setHSL(.985, .75, .45 + (i % 3) * .05)); chunks.visible = false; scene.add(chunks); }
-const stain = MELON ? (() => { const c = document.createElement('canvas'); c.width = c.height = 512; const x = c.getContext('2d'), r = rng(63);
+const MELON = OBJ === 'melon', BALLOON = OBJ === 'balloon', SPLAT = MELON || BALLOON;
+const chunks = SPLAT ? new THREE.InstancedMesh(new THREE.DodecahedronGeometry(1, 0), BALLOON ? new THREE.MeshPhysicalMaterial({ roughness: .05, color: 0xffffff, clearcoat: 1, envMapIntensity: 2.2, transparent: true, opacity: .85 }) : new THREE.MeshStandardMaterial({ roughness: .6, color: 0xffffff }), 60) : null;
+if (chunks) { const c = new THREE.Color(); for (let i = 0; i < 60; i++) chunks.setColorAt(i, BALLOON ? (i % 6 === 0 ? c.set(0xe8384f) : c.setHSL(.56, .45, .72 + (i % 3) * .06)) : i % 4 === 0 ? c.set(0x2f5d22) : i % 4 === 1 ? c.set(0xe8f0c8) : c.setHSL(.985, .75, .45 + (i % 3) * .05)); chunks.visible = false; scene.add(chunks); }
+const stain = BALLOON ? (() => { const c = document.createElement('canvas'); c.width = c.height = 512; const x = c.getContext('2d'), r = rng(64);
+  for (let i = 0; i < 60; i++) { const a = r() * 6.28, d = Math.pow(r(), .8) * 190, rr = 20 + r() * 70; const g = x.createRadialGradient(256 + Math.cos(a) * d, 256 + Math.sin(a) * d, 0, 256 + Math.cos(a) * d, 256 + Math.sin(a) * d, rr);
+    g.addColorStop(0, 'rgba(40,50,60,.55)'); g.addColorStop(.8, 'rgba(40,50,60,.35)'); g.addColorStop(1, 'rgba(40,50,60,0)'); x.fillStyle = g; x.fillRect(0, 0, 512, 512); }
+  for (let i = 0; i < 160; i++) { const a = r() * 6.28, d = 60 + Math.pow(r(), .5) * 190; x.fillStyle = 'rgba(40,50,60,.5)'; x.beginPath(); x.arc(256 + Math.cos(a) * d, 256 + Math.sin(a) * d, 2 + r() * 6, 0, 7); x.fill(); }
+  for (let i = 0; i < 5; i++) { const a = r() * 6.28, d = 20 + r() * 60; x.fillStyle = '#c8243a'; x.beginPath(); x.ellipse(256 + Math.cos(a) * d, 256 + Math.sin(a) * d, 10 + r() * 14, 4 + r() * 6, a, 0, 7); x.fill(); }
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(2.4, 2.4), new THREE.MeshStandardMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false, opacity: 0, roughness: .2, metalness: 0, envMapIntensity: .3, color: 0x8a8a8a }));
+  m.material.map.colorSpace = THREE.SRGBColorSpace; m.rotation.x = -Math.PI / 2; scene.add(m); return m; })() : MELON ? (() => { const c = document.createElement('canvas'); c.width = c.height = 512; const x = c.getContext('2d'), r = rng(63);
   x.lineCap = 'round';
   for (let i = 0; i < 46; i++) { const a = r() * 6.28, L = 40 + r() * 210, w0 = 6 + r() * 16;            // juice streaks radiating out
     x.strokeStyle = `rgba(${170 + r() * 50},${20 + r() * 25},${40 + r() * 20},${.5 + r() * .35})`;
@@ -246,7 +273,7 @@ const sV = (x, y, z) => V(x * K, y * K, z * K);
 function coinPos(simT, h) {
   const out = sm((H0 - h) / 650);
   const flutter = VAC ? 0 : clamp(simT / 2) * (OBJ === 'coin' ? .8 : .15);
-  const X0 = 1.6 + (OBJ === 'melon' || VAC ? 1.2 : 0);       // big objects start clear of the spire
+  const X0 = 1.6 + (OBJ === 'melon' || OBJ === 'bball' || VAC ? 1.2 : 0);       // big objects start clear of the spire
   return V(X0 + (LAND.x - X0) * out + Math.sin(simT * 2.3) * .35 * flutter, Math.max(h, 0) + (OBJ === 'coin' ? .00076 : RAD), LAND.z * out + Math.cos(simT * 1.7) * .3 * flutter);
 }
 
@@ -260,11 +287,11 @@ function cam(shot, P, u, t, st) {
       const toT = V(0, 430, 0).sub(P), L = toT.length();
       return { pos: P.clone().add(V(d * .7, d * .3 + .02 * K, d * .62)), look: P.clone().addScaledVector(toT.normalize(), Math.min(L * .85, d * .35 * e * e + d * .25 * e * e * e)), fov: lerp(42, 52, e) }; }
     case 'flutter': return { pos: orbit(.07 * K, .15 + .1 * Math.sin(t * .4), 2.4 + t * .35), look: P, fov: 40 };
-    case 'facade': if (OBJ === 'golf' || OBJ === 'melon' || VAC) return { pos: P.clone().add(sV(.16, .05, .2)), look: P.clone().add(sV(-.03, -.01, -.01)), fov: 50 };
+    case 'facade': if (OBJ === 'golf' || OBJ === 'melon' || OBJ === 'bball' || OBJ === 'balloon' || VAC) return { pos: P.clone().add(sV(.16, .05, .2)), look: P.clone().add(sV(-.03, -.01, -.01)), fov: 50 };
       if (OBJ === 'drop') return { pos: P.clone().add(sV(.1, .012, .05)), look: P.clone().add(sV(0, .004, 0)), fov: 38 };
       return { pos: P.clone().add(sV(.16, .05, .2)), look: P.clone().add(sV(-1.2, -.35, -.25)), fov: 50 };
     case 'topdown': return { pos: P.clone().add(sV(.03, .22, .07)), look: P.clone().add(sV(0, -6, -.6)), fov: lerp(50, 58, u) };
-    case 'rush': if (OBJ === 'golf' || OBJ === 'melon' || VAC) return { pos: P.clone().add(sV(.09, .06, .14)), look: P.clone().add(sV(0, -.04, 0)), fov: lerp(55, 68, u * u) };
+    case 'rush': if (OBJ === 'golf' || OBJ === 'melon' || OBJ === 'bball' || OBJ === 'balloon' || VAC) return { pos: P.clone().add(sV(.09, .06, .14)), look: P.clone().add(sV(0, -.04, 0)), fov: lerp(55, 68, u * u) };
       return { pos: P.clone().add(sV(.09, .06, .14)), look: P.clone().add(sV(1.2, -1.6, .6)), fov: lerp(55, 68, u * u) };
     case 'land': case 'impact_cut': return { pos: LAND.clone().add(sV(.11, .03, .15)), look: LAND.clone().add(sV(0, .004, 0)), fov: 42 };
     case 'rise': { const k = sm(u);
@@ -288,6 +315,8 @@ function update(t) {
   else if (OBJ === 'golf') obj.rotation.set(simT * .5 + .4, simT * .8, simT * .2);
   else if (OBJ === 'melon') obj.rotation.set(.25 + simT * .2, .6 + simT * .35, Math.PI / 2);   // stem axis sideways: stripes read as a melon
   else if (OBJ === 'ball') obj.rotation.set(simT * .7, simT * 1.1, simT * .3);
+  else if (OBJ === 'bball') obj.rotation.set(simT * .45 + .3, simT * .7, simT * .25);
+  else if (BALLOON) obj.rotation.set(Math.sin(simT * 3.1) * .25, simT * .4, Math.sin(simT * 2.3) * .2);   // knot up-trailing: falls knot-last
   else obj.rotation.set(Math.sin(simT * 9) * .05, 0, Math.cos(simT * 7) * .05);
   crack.material.opacity = 0; crown.visible = false; puddle.visible = false; dustI.visible = false; obj.visible = true;
   if (chunks) chunks.visible = false; if (stain) stain.material.opacity = 0;
@@ -300,10 +329,18 @@ function update(t) {
       P = LAND.clone().add(V(dx, RAD + y, dx * .3)); obj.rotation.set(impactAge * 6, 1, impactAge * 2);
       dustI.visible = impactAge < .8; updateDust(dustI, LAND.clone().add(V(0, .02, 0)), impactAge * .06);
       st.shake = .006 * Math.exp(-impactAge * 8);
-    } else if (MELON) {                                   // bursts: flesh + rind chunks fly, juice stain spreads
+    } else if (OBJ === 'bball') {                           // lands and bounces back up (illustrative hops; no height claimed)
+      const hops = [[0, 1.0, 9], [1.0, .62, 3.4], [1.62, .4, 1.3], [2.02, .26, .45], [2.28, .16, .12]]; let y = 0;
+      for (const [t0, dur, hgt] of hops) if (impactAge >= t0 && impactAge < t0 + dur) { const k = (impactAge - t0) / dur; y = 4 * hgt * RAD * k * (1 - k); }
+      const squash = impactAge < .05 ? 1 - .25 * Math.sin(impactAge / .05 * Math.PI) : 1;
+      const dx = Math.min(impactAge, 2.6) * .12;
+      P = LAND.clone().add(V(dx, RAD * squash + y, dx * .3)); obj.rotation.set(impactAge * 2.5, 1, impactAge * .8); obj.scale.set(1 / Math.sqrt(squash), squash, 1 / Math.sqrt(squash));
+      dustI.visible = false;
+      st.shake = .012 * Math.exp(-impactAge * 8);
+    } else if (SPLAT) {                                   // bursts: flesh + rind chunks fly, juice stain spreads
       obj.visible = false; P = LAND.clone().add(V(0, .05, 0));
       const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), r = rng(71);
-      for (let i = 0; i < 60; i++) { const a = r() * 6.283, sp = 1.2 + r() * 4.5, up = .6 + r() * 3.5, tt = Math.min(impactAge, 1.6), sz = RAD * (.12 + r() * .35);
+      for (let i = 0; i < 60; i++) { const a = r() * 6.283, sp = 1.2 + r() * 4.5, up = .6 + r() * 3.5, tt = Math.min(impactAge, 1.6), sz = RAD * (BALLOON ? .08 + r() * .22 : .12 + r() * .35);
         const tl0 = Math.min(tt, up / 9.81 * 2);            // stops when it comes back down
         const y = Math.max(.02, .05 + up * tl0 - 4.9 * tl0 * tl0);
         const dh = sp * (1 - Math.exp(-tt * 2.5)) / 2.5;   // spreads out, slowed by friction once it lands

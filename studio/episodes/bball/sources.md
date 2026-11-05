@@ -1,0 +1,8 @@
+# Sources — basketball from the Burj Khalifa
+- Burj Khalifa 828 m.
+- FIBA size 7 ball: circumference 750–770 mm, weight 580–620 g; rebound test: dropped from ≈1,800 mm (underside) it must rebound to 1,035–1,085 mm (underside) — FIBA Official Basketball Rules 2024, Basketball Equipment https://assets.fiba.basketball/image/upload/documents-corporate-fiba-official-rules-2024-official-basketball-rules-and-basketball-equipment.pdf → coefficient of restitution √(1035/1800)…√(1085/1800) = 0.76–0.78 ("about three quarters of its speed", at test speed ≈ 6 m/s only).
+- Drag: wind-tunnel CD of basketballs falls from 0.5–0.55 at low speed to ≈0.3–0.4 above ~5–6 m/s (tested to 17 m/s) — Zhang, Zhu, Li & Hong 2026, iScience 29:115873 https://pmc.ncbi.nlm.nih.gov/articles/PMC13429921/ . Model: 600 g, 760 mm circumference (d = 24.2 cm), non-spinning, CD 0.35 → Vt 24.4 m/s at sea level (CD 0.30–0.40 → 82–95 km/h).
+- Sim (pipeline/sim.py, std atmosphere, 828 m): 89.4 km/h at 6 s, peak 90.7 km/h at ~8 s, impact 88 km/h after 35.0 s.
+- Golf ball from the same height: 165 km/h (golf episode sim); 600 g / 45.93 g ≈ 13×; 165/88 ≈ 1.9 ("almost twice as fast").
+- 2016: ball dropped 180.968 m from Mauvoisin Dam (Switzerland) into a hoop, verified by Guinness at the time — The New Daily https://www.thenewdaily.com.au/sport/basketball/2016/11/25/crazy-shot-australian-breaks-world-record-180m-basket . Group not named. Our sim for 181 m (same model, no spin): 87.9 km/h at the bottom (9.1 s) → same speed as from 828 m. Real shot's spin/throw not modelled.
+- Bounce animation is illustrative only (no bounce height claimed; restitution at 88 km/h is not measured here).

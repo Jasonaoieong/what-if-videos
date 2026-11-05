@@ -1,0 +1,197 @@
+{
+ "id": "dayyear",
+ "engine": "spin",
+ "spin_mode": "slow",
+ "morph_sign": 0,
+ "title": "WHAT IF ONE DAY LASTED A WHOLE YEAR?",
+ "hook_text": "WHAT IF 1 DAY\nLASTED A YEAR?",
+ "hook_em": "A YEAR?",
+ "foot": "SIMULATION · STYLISED GLOBE · NOT TO SCALE IN TIME",
+ "counter": {
+  "label": "HOURS IN ONE DAY",
+  "unit": "h",
+  "from": 24,
+  "to": 8766
+ },
+ "display": [
+  [
+   "Six months",
+   "6 months"
+  ],
+  [
+   "six months",
+   "6 months"
+  ],
+  [
+   "a hundred and twenty-seven degrees",
+   "127 °C"
+  ],
+  [
+   "minus a hundred and seventy-three",
+   "−173 °C"
+  ],
+  [
+   "two hundred and forty-three days",
+   "243 days"
+  ],
+  [
+   "once a year",
+   "once a year"
+  ],
+  [
+   "three hundred and sixty-five days",
+   "365 days"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "space",
+   "dayH": 24,
+   "heading": "1 DAY = 1 YEAR",
+   "text": "What if one day on Earth lasted a whole year?",
+   "sfx": [
+    "hit_open"
+   ],
+   "event": "Hook: spin winds down.",
+   "counter": {
+    "label": "HOURS IN ONE DAY",
+    "unit": "h",
+    "from": 24,
+    "to": 8766,
+    "ease": "out"
+   }
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "camera": "oceans",
+   "dayH": 8766,
+   "heading": "BARELY TURNING",
+   "text": "Earth would barely turn. Sunrise to sunrise: three hundred and sixty-five days.",
+   "sfx": [
+    "riser_short"
+   ],
+   "event": "Solar day = 1 year.",
+   "counter": {
+    "label": "DAYS, SUNRISE TO SUNRISE",
+    "unit": "",
+    "from": 1,
+    "to": 365
+   }
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "climax",
+   "camera": "day",
+   "dayH": 8766,
+   "heading": "6 MONTHS OF SUN",
+   "text": "Six months of daylight. Then six months of night.",
+   "sfx": [
+    "bass_hit"
+   ],
+   "event": "Half a year each.",
+   "counter": {
+    "label": "HOURS OF DAYLIGHT",
+    "unit": "h",
+    "from": 0,
+    "to": 4383
+   }
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "escalate",
+   "camera": "tilt",
+   "dayH": 8766,
+   "heading": "BAKE · FREEZE",
+   "text": "One side bakes for months on end. The other freezes in the dark.",
+   "sfx": [
+    "rumble_low",
+    "ice_crackle"
+   ],
+   "event": "Qualitative.",
+   "counter": {
+    "label": "DAYS IN THE DARK",
+    "unit": "",
+    "from": 0,
+    "to": 183
+   }
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "reveal",
+   "camera": "space",
+   "dayH": 8766,
+   "heading": "LIKE THE MOON",
+   "text": "The Moon's day lasts about a month: a hundred and twenty-seven degrees in the Sun, minus a hundred and seventy-three in the dark.",
+   "sfx": [
+    "number_hit"
+   ],
+   "event": "NASA Moon facts.",
+   "counter": {
+    "label": "MOON IN FULL SUN",
+    "unit": "°C",
+    "from": 0,
+    "to": 127
+   },
+   "fact": {
+    "title": "MOON · NASA",
+    "value": "127 °C sun · −173 °C dark"
+   }
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "reveal",
+   "camera": "latitude",
+   "dayH": 8766,
+   "heading": "IT ALREADY HAPPENS",
+   "text": "But part of Earth already lives like this. At the North Pole, the Sun rises once a year.",
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "event": "Britannica: day and night ~6 months each at the poles.",
+   "counter": {
+    "label": "SUNRISES PER YEAR",
+    "unit": "",
+    "from": 365,
+    "to": 1
+   },
+   "fact": {
+    "title": "NORTH POLE",
+    "value": "≈ 6 months day · 6 months night"
+   }
+  },
+  {
+   "id": "seg07",
+   "scene": 7,
+   "mood": "ending",
+   "camera": "ending",
+   "dayH": 8766,
+   "heading": "VENUS DOES IT",
+   "text": "And Venus spins so slowly, one turn takes two hundred and forty-three days. Longer than its whole year.",
+   "sfx": [
+    "drone_resolve",
+    "hit_final"
+   ],
+   "event": "NASA NSSDC Venus fact sheet.",
+   "counter": {
+    "label": "VENUS: DAYS PER SPIN",
+    "unit": "",
+    "from": 0,
+    "to": 243
+   },
+   "fact": {
+    "title": "VENUS · NASA",
+    "value": "1 spin 243 d · 1 year 225 d"
+   }
+  }
+ ]
+}

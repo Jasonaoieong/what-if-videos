@@ -1,0 +1,201 @@
+{
+ "id": "drain",
+ "engine": "spin",
+ "spin_mode": "normal",
+ "morph_sign": 0,
+ "drain": true,
+ "readout": "none",
+ "water_ball": true,
+ "title": "WHAT IF EARTH'S OCEANS DRAINED?",
+ "hook_text": "WHAT IF THE\nOCEANS DRAINED?",
+ "hook_em": "DRAINED?",
+ "foot": "SIMULATION · STYLISED GLOBE · NOT REAL GEOGRAPHY",
+ "counter": {
+  "label": "SEA LEVEL DROP",
+  "unit": "m",
+  "from": 0,
+  "to": 0
+ },
+ "display": [
+  [
+   "three thousand six hundred and eighty-two meters",
+   "3,682 m"
+  ],
+  [
+   "sixty-five thousand kilometers",
+   "65,000 km"
+  ],
+  [
+   "ten thousand nine hundred and thirty-five meters",
+   "10,935 m"
+  ],
+  [
+   "ten thousand two hundred meters",
+   "10,200 m"
+  ],
+  [
+   "less than a third",
+   "< ⅓"
+  ],
+  [
+   "fourteen hundred kilometers",
+   "1,400 km"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "space",
+   "heading": "PULL THE PLUG",
+   "text": "What if someone pulled the plug on every ocean on Earth?",
+   "sfx": [
+    "hit_open"
+   ],
+   "event": "Hook.",
+   "counter": {
+    "label": "SEA LEVEL DROP",
+    "unit": "m",
+    "from": 0,
+    "to": 0
+   }
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "escalate",
+   "camera": "oceans",
+   "heading": "THE SEA DROPS",
+   "text": "The water starts to fall. On average, it's three thousand six hundred and eighty-two meters deep.",
+   "sfx": [
+    "riser_long",
+    "wide_atmos"
+   ],
+   "event": "NOAA average depth 3,682 m.",
+   "counter": {
+    "label": "SEA LEVEL DROP",
+    "unit": "m",
+    "from": 0,
+    "to": 3682
+   },
+   "fact": {
+    "title": "AVERAGE OCEAN DEPTH",
+    "value": "3,682 m"
+   }
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "reveal",
+   "camera": "orbit",
+   "heading": "HIDDEN MOUNTAINS",
+   "text": "Underneath is the longest mountain range on Earth. Nearly sixty-five thousand kilometers of volcanoes.",
+   "sfx": [
+    "whoosh",
+    "rumble_low"
+   ],
+   "event": "NOAA mid-ocean ridge ~65,000 km, >90% underwater.",
+   "counter": {
+    "label": "RIDGE LENGTH",
+    "unit": "km",
+    "from": 0,
+    "to": 65000
+   },
+   "fact": {
+    "title": "MID-OCEAN RIDGE",
+    "value": "≈ 65,000 km · 90% underwater"
+   }
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "climax",
+   "camera": "space",
+   "heading": "DEEPER THAN EVEREST",
+   "text": "In the Pacific, a trench drops ten thousand nine hundred and thirty-five meters. Everest fits inside.",
+   "sfx": [
+    "bass_hit"
+   ],
+   "event": "NOAA Challenger Deep 10,935 m; Everest 8,849 m.",
+   "counter": {
+    "label": "TRENCH DEPTH",
+    "unit": "m",
+    "from": 0,
+    "to": 10935
+   },
+   "fact": {
+    "title": "CHALLENGER DEEP",
+    "value": "10,935 m · Everest 8,849 m"
+   }
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "reveal",
+   "camera": "tilt",
+   "heading": "THE REAL TALLEST",
+   "text": "And the tallest mountain isn't Everest. From the seafloor, Mauna Kea rises ten thousand two hundred meters.",
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "event": "Guinness: Mauna Kea ≈10,205 m base to peak, 4,205 m above sea level.",
+   "counter": {
+    "label": "MAUNA KEA, BASE TO PEAK",
+    "unit": "m",
+    "from": 0,
+    "to": 10205
+   },
+   "fact": {
+    "title": "ABOVE SEA LEVEL",
+    "value": "only 4,205 m"
+   }
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "explain",
+   "camera": "orbit",
+   "heading": "STILL UNMAPPED",
+   "text": "Most of this landscape has never been mapped in detail. Less than a third.",
+   "sfx": [
+    "number_hit"
+   ],
+   "event": "Seabed 2030: 27.3% mapped (June 2025).",
+   "counter": {
+    "label": "SEAFLOOR MAPPED",
+    "unit": "%",
+    "from": 0,
+    "to": 27
+   },
+   "fact": {
+    "title": "SEABED 2030 · JUNE 2025",
+    "value": "27.3% mapped"
+   }
+  },
+  {
+   "id": "seg07",
+   "scene": 7,
+   "mood": "ending",
+   "camera": "ending",
+   "heading": "ALL THE WATER",
+   "text": "And all of Earth's water, rolled into one ball? It's less than fourteen hundred kilometers wide.",
+   "sfx": [
+    "drone_resolve",
+    "hit_final"
+   ],
+   "event": "USGS: sphere ≈ 860 mi (1,384 km) diameter, 1.386 billion km³.",
+   "counter": {
+    "label": "BALL OF ALL WATER",
+    "unit": "km",
+    "from": 0,
+    "to": 1384
+   },
+   "fact": {
+    "title": "ALL EARTH'S WATER",
+    "value": "≈ 1,384 km wide · USGS"
+   }
+  }
+ ]
+}

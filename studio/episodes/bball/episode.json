@@ -1,0 +1,226 @@
+{
+ "id": "bball",
+ "engine": "penny",
+ "object": {
+  "type": "bball"
+ },
+ "title": "WHAT IF YOU DROPPED A BASKETBALL FROM THE BURJ KHALIFA?",
+ "hook_text": "A BASKETBALL\nFROM 828 M",
+ "hook_em": "BASKETBALL",
+ "marker_label": "BASKETBALL",
+ "danger_h": 300,
+ "vmax": 30,
+ "foot": "SIMULATION · TIME COMPRESSED · STANDARD ATMOSPHERE",
+ "counter": {
+  "label": "ALTITUDE",
+  "field": "h",
+  "unit": "m",
+  "ticks": {
+   "step": 10,
+   "major": 100,
+   "px": 1.4,
+   "max": 900
+  }
+ },
+ "display": [
+  [
+   "Six hundred grams",
+   "600 g"
+  ],
+  [
+   "six seconds",
+   "6 seconds"
+  ],
+  [
+   "ninety kilometers per hour",
+   "90 km/h"
+  ],
+  [
+   "thirteen times",
+   "13×"
+  ],
+  [
+   "Thirty-five seconds",
+   "35 seconds"
+  ],
+  [
+   "three quarters",
+   "¾"
+  ],
+  [
+   "a hundred and eighty-one meters",
+   "181 m"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "hook",
+   "heading": "828 M · ONE BASKETBALL",
+   "text": "This basketball is about to fall from the top of the tallest building on Earth.",
+   "sfx": [
+    "hit_open"
+   ],
+   "event": "Burj Khalifa 828 m.",
+   "sim": [
+    0,
+    1.2
+   ]
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "camera": "wide",
+   "heading": "BIG + HOLLOW",
+   "text": "Six hundred grams, but big and hollow, so the air pushes back hard.",
+   "sfx": [
+    "wide_atmos"
+   ],
+   "event": "FIBA size 7: 580–620 g, 750–770 mm.",
+   "sim": [
+    1.2,
+    3.5
+   ],
+   "fact": {
+    "title": "OUR BALL · SIZE 7",
+    "value": "≈ 600 g · 24 cm"
+   }
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "escalate",
+   "camera": "flutter",
+   "heading": "TOP SPEED, FAST",
+   "text": "Just six seconds in, it stops speeding up. About ninety kilometers per hour.",
+   "sfx": [
+    "riser_short",
+    "doppler"
+   ],
+   "event": "Sim 89.4 km/h at 6 s, peak 90.7.",
+   "sim": [
+    3.5,
+    8
+   ],
+   "fact": {
+    "title": "TOP SPEED",
+    "value": "≈ 90 km/h"
+   }
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "reveal",
+   "camera": "facade",
+   "heading": "THE TWIST",
+   "text": "A golf ball, thirteen times lighter, would fall almost twice as fast.",
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "event": "Golf episode sim: 165 km/h; 600/45.9 = 13.",
+   "sim": [
+    8,
+    14
+   ],
+   "fact": {
+    "title": "GOLF BALL, SAME DROP",
+    "value": "≈ 165 km/h"
+   }
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "climax",
+   "camera": "topdown",
+   "heading": "IMPACT IN SECONDS",
+   "text": "Thirty-five seconds after letting go.",
+   "sfx": [
+    "riser_long"
+   ],
+   "event": "Total 35.0 s.",
+   "sim": [
+    14,
+    31
+   ]
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "rush",
+   "heading": "",
+   "text": "Would it bounce?",
+   "sfx": [
+    "heartbeat"
+   ],
+   "event": "Approach.",
+   "sim": [
+    31,
+    34.4
+   ]
+  },
+  {
+   "id": "seg07",
+   "scene": 7,
+   "mood": "climax",
+   "camera": "impact_cut",
+   "heading": "",
+   "text": "",
+   "sfx": [
+    "silence",
+    "impact_huge",
+    "debris"
+   ],
+   "event": "Impact 88 km/h.",
+   "sim": [
+    34.4,
+    34.99
+   ],
+   "silent_duration": 1.3
+  },
+  {
+   "id": "seg08",
+   "scene": 8,
+   "mood": "ending",
+   "camera": "land",
+   "heading": "BOUNCE",
+   "text": "Yes. At gym speeds, a regulation ball keeps about three quarters of its speed in a bounce.",
+   "sfx": [
+    "drone_resolve"
+   ],
+   "event": "FIBA rebound test → e ≈ 0.76–0.78.",
+   "sim": [
+    34.99,
+    34.99
+   ],
+   "fact": {
+    "title": "FIBA BOUNCE TEST",
+    "value": "1.8 m drop → 1.04–1.09 m"
+   }
+  },
+  {
+   "id": "seg09",
+   "scene": 9,
+   "mood": "ending",
+   "camera": "rise",
+   "heading": "REAL · 2016",
+   "text": "In 2016, a ball dropped a hundred and eighty-one meters from a dam swished through a hoop. Our model says: just as fast.",
+   "sfx": [
+    "hit_final"
+   ],
+   "event": "Mauvoisin Dam 180.968 m (Guinness 2016); sim from 181 m: 87.9 km/h.",
+   "sim": [
+    34.99,
+    34.99
+   ],
+   "fact": {
+    "title": "DAM DROP · 181 M",
+    "value": "≈ 88 km/h, same as the Burj"
+   }
+  }
+ ]
+}

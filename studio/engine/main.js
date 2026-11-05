@@ -260,6 +260,7 @@ window.renderAt = (t) => {
   }
   const { st, shot, seg, P } = updateWorld(t);
   if (MB > 1) renderer.render(mbQuad, mbCam); else renderer.render(scene, camera);
+  if (tl.foot) st.foot = tl.foot;
   updateHud(t, tl, st, seg);
   const cp = camera.position;
   return { t, simT: +st.simT.toFixed(2), h: +st.h.toFixed(1), v: +st.v.toFixed(2), shot: shot.camera,

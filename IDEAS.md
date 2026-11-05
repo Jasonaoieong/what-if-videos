@@ -29,11 +29,11 @@
 - [x] How fast does a golf ball fall from the Burj? (penny) → `golf`
 
 ## Nov 5
-- [ ] What if Earth's oceans drained? (spin, oceans morph)
-- [ ] A water balloon from 828 m (penny, splash)
-- [ ] Terminal velocity of a human in thin vs thick air (main)
-- [ ] What if a day lasted a year? (spin, day)
-- [ ] A basketball from the Burj Khalifa: would it bounce? (penny)
+- [x] What if Earth's oceans drained? (spin, oceans morph) → `drain` (new sea-level drain + seafloor/ridges + USGS water ball in spin engine)
+- [x] A water balloon from 828 m (penny, splash) → `balloon` (new balloon object + water splash; raindrop comparison)
+- [x] Terminal velocity of a human in thin vs thick air (main) → `thickair`: reframed as "what if air were 10× thicker" (sim.py rho_mul) + Venus, because thin-air falling from altitude was already covered by `fall`/`space`
+- [x] What if a day lasted a year? (spin, day) → `dayyear` (spin_mode slow; Moon, North Pole, Venus facts)
+- [x] A basketball from the Burj Khalifa: would it bounce? (penny) → `bball` (new basketball object + bounce; FIBA rebound test, measured basketball Cd)
 
 ## Nov 6
 - [ ] What if you fell from the cruising height of a hot-air balloon (main)
