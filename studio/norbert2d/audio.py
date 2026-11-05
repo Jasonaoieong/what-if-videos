@@ -234,6 +234,38 @@ def crowd(sec=5.0):
     return x * am * 0.18 * np.clip((sec - t_(sec)) * 2, 0, 1)
 
 
+def braam():
+    """Heavy cinematic horn hit."""
+    from scipy.signal import butter, sosfilt
+    t = t_(3.0)
+    x = sum(np.sign(np.sin(2 * np.pi * f * t + d)) for f, d in ((55, 0), (55.4, 1), (82.4, 2), (110.6, 3)))
+    sweep = np.linspace(1800, 300, len(t))
+    out = np.zeros_like(x)
+    for i in range(0, len(t), 4800):
+        seg = slice(i, i + 4800)
+        out[seg] = sosfilt(butter(2, sweep[i], "low", fs=SR, output="sos"), x)[seg]
+    return out * env(len(t), 0.02, 1.0) * 0.35
+
+
+def score(sec, bpm=96):
+    """Tension score: sub pulse on every beat, ticking hats, a dark pad that swells."""
+    from scipy.signal import butter, sosfilt
+    buf = drone(sec) * 0.6
+    beat = 60 / bpm
+    for i in range(int(sec / beat)):
+        at = i * beat
+        tt = t_(0.35)
+        add(buf, np.sin(2 * np.pi * (52 - 10 * tt) * tt) * env(len(tt), 0.003, 0.12) * 0.8, at)
+        hh = rng.standard_normal(int(0.03 * SR))
+        hh = sosfilt(butter(2, 6000, "high", fs=SR, output="sos"), hh) * env(len(hh), 0.001, 0.01)
+        add(buf, hh * 0.12, at + beat / 2)
+        if i % 4 == 3:
+            add(buf, hh * 0.08, at + beat * 0.75)
+    t = t_(sec)
+    pad = sum(np.sin(2 * np.pi * f * t) for f in (110, 130.8, 164.8)) * (0.5 + 0.5 * np.sin(2 * np.pi * t / 16)) * 0.06
+    return buf + pad
+
+
 def buzz(sec):
     t = t_(sec)
     f = 210 + 25 * np.sin(2 * np.pi * 0.7 * t) + 15 * np.sin(2 * np.pi * 1.9 * t)

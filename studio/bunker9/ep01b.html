@@ -1,0 +1,232 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face { font-family: Anton; src: url(fonts/Anton.ttf); }
+@font-face { font-family: SpecialElite; src: url(fonts/SpecialElite.ttf); }
+html, body { margin: 0; background: #000; overflow: hidden; }
+svg { display: block; }
+</style></head>
+<body>
+<svg id="s" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <radialGradient id="holeGrad"><stop offset="0" stop-color="#000"/><stop offset="0.55" stop-color="#000" stop-opacity="0.85"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <filter id="coneblur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>
+    <filter id="fogblur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="30"/></filter>
+    <filter id="bloomblur" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="40"/></filter>
+    <filter id="motion" x="-20%" y="-5%" width="140%" height="110%"><feGaussianBlur id="motionb" stdDeviation="0 0"/></filter>
+    <filter id="rimWarm" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="-5" dy="-3" stdDeviation="0.5" flood-color="#FFB25A" flood-opacity="0.95"/></filter>
+    <filter id="rimCool" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="5" dy="-3" stdDeviation="0.5" flood-color="#7FD3E6" flood-opacity="0.8"/></filter>
+    <filter id="rimRed" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="-5" dy="-2" stdDeviation="0.5" flood-color="#FF4A3D" flood-opacity="0.9"/></filter>
+    <filter id="grain"><feTurbulence id="turb" type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="1"/><feColorMatrix type="saturate" values="0"/></filter>
+    <filter id="mono"><feColorMatrix type="saturate" values="0.15"/></filter>
+    <radialGradient id="vig" cx="50%" cy="50%" r="75%"><stop offset="0.5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.9"/></radialGradient>
+  </defs>
+  <g id="world"></g>
+  <rect width="1080" height="1920" fill="url(#vig)"/>
+  <rect width="1080" height="1920" filter="url(#grain)" opacity="0.09"/>
+  <g id="ui"></g>
+</svg>
+<script src="stick.js"></script>
+<script src="set.js"></script>
+<script>
+const B = window.Bunker, ST = window.Stick;
+const ease = (x) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
+const easeIO = (x) => { x = Math.min(1, Math.max(0, x)); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const lerp = (a, b, k) => a + (b - a) * k;
+const between = (t, a, b) => t >= a && t < b;
+const pop = (t, t0, d = 0.16) => { const x = (t - t0) / d; if (x < 0) return 0; if (x > 1) return 1; return ease(x) + Math.sin(x * Math.PI) * 0.15; };
+function cam(cx, cy, z, rot = 0, sh = 0) {
+  const sx = sh ? Math.sin(T * 47) * sh : 0, sy = sh ? Math.cos(T * 39) * sh : 0;
+  return `translate(${(540 + sx).toFixed(1)} ${(960 + sy).toFixed(1)}) rotate(${rot.toFixed(2)}) scale(${z.toFixed(4)}) translate(${(-cx).toFixed(1)} ${(-cy).toFixed(1)})`;
+}
+let T = 0;
+function mouth(t, w) { const m = (EP.mouth || {})[w] || [], i = Math.floor(t * EP.fps); return i >= 0 && i < m.length ? m[i] : 0; }
+function blink(t, off = 0) { const ph = (t + off) % 3.7; return Math.max(0, 1 - Math.abs(ph - 3.5) / 0.07); }
+function flick(t, amt = 0.08) { return (Math.sin(t * 37) * Math.sin(t * 13.3) > 0.82 ? amt * 3 : 0) + Math.sin(t * 61) * amt * 0.2; }
+function sceneAt(t) {
+  const ls = EP.lines;
+  for (let i = ls.length - 1; i >= 0; i--) { const t0 = i === 0 ? 0 : ls[i].t0 - 0.1; if (t >= t0) return { i, line: ls[i], t0, t1: i + 1 < ls.length ? ls[i + 1].t0 - 0.1 : EP.dur }; }
+}
+const P = (o, t) => ST.svg(Object.assign({ t, blink: blink(t, (o.x || 0) * 0.01) }, o));
+const rim = (svg, kind = 'Warm') => `<g filter="url(#rim${kind})">${svg}</g>`;
+const YOU = (o, t) => P(Object.assign({ who: 'milo', talk: 0 }, o), t);
+
+const SCENES = {
+  alert(t, k, tl) {
+    let s = `<g transform="translate(540 960) scale(${lerp(1.12, 1.0, ease(tl / 0.5)).toFixed(3)}) translate(-540 -960)">` + B.alert(t, k) + `</g>`;
+    return s + B.bloom(540, 700, 380, '#FF3B30', 0.25 + 0.2 * Math.sin(t * 12));
+  },
+  street(t, k, tl) {
+    const mx = lerp(140, 820, k);
+    let s = `<g transform="${cam(lerp(340, 820, k), 1040, 1.05, -5, 3)}">` + B.city(t, { missile: lerp(0.15, 0.62, k) });
+    s += B.shaft(900, 300, 260, 1400, 22, '#FFB070', 0.14);
+    const crowd = [['npc1', 1500, -1, 0.95], ['npc2', 1800, -1, 0.9], ['npc3', -300, 1, 1.0], ['npc4', 1250, -1, 0.85], ['npc2', 250, 1, 0.8], ['npc1', 1950, -1, 0.9]];
+    crowd.forEach(([w, x0, d, sc], i) => { s += rim(P({ who: w, x: x0 + d * tl * 520, y: 1480 + (i % 3) * 30, scale: sc, expr: 'terror', walk: tl * 3.2 + i * 0.3, flip: d < 0, armL: 2.4, armR: 2.6, bendL: 0.4, bendR: 0.4 }, t)); });
+    s += rim(P({ who: 'mae', x: mx - 150, y: 1570, scale: 0.62, expr: 'terror', walk: tl * 3.6, armR: 2.0, bendR: -0.2 }, t));
+    s += rim(YOU({ x: mx, y: 1570, expr: 'terror', walk: tl * 3.2, armL: 1.25, bendL: 0.3, lean: 9 }, t));
+    s += B.embers(t, 50) + B.grade('#FF7A3A', 0.22) + B.dark(0.2, [], [], '#2A0A05');
+    return s + `</g>`;
+  },
+  garage(t, k, tl) {
+    let s = `<g transform="${cam(lerp(560, 640, k), 1080, lerp(1.0, 1.12, k), 3, 2)}">` + B.garage(t, { open: 1 });
+    s += B.shaft(630, 700, 260, 1000, 0, '#FFE2A0', 0.22) + B.bloom(630, 1000, 360, '#FFE2A0', 0.45);
+    [['npc3', 120], ['npc1', 300], ['npc4', -40], ['npc2', 420]].forEach(([w, x0], i) => { const x = x0 + tl * 340; if (x < 640) s += rim(P({ who: w, x, y: 1500, scale: 0.9, expr: 'terror', walk: tl * 3.2 + i, armL: 2.3, armR: 2.3 }, t)); });
+    s += rim(P({ who: 'hal', x: 930, y: 1500, expr: 'stern', armR: 2.5 + Math.sin(t * 9) * 0.3, bendR: -0.3, flip: true, talk: mouth(t, 'HAL') }, t));
+    s += rim(P({ who: 'mae', x: lerp(-80, 240, k) - 140, y: 1610, scale: 0.68, expr: 'terror', walk: tl * 3.6, armR: 2.0, bendR: -0.2 }, t));
+    s += rim(YOU({ x: lerp(-80, 240, k), y: 1610, expr: 'terror', walk: tl * 3.2, armL: 1.25, bendL: 0.3, lean: 7 }, t));
+    s += B.dark(0.42, [{ x: 630, y: 1100, r: 640 }], [], '#05050A') + B.grade('#3A6A8A', 0.18);
+    return s + `</g>`;
+  },
+  separation(t, k, tl) {
+    const pull = ease((tl - 0.2) / 0.8);
+    let s = `<g transform="${cam(560, 1080, 1.55, 7, 5)}">` + B.garage(t, { open: 1 }) + B.bloom(630, 1000, 340, '#FFE2A0', 0.4);
+    for (let i = 0; i < 4; i++) s += P({ who: ['npc1', 'npc2', 'npc4', 'npc3'][i], x: 260 + i * 180 + Math.sin(t * 7 + i) * 24, y: 1470, scale: 0.85, expr: 'terror', walk: tl * 3 + i, armL: 2.2, armR: 2.2 }, t);
+    s += rim(YOU({ x: 780, y: 1570, expr: 'terror', armL: lerp(1.3, 1.7, pull), bendL: 0.1, lean: -8 }, t));
+    s += rim(P({ who: 'mae', x: lerp(600, 230, pull), y: 1610, scale: 0.72, expr: 'terror', armR: 2.0, bendR: -0.1, talk: mouth(t, 'MAE') }, t));
+    s += B.dark(0.42 + flick(t), [{ x: 600, y: 1060, r: 560 }], [], '#05050A');
+    return s + `</g>`;
+  },
+  slip(t, k, tl) {
+    // Extreme close-up: two hands sliding apart, slow motion, crowd blurred behind.
+    const gap = easeIO(k) * 220;
+    let s = `<rect x="-100" y="-100" width="1280" height="2120" fill="#1A1A20"/>`;
+    s += `<g filter="url(#fogblur)" opacity="0.6">` + B.garage(t, { open: 1 }) + `</g>`;
+    s += B.bloom(540, 700, 500, '#FFE2A0', 0.35);
+    const hand = (x, y, r, col, flip) => `<g transform="translate(${x.toFixed(1)} ${y}) scale(${flip ? -1 : 1} 1)">` +
+      `<path d="M -600 30 L -60 0 L -60 60 L -600 90 Z" fill="${col}" stroke="#0B0B0D" stroke-width="8"/>` +
+      `<circle cx="0" cy="30" r="${r}" fill="#EFE6D6" stroke="#0B0B0D" stroke-width="8"/>` +
+      [-1, 0, 1, 2].map((i) => `<path d="M 10 ${30 + i * 18} q ${r * 0.9} ${-6 + i * 4} ${r * 1.2} ${6 + i * 6}" stroke="#0B0B0D" stroke-width="18" fill="none" stroke-linecap="round"/><path d="M 10 ${30 + i * 18} q ${r * 0.9} ${-6 + i * 4} ${r * 1.2} ${6 + i * 6}" stroke="#EFE6D6" stroke-width="10" fill="none" stroke-linecap="round"/>`).join('') + `</g>`;
+    s += `<g transform="translate(540 960) scale(1.8) translate(-540 -960)">` + hand(480 - gap, 940, 70, '#E9B43A', false) + hand(600 + gap, 980, 46, '#B5A7E0', true) + `</g>`;
+    s += B.grade('#3A6A8A', 0.2);
+    return `<g transform="${cam(540, 960, lerp(1.0, 1.08, k), 0, 2)}">${s}</g>`;
+  },
+  slam(t, k, tl) {
+    const close = ease(tl / 0.9);
+    let s = `<g transform="${cam(560, 1110, lerp(1.2, 1.35, k), 0, tl > 0.85 && tl < 1.2 ? 14 : 0)}">` + B.garage(t, { open: 1 - close });
+    s += B.bloom(630, 1100, 420 * (1 - close) + 40, '#FFE2A0', 0.4);
+    s += rim(P({ who: 'mae', x: 300, y: 1570, scale: 0.74, expr: 'sad', armR: 1.9, bendR: -0.2, look: { x: 1, y: -0.3 } }, t), 'Cool');
+    s += B.dark(0.6, [{ x: 630, y: 1100, r: 520 * (1 - close) + 140 }], [], '#05050A') + B.grade('#2A4A6A', 0.25);
+    return s + `</g>`;
+  },
+  blast(t, k, tl) {
+    let s = `<g transform="${cam(540, 1000, 1.0 + tl * 0.03, 0, Math.max(0, 16 - tl * 6))}">` + B.city(t, { missile: 1 }) + B.mushroom(t, 760, 1300, ease((tl - 0.3) / 2.2));
+    s += B.embers(t * 1.5, 80) + B.grade('#FF5A1A', 0.3) + `</g>`;
+    return s + `<rect width="1080" height="1920" fill="#FFFFFF" opacity="${Math.max(0, 1 - tl / 0.9).toFixed(2)}"/>`;
+  },
+  skip(t, k, tl) {
+    if (tl < 1.6) {
+      const a = pop(t, sceneAt(t).t0 + 0.05, 0.3);
+      return `<rect width="1080" height="1920" fill="#000"/><g transform="translate(540 900) scale(${a.toFixed(3)})"><text x="0" y="0" text-anchor="middle" font-family="SpecialElite" font-size="118" fill="#D2443A">DON'T LET</text><text x="0" y="128" text-anchor="middle" font-family="SpecialElite" font-size="118" fill="#D2443A">THEM IN</text></g>`;
+    }
+    return `<rect width="1080" height="1920" fill="#000"/><text x="540" y="980" text-anchor="middle" font-family="SpecialElite" font-size="96" fill="#E4E1DA" opacity="${Math.min(1, (tl - 1.6) * 2).toFixed(2)}">19 DAYS LATER</text>`;
+  },
+  radio(t, k, tl) {
+    if (between(k, 0.3, 0.78)) {
+      // cutaway: the infected in the ruined city at night
+      let s = `<g transform="${cam(540, 1040, 1.1, -3, 1)}"><g filter="url(#mono)">` + B.city(t, { missile: 0 }) + `</g>`;
+      s += `<rect x="-800" y="-400" width="3000" height="1900" fill="#0A1A14" opacity="0.65"/>`;
+      s += B.zombie(t, 220, 1480, 0.9, 0) + B.zombie(t, 560, 1520, 1.05, 1.3, { cloth: '#3A4A5A' }) + B.zombie(t, 860, 1470, 0.85, 2.1, { flip: true, cloth: '#5A3A3A' });
+      s += B.fog(t, 1350, 8, 1600) + B.grade('#2AFF9A', 0.08, 'screen') + `</g>`;
+      return s;
+    }
+    let s = `<g transform="${cam(540, 1150, lerp(1.6, 1.9, k))}">` + B.bunkroom(t) + B.radioTable(t);
+    s += B.bloom(500, 1180, 160, '#F2C76B', 0.5);
+    s += B.dark(0.82 + flick(t), [{ x: 540, y: 1180, r: 360 }]) + B.grade('#2A6A7A', 0.15);
+    return s + `</g>`;
+  },
+  food(t, k, tl) {
+    let s = `<g transform="${cam(lerp(540, 560, k), 1100, lerp(1.25, 1.4, k))}">` + B.bunkroom(t) + B.radioTable(t);
+    const cast = [['hal', 120, 'stern'], ['june', 330, 'stern'], ['priya', 760, 'scared'], ['dante', 960, 'angry']];
+    cast.forEach(([w, x, e]) => { s += rim(P({ who: w, x, y: 1500, expr: e, flip: x > 540, look: { x: x > 540 ? -1 : 1, y: 0.4 } }, t), 'Cool'); });
+    s += rim(P({ who: 'teddy', x: 1140, y: 1500, scale: 0.72, expr: 'blank', prop: 'rabbit', armR: 0.7, bendR: 0.9, flip: true }, t), 'Cool');
+    s += B.bloom(540, 1150, 300, '#F2C76B', 0.4);
+    s += B.dark(0.7 + flick(t), [{ x: 540, y: 1160, r: 560 }]) + B.grade('#2A6A7A', 0.15);
+    return s + `</g>`;
+  },
+  knock(t, k, tl) {
+    const kn = [0.0, 0.32, 0.64, 1.6, 1.92, 2.24].some((a) => between(tl, a, a + 0.1)) ? 1 : 0;
+    let s = `<rect x="-200" y="-200" width="1480" height="2320" fill="#000"/>`;
+    if (kn) s += `<g opacity="0.45" transform="${cam(620, 1050, 1.2, 0, 10)}">` + B.concrete(-400, 1600) + B.door(t, { knock: 1 }) + B.rule(t, 0.6) + `</g>`;
+    return s;
+  },
+  voice(t, k, tl) {
+    let s = `<g transform="${cam(620, 1070, lerp(2.4, 3.0, k), 0, 1)}">` + B.concrete(-400, 1600) + B.door(t, {});
+    for (let i = 0; i < 4; i++) {
+      const ph = (tl * 0.5 + i / 4) % 1;
+      s += `<ellipse cx="${(600 + i * 12)}" cy="${(1070 - ph * 90).toFixed(1)}" rx="${(30 + ph * 60).toFixed(1)}" ry="${(12 + ph * 20).toFixed(1)}" fill="#C9D3DC" opacity="${(0.35 * (1 - ph)).toFixed(2)}" filter="url(#fogblur)"/>`;
+    }
+    s += B.dark(0.55 + flick(t, 0.12), [{ x: 620, y: 1066, r: 300 }]) + B.grade('#3A5A7A', 0.2);
+    return s + `</g>`;
+  },
+  react(t, k, tl) {
+    let s = `<g transform="${cam(lerp(560, 600, k), 980, lerp(1.0, 1.15, k), -2)}">` + B.concrete(-400, 1600) + B.rule(t, 1) + B.door(t, {});
+    s += rim(P({ who: 'hal', x: 140, y: 1500, expr: 'stern', prop: 'flashlight', propRot: -50, armR: 1.9, bendR: 0.1, look: { x: 1, y: 0 } }, t), 'Cool');
+    s += rim(P({ who: 'june', x: 330, y: 1530, expr: 'scared', prop: 'logbook', armR: 0.9, bendR: 0.8, look: { x: 1, y: 0 } }, t), 'Cool');
+    s += rim(YOU({ x: 600, y: 1600, expr: 'scared', prop: 'camcorder', armR: 1.0, bendR: 0.6, look: { x: 0, y: 0 } }, t), 'Cool');
+    s += rim(P({ who: 'priya', x: 920, y: 1530, expr: 'scared', flip: true, look: { x: -1, y: 0 } }, t), 'Cool');
+    s += B.dark(0.8, [{ x: 620, y: 470, r: 360 }, { x: 600, y: 1100, r: 420 }], [{ x: 330, y: 920, a: -1.0, len: 1100, spread: 0.2 }]) + B.grade('#3A5A7A', 0.15);
+    return s + `</g>`;
+  },
+  bolt(t, k, tl) {
+    const bk = 0.55 * ease((tl - 0.5) / 0.6);
+    let s = `<g transform="${cam(lerp(700, 760, k), 1120, lerp(1.6, 1.9, k), 3)}">` + B.concrete(-400, 1600) + B.door(t, { boltK: bk });
+    s += rim(P({ who: 'dante', x: 980, y: 1500, expr: 'angry', armL: lerp(1.4, 1.62, ease((tl - 0.5) / 0.6)), bendL: -0.2, look: { x: -1, y: 0 } }, t), 'Red');
+    s += B.dark(0.6 + flick(t), [{ x: 780, y: 1150, r: 420 }]) + B.grade('#7A1A1A', 0.18);
+    return s + `</g>`;
+  },
+  hand(t, k, tl) {
+    const dur = sceneAt(t).t1 - sceneAt(t).t0;
+    const hk = ease((tl - 0.8) / Math.max(0.6, dur - 2.0));
+    const flash = tl > dur - 0.6;
+    let s = `<g transform="${cam(630, 1180, lerp(2.0, 2.7, ease(k)), 0, flash ? 18 : 1)}">` + B.concrete(-400, 1600) + B.door(t, { boltK: 0.55, slotK: Math.min(1, tl / 0.6) }) + B.hand(t, hk);
+    s += B.dark(0.6 + flick(t, 0.25), [{ x: 640, y: 1200, r: 360 }]) + B.grade('#3A5A7A', 0.2);
+    s += `</g>`;
+    if (flash) s += `<rect x="0" y="0" width="1080" height="1920" fill="${(tl * 20) % 2 < 1 ? '#FFFFFF' : '#7A0000'}"/>`;
+    return s;
+  },
+  vote(t, k, tl) {
+    let s = `<rect width="1080" height="1920" fill="#070708"/><g opacity="0.25">` + B.concrete(-200, 1300) + B.door(t, { boltK: 0.55 }) + `</g><rect width="1080" height="1920" fill="rgba(60,0,0,0.35)"/>`;
+    const t0 = sceneAt(t).t0;
+    const tk = pop(t, t0 + 0.1, 0.3);
+    if (tk) s += `<g transform="translate(540 420) scale(${tk.toFixed(3)})"><text x="0" y="0" text-anchor="middle" font-family="SpecialElite" font-size="78" fill="#D2443A">WHAT DO YOU DO?</text></g>`;
+    [['A', 'GRAB THE HAND'], ['B', 'SLAM THE SLOT SHUT'], ['C', 'ASK WHAT ONLY SHE KNOWS']].forEach(([l, txt], i) => {
+      const c = pop(t, t0 + 0.4 + i * 0.25, 0.22);
+      if (!c) return;
+      s += `<g transform="translate(540 ${640 + i * 230}) scale(${c.toFixed(3)})"><rect x="-470" y="-90" width="940" height="180" rx="10" fill="#141518" stroke="#D2443A" stroke-width="5"/>` +
+        `<text x="-410" y="34" font-family="Anton" font-size="104" fill="#D2443A">${l}</text><text x="-320" y="26" font-family="Anton" font-size="${txt.length > 18 ? 58 : 66}" fill="#EDEAE3">${txt}</text></g>`;
+    });
+    if (tl > 1.4) s += `<text x="540" y="1420" text-anchor="middle" font-family="Anton" font-size="78" fill="#FFFFFF" opacity="${(0.75 + 0.25 * Math.sin(t * 6)).toFixed(2)}">COMMENT A, B OR C 👇</text>`;
+    if (tl > 2.2) s += `<text x="540" y="1520" text-anchor="middle" font-family="SpecialElite" font-size="48" fill="#9A958C">PART 2 · TOMORROW</text>`;
+    return s;
+  },
+};
+
+const STAMP = { street: 'DAY 0 · 6:41 PM', garage: 'DAY 0 · 6:49 PM', separation: 'DAY 0 · 6:52 PM', slam: 'DAY 0 · 6:52 PM', knock: 'NIGHT 19 · 3:04 AM', voice: 'NIGHT 19 · 3:04 AM' };
+const CAPCOL = { NARR: '#F2F2F2', MAE: '#CDB2FF', MAE_LIVE: '#CDB2FF', HAL: '#A8D17E', RADIO: '#FFB86B' };
+
+window.frame = function (t) {
+  T = t;
+  const sc = sceneAt(t), tl = t - sc.t0, k = Math.min(1, tl / Math.max(0.01, sc.t1 - sc.t0));
+  document.getElementById('turb').setAttribute('seed', String(Math.floor(t * 24) % 97));
+  let world = SCENES[sc.line.scene](t, k, tl);
+  // whip-blur on every cut
+  const w = sc.i > 0 ? 1 - ease(tl / 0.18) : 0;
+  document.getElementById('motionb').setAttribute('stdDeviation', `${(w * 36).toFixed(1)} 0`);
+  if (w > 0.02) world = `<g filter="url(#motion)" transform="translate(${(w * 120).toFixed(1)} 0)">${world}</g>`;
+  document.getElementById('world').innerHTML = world;
+  let ui = '';
+  const scn = sc.line.scene;
+  if (STAMP[scn]) ui += `<text x="540" y="230" text-anchor="middle" font-family="SpecialElite" font-size="46" fill="#D8D0C0">${STAMP[scn]}</text>`;
+  const cap = EP.caps.filter((c) => between(t, c.t0, c.t1)).slice(-1)[0];
+  if (cap && scn !== 'vote' && scn !== 'skip') {
+    const g = pop(t, cap.t0, 0.12), col = CAPCOL[cap.who] || '#fff';
+    const name = { MAE: '??? (OUTSIDE)', MAE_LIVE: 'YOUR SISTER', NARR: '', RADIO: 'EMERGENCY BROADCAST' }[cap.who] ?? cap.who;
+    ui += `<g transform="translate(540 1560) scale(${g.toFixed(3)})">`;
+    if (name) ui += `<text x="0" y="-108" text-anchor="middle" font-family="SpecialElite" font-size="38" fill="${col}" opacity="0.9">${name}</text>`;
+    ui += `<text x="0" y="0" text-anchor="middle" font-family="Anton" font-size="${cap.text.length > 15 ? 92 : 112}" fill="${col}" stroke="#000" stroke-width="18" stroke-linejoin="round" paint-order="stroke">${cap.text}</text></g>`;
+  }
+  document.getElementById('ui').innerHTML = ui;
+};
+window.EP = window.EP || { lines: [{ scene: 'street', t0: 0, t1: 4 }], caps: [], mouth: {}, fps: 30, dur: 4 };
+</script>
+</body></html>

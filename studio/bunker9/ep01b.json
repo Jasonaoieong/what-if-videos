@@ -1,0 +1,35 @@
+{
+  "id": "bunker9-ep01b",
+  "page": "ep01b.html",
+  "music": "score",
+  "caption_pops": false,
+  "flies": false,
+  "whoosh": true,
+  "start": 0.5,
+  "voices": {
+    "NARR":     {"voice": "am_fenrir", "speed": 1.02, "pitch": 0.96},
+    "MAE":      {"voice": "af_sky", "speed": 0.92, "pitch": 1.22, "fx": "lowpass=f=1900,aecho=0.8:0.6:45|80:0.35|0.2"},
+    "MAE_LIVE": {"voice": "af_sky", "speed": 1.05, "pitch": 1.22},
+    "HAL":      {"voice": "am_michael", "speed": 1.05, "pitch": 0.9},
+    "RADIO":    {"voice": "am_michael", "speed": 0.98, "pitch": 0.97, "fx": "highpass=f=450,lowpass=f=3200,acrusher=bits=10:mix=0.25"}
+  },
+  "lines": [
+    {"who": "NARR", "text": "Your phone screams at six forty one.", "scene": "alert", "gap": 0.2, "sfx": [["siren", 0.0], ["vibrate", 0.0]]},
+    {"who": "RADIO", "text": "Missile inbound. This is not a drill.", "scene": "alert", "gap": 0.25},
+    {"who": "NARR", "text": "Eleven minutes. You grab your little sister and run.", "scene": "street", "gap": 0.3, "sfx": [["crowd", 0.0]]},
+    {"who": "HAL", "text": "Bunker Nine! This way! Move!", "scene": "garage", "gap": 0.2, "sfx": [["crowd", 0.0]]},
+    {"who": "NARR", "text": "One door. Way too many people.", "scene": "separation", "gap": 0.15},
+    {"who": "MAE_LIVE", "text": "Don't let go!", "scene": "slip", "gap": 0.6},
+    {"who": "NARR", "text": "The door seals. She's still outside.", "scene": "slam", "gap": 0.7, "sfx": [["slam", 0.85]]},
+    {"who": "NARR", "text": "Then the sky turns white.", "scene": "blast", "gap": 2.2, "sfx": [["rumble", 0.0], ["braam", 0.2]]},
+    {"who": "NARR", "text": "", "scene": "skip", "gap": 0.0, "silent": 3.0},
+    {"who": "RADIO", "text": "The infected copy the voices of the people they took. Do not open your doors.", "scene": "radio", "gap": 0.3, "sfx": [["static", 0.0]]},
+    {"who": "NARR", "text": "Four cans of food left. Six of you.", "scene": "food", "gap": 0.7},
+    {"who": "NARR", "text": "Then, at three A.M., something knocks.", "scene": "knock", "gap": 1.4, "sfx": [["knock", 0.0], ["knock", 1.6]]},
+    {"who": "MAE", "text": "It's me. It's cold. Let me in.", "scene": "voice", "gap": 0.5, "sfx": [["heartbeat", 0.0]]},
+    {"who": "NARR", "text": "Everyone turns to you. It's her voice. Exactly her voice.", "scene": "react", "gap": 0.3},
+    {"who": "NARR", "text": "Dante already has his hand on the bolt.", "scene": "bolt", "gap": 0.4, "sfx": [["creak", 0.5]]},
+    {"who": "NARR", "text": "The slot opens. A small hand reaches in. It has seven fingers.", "scene": "hand", "gap": 2.4, "sfx_end": "stinger", "sfx_end_at": 1.8},
+    {"who": "NARR", "text": "Grab the hand. Slam the slot. Or ask what only your sister would know.", "scene": "vote", "gap": 2.4, "sfx": [["braam", 0.0]]}
+  ]
+}

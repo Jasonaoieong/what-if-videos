@@ -28,6 +28,10 @@ def tts(lines, voices, work):
     k = Kokoro(os.path.join(KOKORO, "kokoro-v1.0.onnx"), os.path.join(KOKORO, "voices-v1.0.bin"))
     out = []
     for i, ln in enumerate(lines):
+        if ln.get("silent"):
+            out.append(np.zeros(int(ln["silent"] * SR)))
+            print(f"voice {i} (silent {ln['silent']}s)", flush=True)
+            continue
         v = voices[ln.get("voice_override", ln["who"])]
         a, sr = k.create(ln["text"], voice=v["voice"], speed=v["speed"], lang="en-gb" if v["voice"].startswith("b") else "en-us")
         raw = os.path.join(work, f"l{i}_raw.wav")
@@ -78,6 +82,8 @@ def build(ep_path, out_mp4, stills=None):
     # captions: word groups timed by character share
     caps = []
     for ln in ep["lines"]:
+        if not ln["text"].strip():
+            continue
         gs = chunks(ln["text"].upper())
         total = sum(len(g) for g in gs)
         c = ln["t0"]
@@ -103,7 +109,7 @@ def build(ep_path, out_mp4, stills=None):
         mouths[who] = [round(float(v), 3) for v in np.where(m > 0.12, m, 0)]
 
     # sound design
-    music = (audio.drone(dur + 1) if ep.get("music") == "drone" else audio.music(dur + 1))[: len(voice)]
+    music = {"drone": audio.drone, "score": audio.score}.get(ep.get("music"), audio.music)(dur + 1)[: len(voice)]
     vol_env = np.abs(voice)
     k = int(0.25 * SR)
     duck = np.convolve(vol_env > 0.02, np.ones(k) / k, mode="same")

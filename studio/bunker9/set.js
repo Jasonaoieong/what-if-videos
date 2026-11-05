@@ -201,5 +201,59 @@
     return s;
   };
 
+  // ---- cinematic layer helpers ----
+  S.grade = (col, op = 0.25, mode = 'overlay') => `<rect x="-2000" y="-2000" width="6000" height="6000" fill="${col}" opacity="${op}" style="mix-blend-mode:${mode}"/>`;
+  S.bloom = (x, y, r, col = '#FFD9A0', op = 0.55) => `<circle cx="${f(x)}" cy="${f(y)}" r="${f(r)}" fill="${col}" opacity="${op}" filter="url(#bloomblur)" style="mix-blend-mode:screen"/>`;
+  S.shaft = (x, y, w, len, ang, col = '#FFE3B0', op = 0.18) =>
+    `<g transform="translate(${f(x)} ${f(y)}) rotate(${f(ang)})"><path d="M ${-w * 0.2} 0 L ${w * 0.2} 0 L ${w} ${len} L ${-w} ${len} Z" fill="${col}" opacity="${op}" filter="url(#coneblur)" style="mix-blend-mode:screen"/></g>`;
+  S.embers = function (t, n = 40, col = '#FFB25A') {
+    let s = '';
+    for (let i = 0; i < n; i++) {
+      const x = ((i * 131) % 1400) - 160 + Math.sin(t * 1.5 + i) * 30, y = 1700 - ((t * (90 + (i % 5) * 40) + i * 77) % 1900);
+      s += `<circle cx="${f(x)}" cy="${f(y)}" r="${2 + (i % 3)}" fill="${col}" opacity="${(0.4 + 0.5 * Math.abs(Math.sin(t * 4 + i))).toFixed(2)}"/>`;
+    }
+    return `<g style="mix-blend-mode:screen">${s}</g>`;
+  };
+  // An infected: hunched stick body, grey-green skin, torn clothes, glowing eyes, limping shamble.
+  S.zombie = function (t, x, y, sc = 1, ph = 0, o = {}) {
+    const w = t * 1.6 + ph, lurch = Math.sin(w * Math.PI) * 6, fl = o.flip ? -1 : 1;
+    const skin = '#8FA08A', cloth = o.cloth || '#4A3F45';
+    let s = `<g transform="translate(${f(x)} ${f(y)}) scale(${f(sc * fl)} ${f(sc)})">`;
+    s += `<ellipse cx="0" cy="6" rx="100" ry="14" fill="rgba(0,0,0,0.45)"/>`;
+    for (const sd of [-1, 1]) {
+      const p2 = w * Math.PI + (sd > 0 ? Math.PI : 0);
+      const fx = sd * 20 + Math.sin(p2) * 40, kx = sd * 16 + Math.sin(p2) * 22 + 20;
+      s += `<path d="M ${sd * 20} -290 Q ${f(kx)} -150 ${f(fx)} 0" stroke="${INK}" stroke-width="30" fill="none" stroke-linecap="round"/><path d="M ${sd * 20} -290 Q ${f(kx)} -150 ${f(fx)} 0" stroke="#3A3530" stroke-width="20" fill="none" stroke-linecap="round"/>`;
+    }
+    s += `<g transform="rotate(${f(24 + lurch)} 0 -300)">`;
+    s += `<path d="M -54 -560 Q 0 -576 54 -560 L 62 -300 L 30 -280 L 10 -300 L -20 -276 L -62 -300 Z" fill="${cloth}" stroke="${INK}" stroke-width="5"/>`;
+    for (const sd of [-1, 1]) s += `<path d="M ${sd * 48} -540 Q ${sd * 120} -470 ${sd * 60 + 140} ${f(-430 + Math.sin(w * 2 + sd) * 20)}" stroke="${INK}" stroke-width="28" fill="none" stroke-linecap="round"/><path d="M ${sd * 48} -540 Q ${sd * 120} -470 ${sd * 60 + 140} ${f(-430 + Math.sin(w * 2 + sd) * 20)}" stroke="${skin}" stroke-width="18" fill="none" stroke-linecap="round"/>`;
+    s += `<circle cx="20" cy="-640" r="70" fill="${skin}" stroke="${INK}" stroke-width="6"/>`;
+    s += `<path d="M -20 -690 L 10 -660 L -4 -640" stroke="#5A2A2A" stroke-width="5" fill="none"/>`;
+    s += `<circle cx="0" cy="-650" r="13" fill="#E9F57A"/><circle cx="44" cy="-650" r="13" fill="#E9F57A"/>` + S.bloom(22, -650, 40, '#E9F57A', 0.5);
+    s += `<path d="M -4 -606 Q 22 -592 50 -608 L 44 -596 L 34 -604 L 26 -594 L 16 -604 L 6 -594 Z" fill="#2A1414" stroke="${INK}" stroke-width="3"/>`;
+    s += `</g></g>`;
+    return s;
+  };
+  // Mushroom cloud on the horizon. k: 0..1 growth.
+  S.mushroom = function (t, x, y, k) {
+    if (k <= 0) return '';
+    const h = 900 * k, w = 380 * Math.min(1, k * 1.4);
+    let s = `<g transform="translate(${x} ${y})" style="mix-blend-mode:screen">`;
+    s += `<path d="M -70 0 Q -50 ${f(-h * 0.5)} -90 ${f(-h * 0.8)} L 90 ${f(-h * 0.8)} Q 50 ${f(-h * 0.5)} 70 0 Z" fill="#E8A35A" opacity="0.8" filter="url(#fogblur)"/>`;
+    for (let i = 0; i < 9; i++) {
+      const a = (i / 9) * Math.PI * 2 + t * 0.2;
+      s += `<circle cx="${f(Math.cos(a) * w * 0.55)}" cy="${f(-h * 0.85 + Math.sin(a) * w * 0.22)}" r="${f(w * 0.42)}" fill="${i % 2 ? '#FFC77A' : '#E86B3A'}" opacity="0.75" filter="url(#fogblur)"/>`;
+    }
+    s += `<circle cx="0" cy="${f(-h * 0.85)}" r="${f(w * 0.5)}" fill="#FFF3D0" opacity="0.6" filter="url(#bloomblur)"/>`;
+    s += `</g><g transform="translate(${x} ${y})">`;
+    // solid, readable silhouette on top of the glow
+    s += `<path d="M -46 0 Q -30 ${f(-h * 0.45)} -60 ${f(-h * 0.78)} L 60 ${f(-h * 0.78)} Q 30 ${f(-h * 0.45)} 46 0 Z" fill="#C8552E" opacity="0.9"/>`;
+    s += `<ellipse cx="0" cy="${f(-h * 0.86)}" rx="${f(w * 0.85)}" ry="${f(w * 0.42)}" fill="#E07A3A" opacity="0.92"/>`;
+    s += `<ellipse cx="0" cy="${f(-h * 0.9)}" rx="${f(w * 0.6)}" ry="${f(w * 0.26)}" fill="#FFC77A" opacity="0.9"/>`;
+    s += `<ellipse cx="0" cy="${f(-h * 0.55)}" rx="${f(w * 0.5)}" ry="${f(w * 0.1)}" fill="#E8A35A" opacity="0.7"/>`;
+    return s + `</g>`;
+  };
+
   window.Bunker = S;
 })();
