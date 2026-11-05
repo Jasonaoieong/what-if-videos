@@ -101,7 +101,7 @@ def build(ep_path, out_mp4, stills=None):
         mouths[who] = [round(float(v), 3) for v in np.where(m > 0.12, m, 0)]
 
     # sound design
-    music = audio.music(dur + 1)[: len(voice)]
+    music = (audio.drone(dur + 1) if ep.get("music") == "drone" else audio.music(dur + 1))[: len(voice)]
     vol_env = np.abs(voice)
     k = int(0.25 * SR)
     duck = np.convolve(vol_env > 0.02, np.ones(k) / k, mode="same")
@@ -111,7 +111,7 @@ def build(ep_path, out_mp4, stills=None):
     for i, ln in enumerate(ep["lines"]):
         st = 0 if i == 0 else ln["t0"] - 0.12
         scene_t0.setdefault(ln["scene"], st)
-        if i > 0:
+        if i > 0 and ep.get("whoosh", True):
             audio.add(sfx, audio.whoosh() * 0.8, max(0, st - 0.05))
         for name, at in ln.get("sfx", []):
             audio.add(sfx, getattr(audio, name)(), st + at)
@@ -133,9 +133,11 @@ def build(ep_path, out_mp4, stills=None):
     if "vote" in scene_t0 and not any(l.get("sfx") for l in ep["lines"] if l["scene"] == "vote"):
         for i in range(4):
             audio.add(sfx, audio.pop(), scene_t0["vote"] + 0.25 + i * 0.22)
-    for c in caps:
-        audio.add(sfx, audio.pop() * 0.25, c["t0"])
-    sfx += audio.buzz(len(sfx) / SR)[: len(sfx)] * 0.6
+    if ep.get("caption_pops", True):
+        for c in caps:
+            audio.add(sfx, audio.pop() * 0.25, c["t0"])
+    if ep.get("flies", True):
+        sfx += audio.buzz(len(sfx) / SR)[: len(sfx)] * 0.6
     mix = voice * 1.0 + music + sfx * 0.9
     mix = mix[: int(dur * SR)]
     mix = mix / (np.max(np.abs(mix)) + 1e-9) * 0.9
@@ -143,14 +145,14 @@ def build(ep_path, out_mp4, stills=None):
     sf.write(wav, np.stack([mix, mix], 1), SR)
 
     data = {"lines": ep["lines"], "caps": caps, "mouth": mouths, "fps": FPS, "dur": dur}
-    for key in ("days_left", "glow", "glow_to", "vote", "vote_emoji", "vote_title", "look", "nohud"):
+    for key in ("days_left", "glow", "glow_to", "vote", "vote_emoji", "vote_title", "look", "nohud", "title"):
         if key in ep:
             data[key] = ep[key]
     if "cap_colors" in ep:
         data["capColors"] = ep["cap_colors"]
     dj = os.path.join(work, "ep.json")
     json.dump(data, open(dj, "w"))
-    page = os.path.join(HERE, "ep.html")
+    page = os.path.join(os.path.dirname(os.path.abspath(ep_path)), ep["page"]) if "page" in ep else os.path.join(HERE, "ep.html")
     render = os.path.join(HERE, "render.js")
     if stills:
         subprocess.run(["node", render, page, out_mp4, "0", str(FPS), "--data", dj, "--stills", stills], check=True)
