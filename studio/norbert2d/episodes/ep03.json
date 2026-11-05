@@ -1,0 +1,190 @@
+{
+  "id": "ep03",
+  "title": "Day 3 of 30",
+  "days_left": 28,
+  "glow": 10,
+  "glow_to": 35,
+  "vote_pill": true,
+  "look": {
+    "teeth": "fixed",
+    "skin_vote": "clear"
+  },
+  "voices": {
+    "NARR": {
+      "voice": "af_heart",
+      "speed": 1.05,
+      "pitch": 1.0
+    },
+    "NORB": {
+      "voice": "am_puck",
+      "speed": 1.08,
+      "pitch": 1.1
+    }
+  },
+  "cap_colors": {
+    "NORB": "#FFD23F"
+  },
+  "lines": [
+    {
+      "who": "NARR",
+      "text": "Day three. You picked skin.",
+      "scene": "recap3",
+      "gap": 0.25,
+      "sfx": [
+        [
+          "pop",
+          0.05
+        ],
+        [
+          "ding",
+          0.3
+        ]
+      ]
+    },
+    {
+      "who": "NORB",
+      "text": "Fourteen step skincare routine. How hard can it be?",
+      "scene": "bathroom",
+      "gap": 0.25
+    },
+    {
+      "who": "NARR",
+      "text": "Step one: a face mask.",
+      "scene": "mask",
+      "gap": 0.3,
+      "sfx": [
+        [
+          "splat",
+          0.25
+        ]
+      ]
+    },
+    {
+      "who": "NORB",
+      "text": "It's tingling. Is it supposed to burn?",
+      "scene": "mask_burn",
+      "gap": 0.3,
+      "sfx": [
+        [
+          "boing",
+          0.0
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "Step seven: he popped one. It hit the mirror.",
+      "scene": "pop",
+      "gap": 0.5,
+      "sfx": [
+        [
+          "splat",
+          0.65
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "Step fourteen: he fell asleep in the mask.",
+      "scene": "sleep",
+      "gap": 0.4
+    },
+    {
+      "who": "NORB",
+      "text": "Wait. Where did my pimples go?!",
+      "scene": "reveal_skin",
+      "gap": 0.4,
+      "sfx": [
+        [
+          "chime",
+          0.0
+        ],
+        [
+          "ding",
+          0.15
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "Glow up: thirty five percent. Twenty eight days left.",
+      "scene": "meter3",
+      "gap": 0.4,
+      "sfx": [
+        [
+          "pop",
+          0.1
+        ],
+        [
+          "chime",
+          0.6
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "Then Maya texted.",
+      "scene": "maya3",
+      "gap": 0.6,
+      "sfx": [
+        [
+          "vibrate",
+          0.1
+        ],
+        [
+          "pop",
+          0.5
+        ]
+      ]
+    },
+    {
+      "who": "NORB",
+      "text": "Smoothies?! My hair looks like a dead raccoon!",
+      "scene": "hair_panic",
+      "gap": 0.4,
+      "sfx": [
+        [
+          "boing",
+          0.05
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "What does Norbert fix next? Comment one word.",
+      "scene": "vote",
+      "gap": 1.8,
+      "sfx": [
+        [
+          "pop",
+          0.25
+        ],
+        [
+          "pop",
+          0.47
+        ],
+        [
+          "pop",
+          0.69
+        ],
+        [
+          "pop",
+          0.91
+        ]
+      ]
+    }
+  ],
+  "vote": [
+    "HAIR",
+    "CLOTHES",
+    "ROOM",
+    "GYM"
+  ],
+  "vote_emoji": [
+    "💇",
+    "👕",
+    "🛏️",
+    "💪"
+  ],
+  "vote_title": "WHAT SHOULD NORBERT FIX NEXT?"
+}

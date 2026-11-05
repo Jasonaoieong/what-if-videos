@@ -266,6 +266,13 @@ def score(sec, bpm=96):
     return buf + pad
 
 
+def splat():
+    from scipy.signal import butter, sosfilt
+    tt = t_(0.35)
+    x = sosfilt(butter(2, [200, 1800], "band", fs=SR, output="sos"), rng.standard_normal(len(tt)))
+    return (x * 1.5 + np.sin(2 * np.pi * (180 - 300 * tt) * tt)) * env(len(tt), 0.001, 0.07) * 0.6
+
+
 def buzz(sec):
     t = t_(sec)
     f = 210 + 25 * np.sin(2 * np.pi * 0.7 * t) + 15 * np.sin(2 * np.pi * 1.9 * t)

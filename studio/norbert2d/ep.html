@@ -198,6 +198,7 @@ window.frame = function (t) {
   if (scn === 'wide' || scn === 'determined' || scn === 'plead') ui += L.banner(t, '30 DAYS TO THE SPRING DANCE', scn === 'wide' ? 0.15 : sc.t0 + 0.05);
   // word-by-word captions
   const cy = scn === 'vote' ? 1590 : scn === 'meter' ? 1440 : scn === 'flyer' ? 1760 : 1420;
+  if (EP.vote_pill && t > 2.5 && !['vote', 'meter', 'meter3'].includes(scn)) ui += `<g opacity="0.92"><rect x="230" y="318" width="620" height="64" rx="32" fill="#E5483B" stroke="#000" stroke-width="5"/><text x="540" y="362" text-anchor="middle" font-family="Anton" font-size="38" fill="#FFF">COMMENT WHAT HE FIXES NEXT 👇</text></g>`;
   const capNow = EP.caps.filter((c) => between(t, c.t0, c.t1)).slice(-1);
   for (const c of capNow) ui += L.caption(t, c.text, c.t0, cy, c.text.length > 14 ? 110 : 132, (EP.capColors || { NORB: '#FFD23F' })[c.who] || '#FFFFFF');
   if (scn === 'mirror' && tl > 0.55) ui += `<text x="540" y="300" text-anchor="middle" font-family="Anton" font-size="90" fill="#FFFFFF" stroke="#000" stroke-width="14" paint-order="stroke">*RECORD SCRATCH*</text>`;
@@ -210,4 +211,5 @@ window.frame = function (t) {
 window.EP = window.EP || { lines: [{ scene: 'wide', t0: 0, t1: 3 }], caps: [], mouth: [], fps: 30, dur: 3, days_left: 30, glow: 0, vote: ['A', 'B', 'C', 'D'] };
 </script>
 <script src="scenes_ep02.js"></script>
+<script src="scenes_ep03.js"></script>
 </body></html>
