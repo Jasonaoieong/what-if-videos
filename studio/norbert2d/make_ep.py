@@ -112,7 +112,9 @@ def build(ep_path, out_mp4, stills=None):
     music = {"drone": audio.drone, "score": audio.score}.get(ep.get("music"), audio.music)(dur + 1)[: len(voice)]
     vol_env = np.abs(voice)
     k = int(0.25 * SR)
-    duck = np.convolve(vol_env > 0.02, np.ones(k) / k, mode="same")
+    cs = np.concatenate([[0.0], np.cumsum((vol_env > 0.02).astype(float))])
+    idx = np.arange(len(vol_env))
+    duck = (cs[np.clip(idx + k // 2, 0, len(vol_env))] - cs[np.clip(idx - k // 2, 0, len(vol_env))]) / k  # fast moving average
     music *= 0.42 - 0.3 * np.clip(duck * 3, 0, 1)
     sfx = np.zeros_like(voice)
     scene_t0 = {}
