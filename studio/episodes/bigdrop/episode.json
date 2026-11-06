@@ -1,0 +1,230 @@
+{
+ "id": "bigdrop",
+ "engine": "penny",
+ "object": {
+  "type": "drop",
+  "rad": 0.004
+ },
+ "title": "THE BIGGEST RAINDROPS EVER MEASURED",
+ "hook_text": "THE BIGGEST\nRAINDROP EVER",
+ "hook_em": "BIGGEST",
+ "marker_label": "RAINDROP",
+ "danger_h": 0,
+ "vmax": 10,
+ "foot": "SIMULATION · SLOW MOTION · STANDARD ATMOSPHERE",
+ "counter": {
+  "label": "ALTITUDE",
+  "field": "h",
+  "unit": "m",
+  "ticks": {
+   "step": 50,
+   "major": 500,
+   "px": 0.6,
+   "max": 2100
+  }
+ },
+ "voice_style": "Calm, deep male narrator.",
+ "display": [
+  [
+   "eight millimeters",
+   "8 mm"
+  ],
+  [
+   "five millimeters",
+   "5 mm"
+  ],
+  [
+   "in 1995",
+   "in 1995"
+  ],
+  [
+   "in 1999",
+   "in 1999"
+  ],
+  [
+   "About thirty-three kilometers per hour",
+   "About 33 km/h"
+  ],
+  [
+   "eight times",
+   "8×"
+  ],
+  [
+   "ten meters per second",
+   "10 m/s"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "hook",
+   "heading": "RECORD RAINDROP",
+   "text": "One of the biggest raindrops ever measured. At least eight millimeters wide.",
+   "sim": [
+    0,
+    4
+   ],
+   "sfx": [
+    "hit_open"
+   ],
+   "fact": {
+    "title": "SIZE",
+    "value": "≥ 8 mm · maybe 1 cm"
+   },
+   "event": "UW 2004 (Hobbs & Rangno, GRL)."
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "camera": "wide",
+   "heading": "TOO BIG TO EXIST?",
+   "text": "It shouldn't exist. In the lab, drops break apart at about five millimeters.",
+   "sim": [
+    4,
+    15
+   ],
+   "sfx": [
+    "wide_atmos"
+   ],
+   "fact": {
+    "title": "LAB BREAKUP SIZE",
+    "value": "≈ 5 mm"
+   },
+   "event": "UW News 2004."
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "explain",
+   "camera": "flutter",
+   "heading": "WHY THEY SHATTER",
+   "text": "Air flattens big drops, then bursts through them.",
+   "sim": [
+    15,
+    40
+   ],
+   "sfx": [
+    "whoosh"
+   ],
+   "event": "UW: air forces through the thin film → breakup."
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "reveal",
+   "camera": "facade",
+   "heading": "FOUND TWICE",
+   "text": "Yet research planes found giants like this over a burning forest in Brazil, in 1995.",
+   "sim": [
+    40,
+    80
+   ],
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "fact": {
+    "title": "BRAZIL · 1995",
+    "value": "smoke clouds over burning forest"
+   },
+   "event": "UW Cloud and Aerosol Research Group flights."
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "reveal",
+   "camera": "topdown",
+   "heading": "AND AGAIN",
+   "text": "And in clean ocean air over the Marshall Islands, in 1999.",
+   "sim": [
+    80,
+    130
+   ],
+   "sfx": [
+    "riser_short"
+   ],
+   "fact": {
+    "title": "MARSHALL ISLANDS · 1999",
+    "value": "clean marine air"
+   },
+   "event": "UW News 2004."
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "rush",
+   "heading": "IF IT SURVIVES THE FALL",
+   "text": "Ash and sea salt may have helped them grow. But how fast would one land?",
+   "sim": [
+    130,
+    207.2
+   ],
+   "sfx": [
+    "heartbeat"
+   ],
+   "event": "UW: scientists speculate ash particles / sea salt."
+  },
+  {
+   "id": "seg07",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "impact_cut",
+   "heading": "",
+   "text": "",
+   "silent_duration": 1.1,
+   "sim": [
+    207.2,
+    207.82
+   ],
+   "sfx": [
+    "silence",
+    "splash"
+   ],
+   "event": "Impact ~33 km/h."
+  },
+  {
+   "id": "seg08",
+   "scene": 7,
+   "mood": "ending",
+   "camera": "land",
+   "heading": "BARELY FASTER",
+   "text": "About thirty-three kilometers per hour. Barely faster than a drop eight times lighter.",
+   "sim": [
+    207.82,
+    207.82
+   ],
+   "sfx": [
+    "drone_resolve"
+   ],
+   "fact": {
+    "title": "4 MM DROP",
+    "value": "≈ 32 km/h"
+   },
+   "event": "Sim Vt 9.2 m/s (Gunn & Kinzer max) vs rain episode 4 mm sim 31.7 km/h; (8/4)³ = 8."
+  },
+  {
+   "id": "seg09",
+   "scene": 8,
+   "mood": "ending",
+   "camera": "rise",
+   "heading": "A SPEED LIMIT",
+   "text": "Even the biggest raindrops top out at about ten meters per second.",
+   "sim": [
+    207.82,
+    207.82
+   ],
+   "sfx": [
+    "hit_final"
+   ],
+   "fact": {
+    "title": "NASA",
+    "value": "max ≈ 10 m/s"
+   },
+   "event": "NASA GPM FAQ."
+  }
+ ]
+}

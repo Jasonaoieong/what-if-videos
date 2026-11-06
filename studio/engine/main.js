@@ -79,6 +79,30 @@ scene.add(makeTrees());
 const faller = makeFaller(); scene.add(faller);
 faller.traverse((o) => { if (o.isMesh) o.castShadow = o.receiveShadow = true; });
 
+// ---- optional hot-air balloon the faller slipped out of (tl.balloon): envelope, basket, cables, burner
+const BALLOON = tl.balloon ? (() => {
+  const H0 = S[0].h, g = new THREE.Group();
+  const c = document.createElement('canvas'); c.width = 1024; c.height = 64; const x = c.getContext('2d');
+  const cols = ['#e5482f', '#f2b630', '#2f7fd1', '#f4efe4'];
+  for (let i = 0; i < 16; i++) { x.fillStyle = cols[i % 4]; x.fillRect(i * 64, 0, 64, 64); x.fillStyle = 'rgba(0,0,0,.18)'; x.fillRect(i * 64, 0, 2, 64); }
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+  const prof = [];                                    // teardrop profile: narrow throat at the bottom, round crown on top
+  for (let i = 0; i <= 40; i++) { const k = i / 40, y = k * 21; const r = k < .6 ? 1.1 + 7.1 * Math.sin(Math.PI / 2 * k / .6) : 8.2 * Math.sqrt(Math.max(0, 1 - Math.pow((k - .6) / .4, 2))); prof.push(new THREE.Vector2(Math.max(.05, r), y)); }
+  const env = new THREE.Mesh(new THREE.LatheGeometry(prof, 64), new THREE.MeshStandardMaterial({ map: tex, roughness: .75, side: THREE.DoubleSide }));
+  env.position.y = 4.2; g.add(env);
+  const basket = new THREE.Mesh(new THREE.BoxGeometry(1.4, 1.1, 1.4), new THREE.MeshStandardMaterial({ color: 0x8a6236, roughness: 1 }));
+  basket.position.y = .55; g.add(basket);
+  const rim = new THREE.Mesh(new THREE.BoxGeometry(1.5, .1, 1.5), new THREE.MeshStandardMaterial({ color: 0x4a3420, roughness: .9 })); rim.position.y = 1.12; g.add(rim);
+  const cm = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: .6 });
+  for (const [sx, sz] of [[1, 1], [1, -1], [-1, 1], [-1, -1]]) { const a = V3(.68 * sx, 1.1, .68 * sz), b = V3(1.0 * sx, 4.4, 1.0 * sz);
+    const cyl = new THREE.Mesh(new THREE.CylinderGeometry(.02, .02, a.distanceTo(b), 6), cm); cyl.position.copy(a).lerp(b, .5); cyl.quaternion.setFromUnitVectors(V3(0, 1, 0), b.clone().sub(a).normalize()); g.add(cyl); }
+  const flame = new THREE.Mesh(new THREE.ConeGeometry(.22, 1.1, 12), new THREE.MeshBasicMaterial({ color: 0xffb347, transparent: true, opacity: .85, toneMapped: false }));
+  flame.position.y = 3.3; flame.visible = !!tl.balloon.flame; g.add(flame);
+  g.traverse((o) => { if (o.isMesh) o.castShadow = o.receiveShadow = true; });
+  g.position.set(tl.balloon.x ?? -2.6, H0 - .2, tl.balloon.z ?? .4); scene.add(g); return g; })() : null;
+function lerpN(a, b, u) { return a + (b - a) * u; }
+function V3(x, y, z) { return new THREE.Vector3(x, y, z); }
+
 const sunDir = new THREE.Vector3(0.45, 0.55, -0.7).normalize();
 const sun = new THREE.DirectionalLight(0xfff1dc, 3.2);
 sun.castShadow = true; sun.shadow.mapSize.set(1024, 1024);
@@ -198,7 +222,7 @@ function updateWorld(t) {
   const k10 = Math.min(1, camAlt / 10000);
   sky.position.copy(camera.position);
   sky.material.uniforms.uAlt.value = camAlt;
-  const danger = impactAge < 0 ? Math.max(0, (1500 - st.h) / 1500) : 0;
+  const DH = tl.sky_danger_h || 1500, danger = impactAge < 0 ? Math.max(0, (DH - st.h) / DH) : 0;
   sky.material.uniforms.uDanger.value = danger;
   const hz = new THREE.Color().lerpColors(new THREE.Color(0.84, 0.85, 0.88), new THREE.Color(0.62, 0.74, 0.9), k10);
   scene.fog.color.copy(hz);

@@ -1,0 +1,207 @@
+{
+ "id": "hailayers",
+ "engine": "penny",
+ "object": {
+  "type": "hail",
+  "rad": 0.05
+ },
+ "title": "WHY HAILSTONES HAVE LAYERS LIKE AN ONION",
+ "hook_text": "WHY DOES HAIL\nHAVE LAYERS?",
+ "hook_em": "LAYERS?",
+ "marker_label": "HAILSTONE",
+ "danger_h": 300,
+ "vmax": 36,
+ "foot": "SIMULATION · SLOW MOTION · STANDARD ATMOSPHERE",
+ "counter": {
+  "label": "ALTITUDE",
+  "field": "h",
+  "unit": "m",
+  "ticks": {
+   "step": 50,
+   "major": 500,
+   "px": 0.6,
+   "max": 1600
+  }
+ },
+ "voice_style": "Calm deep narrator.",
+ "display": [
+  [
+   "minus forty degrees",
+   "−40 °C"
+  ],
+  [
+   "about a hundred and fifteen kilometers per hour",
+   "about 115 km/h"
+  ],
+  [
+   "ten centimeters",
+   "10 cm"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "hook",
+   "heading": "10 CM OF ICE",
+   "text": "Slice a big hailstone in half: layers, like an onion.",
+   "sim": [
+    0,
+    2
+   ],
+   "sfx": [
+    "hit_open"
+   ],
+   "fact": {
+    "title": "INSIDE",
+    "value": "clear + cloudy rings"
+   },
+   "event": "NSSL: layers of clear and cloudy ice."
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "camera": "wide",
+   "heading": "THE OLD STORY",
+   "text": "The classic story: each layer is one more trip up and down the storm.",
+   "sim": [
+    2,
+    8
+   ],
+   "sfx": [
+    "rumble_low"
+   ],
+   "event": "NSSL hail page, 2008 archive."
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "reveal",
+   "camera": "flutter",
+   "heading": "THE TWIST",
+   "text": "But storm scientists say that's not the whole story.",
+   "sim": [
+    8,
+    16
+   ],
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "fact": {
+    "title": "NOAA SEVERE STORMS LAB",
+    "value": "not simply up-and-down cycles"
+   },
+   "event": "NSSL Severe Weather 101: Hail."
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "explain",
+   "camera": "facade",
+   "heading": "CLOUDY ICE",
+   "text": "When water freezes on the stone instantly, it traps air bubbles. That makes cloudy ice.",
+   "sim": [
+    16,
+    24
+   ],
+   "sfx": [
+    "whoosh"
+   ],
+   "event": "NSSL."
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "explain",
+   "camera": "topdown",
+   "heading": "CLEAR ICE",
+   "text": "When it freezes slowly, the bubbles escape. That makes clear ice.",
+   "sim": [
+    24,
+    32
+   ],
+   "sfx": [
+    "riser_short"
+   ],
+   "event": "NSSL."
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "rush",
+   "heading": "A MAP OF THE STORM",
+   "text": "The layers record changing conditions as the stone drifts sideways near the updraft.",
+   "sim": [
+    32,
+    46.8
+   ],
+   "sfx": [
+    "heartbeat"
+   ],
+   "event": "NSSL: horizontal passage across/near updraft."
+  },
+  {
+   "id": "seg07",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "impact_cut",
+   "heading": "",
+   "text": "",
+   "silent_duration": 1.2,
+   "sim": [
+    46.8,
+    47.26
+   ],
+   "sfx": [
+    "silence",
+    "impact_huge",
+    "debris"
+   ],
+   "event": "Impact ~116 km/h."
+  },
+  {
+   "id": "seg08",
+   "scene": 7,
+   "mood": "ending",
+   "camera": "land",
+   "heading": "NOT AT THE TOP",
+   "text": "And it doesn't grow at the storm's top. Up there it's below minus forty degrees, and all the water is frozen.",
+   "sim": [
+    47.26,
+    47.26
+   ],
+   "sfx": [
+    "drone_resolve"
+   ],
+   "fact": {
+    "title": "STORM TOP",
+    "value": "below −40 °C · no liquid water"
+   },
+   "event": "NSSL: below −40 °F all liquid water frozen (−40 °F = −40 °C)."
+  },
+  {
+   "id": "seg09",
+   "scene": 8,
+   "mood": "ending",
+   "camera": "rise",
+   "heading": "FALL SPEED",
+   "text": "Stones this size can hit about a hundred and fifteen kilometers per hour.",
+   "sim": [
+    47.26,
+    47.26
+   ],
+   "sfx": [
+    "hit_final"
+   ],
+   "fact": {
+    "title": "2–4 INCH HAIL",
+    "value": "44–72 mph (70–116 km/h)"
+   },
+   "event": "NSSL fall speeds."
+  }
+ ]
+}

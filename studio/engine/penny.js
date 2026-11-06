@@ -135,7 +135,7 @@ const coin = new THREE.Mesh(new THREE.CylinderGeometry(.009525, .009525, .00152,
   [new THREE.MeshStandardMaterial({ color: 0xb06a3c, metalness: .92, roughness: .4 }), copper(faceTex(false)), copper(faceTex(true))]);
 // object: coin (default), bowling ball or raindrop — cameras scale with its size
 const OBJ = tl.object?.type || 'coin';
-const RAD = { coin: .009525, ball: .109, drop: .0021, hail: .1015, golf: .021335, melon: .11, bball: .121, balloon: .05 }[OBJ];
+const RAD = tl.object?.rad || { coin: .009525, ball: .109, drop: .0021, hail: .1015, golf: .021335, melon: .11, bball: .121, balloon: .05 }[OBJ];
 const K = (tl.object?.cam_rad || RAD) / .009525;          // camera scale (cam_rad frames a pair of objects)
 let obj = coin;
 if (OBJ === 'ball') {
@@ -287,11 +287,11 @@ function cam(shot, P, u, t, st) {
       const toT = V(0, 430, 0).sub(P), L = toT.length();
       return { pos: P.clone().add(V(d * .7, d * .3 + .02 * K, d * .62)), look: P.clone().addScaledVector(toT.normalize(), Math.min(L * .85, d * .35 * e * e + d * .25 * e * e * e)), fov: lerp(42, 52, e) }; }
     case 'flutter': return { pos: orbit(.07 * K, .15 + .1 * Math.sin(t * .4), 2.4 + t * .35), look: P, fov: 40 };
-    case 'facade': if (OBJ === 'golf' || OBJ === 'melon' || OBJ === 'bball' || OBJ === 'balloon' || VAC) return { pos: P.clone().add(sV(.16, .05, .2)), look: P.clone().add(sV(-.03, -.01, -.01)), fov: 50 };
+    case 'facade': if (OBJ === 'golf' || OBJ === 'hail' || OBJ === 'melon' || OBJ === 'bball' || OBJ === 'balloon' || VAC) return { pos: P.clone().add(sV(.16, .05, .2)), look: P.clone().add(sV(-.03, -.01, -.01)), fov: 50 };
       if (OBJ === 'drop') return { pos: P.clone().add(sV(.1, .012, .05)), look: P.clone().add(sV(0, .004, 0)), fov: 38 };
       return { pos: P.clone().add(sV(.16, .05, .2)), look: P.clone().add(sV(-1.2, -.35, -.25)), fov: 50 };
     case 'topdown': return { pos: P.clone().add(sV(.03, .22, .07)), look: P.clone().add(sV(0, -6, -.6)), fov: lerp(50, 58, u) };
-    case 'rush': if (OBJ === 'golf' || OBJ === 'melon' || OBJ === 'bball' || OBJ === 'balloon' || VAC) return { pos: P.clone().add(sV(.09, .06, .14)), look: P.clone().add(sV(0, -.04, 0)), fov: lerp(55, 68, u * u) };
+    case 'rush': if (OBJ === 'golf' || OBJ === 'hail' || OBJ === 'melon' || OBJ === 'bball' || OBJ === 'balloon' || VAC) return { pos: P.clone().add(sV(.09, .06, .14)), look: P.clone().add(sV(0, -.04, 0)), fov: lerp(55, 68, u * u) };
       return { pos: P.clone().add(sV(.09, .06, .14)), look: P.clone().add(sV(1.2, -1.6, .6)), fov: lerp(55, 68, u * u) };
     case 'land': case 'impact_cut': return { pos: LAND.clone().add(sV(.11, .03, .15)), look: LAND.clone().add(sV(0, .004, 0)), fov: 42 };
     case 'rise': { const k = sm(u);
@@ -363,6 +363,7 @@ function update(t) {
       if (OBJ === 'hail') for (let i = 0; i < 28; i++) { const a = i / 28 * 6.283 + i, sp = .6 + (i % 5) * .25, tt = impactAge, q2 = new THREE.Quaternion().setFromEuler(new THREE.Euler(tt * 9 + i, tt * 7, 0));
         m4.compose(V(LAND.x + Math.cos(a) * sp * tt, Math.max(.01, .05 + sp * 2.2 * tt - 4.9 * tt * tt), LAND.z + Math.sin(a) * sp * tt), q2, V(1, .7, .8).multiplyScalar(RAD * (.18 + (i % 4) * .07))); crown.setMatrixAt(i, m4); }
       crown.instanceMatrix.needsUpdate = true;
+      if (OBJ === 'hail') { crack.position.set(LAND.x, .002, LAND.z); crack.scale.setScalar(RAD / .1015); crack.material.opacity = clamp(impactAge * 25) * .8; }
       puddle.visible = OBJ === 'drop'; puddle.position.set(LAND.x, .0006, LAND.z); puddle.scale.setScalar(RAD * (1.2 + 1.8 * (1 - Math.exp(-impactAge * 8))));
     }
   } else if (impactAge >= 0) {                                  // land, bounce, wobble, settle flat

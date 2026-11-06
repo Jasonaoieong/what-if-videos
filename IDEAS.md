@@ -36,11 +36,11 @@
 - [x] A basketball from the Burj Khalifa: would it bounce? (penny) → `bball` (new basketball object + bounce; FIBA rebound test, measured basketball Cd)
 
 ## Nov 6
-- [ ] What if you fell from the cruising height of a hot-air balloon (main)
-- [ ] What if Earth spun 10x faster? (spin, faster)
-- [ ] Largest raindrops on record (penny, drop)
-- [ ] A bowling ball from 10 km (penny/main, high start)
-- [ ] Why hailstones have layers like an onion (penny, hail)
+- [x] What if you fell from the cruising height of a hot-air balloon (main) → `hotair` (1,000 m, inside the 1,000–9,000 ft ride range; new balloon model in main engine via `balloon` option)
+- [x] What if Earth spun 10x faster? (spin, faster) → `spin10x` (weight vs latitude computed from ω², Coriolis ×10, Haumea 4 h day ending; spin engine: hard `cut`, no odometer roll across units, `latw` counter)
+- [x] Largest raindrops on record (penny, drop) → `bigdrop` (≥ 8 mm drops, UW/GRL 2004; new `object.rad` override in penny engine)
+- [x] A bowling ball from 10 km (penny/main, high start) → `bowl10k` (peaks 440 km/h at 7.8 km, lands ≈ 300 km/h)
+- [x] Why hailstones have layers like an onion (penny, hail) → `hailayers`: reframed around NSSL's current explanation (layers are NOT simply up-and-down trips; clear vs cloudy ice from slow vs instant freezing)
 
 ## Nov 7
 - [ ] What if you jumped from the world's tallest bridge? (main)

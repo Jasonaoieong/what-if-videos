@@ -192,13 +192,17 @@ const AZ = .55;                              // camera azimuth for the "front" o
 
 function counterAt(t, s) {
   const v = rawCounter(t, s), i = segs.indexOf(s), p = segs[i - 1];
-  if (!p) return v;
+  if (!p || s.cut || (p.counter && p.counter.unit !== s.counter.unit)) return v;   // no odometer roll across a cut or a change of unit
   // odometer rolls quickly from the previous beat's value into the new one
   return lerp(rawCounter(p.end - 1e-3, p), v, sm((t - s.start) / .5));
 }
 function rawCounter(t, s) {
   const u = segU(s, t), c = s.counter;
   if (c.rate) return c.rate * Math.max(0, t - s.start);
+  if (c.latw) {             // weight vs latitude on a faster-spinning Earth: g_eff = g0 − k²·a·cos²φ, relative to today's g0 − a·cos²φ
+    const ls = segBy('latitude'), lat = ls ? (Math.PI / 2) * sm(segU(ls, t) * 1.1) : 0, c2 = Math.cos(lat) ** 2, g0 = 9.814, a = .0339, k2 = c.latw * c.latw;
+    return c.to * (g0 - k2 * a * c2) / (g0 - a * c2);
+  }
   return lerp(c.from, c.to, c.ease === 'out' ? easeOut(u * 1.15) : sm(u));
 }
 
@@ -231,7 +235,7 @@ function update(t) {
   else if (FASTER || SLOW) st.ro.push(['DAY LENGTH', (s.dayH ?? 24).toLocaleString('en-US'), 'h']); else if (NORMAL) st.ro.push(['SPIN AT EQUATOR', '1,674', 'km/h']); else st.ro.push(['EARTH SPIN', t < SPIN_STOP ? Math.round(V_EQ * (1 - t / SPIN_STOP)).toLocaleString('en-US') : '0', 'km/h']);
   if (shot === 'latitude') st.ro.push(['LATITUDE', Math.round(90 * sm(u * 1.1)) + '°', 'N']);
   if (shot === 'flung' || shot === 'wind') st.ro.push(['SPEED OF SOUND', '1,235', 'km/h']);
-  if (shot === 'day') st.ro.push(['DAYLIGHT', Math.round(lerp(12, 4383, sm(u))).toLocaleString('en-US'), 'h']);
+  if (shot === 'day' && SLOW) st.ro.push(['DAYLIGHT', Math.round(lerp(12, 4383, sm(u))).toLocaleString('en-US'), 'h']);
   st.foot = 'SIMULATION · NOT TO SCALE IN TIME';
 
   let scene;
@@ -271,7 +275,7 @@ function update(t) {
     // camera with smooth blend from the previous globe shot
     let c = globeCam(shot, u, t, s);
     const si = segs.indexOf(s), prev = segs[si - 1];
-    if (prev && GLOBE.has(prev.shot) && prev.shot !== shot && t - s.start < 1.2) {
+    if (prev && GLOBE.has(prev.shot) && prev.shot !== shot && !s.cut && t - s.start < 1.2) {
       const p = globeCam(prev.shot, 1, t, prev), k = sm((t - s.start) / 1.2);
       const r0 = p.pos.length(), r1 = c.pos.length(), d = p.pos.clone().normalize().lerp(c.pos.clone().normalize(), k).normalize();
       c = { pos: d.multiplyScalar(Math.exp(lerp(Math.log(r0), Math.log(r1), k))), look: p.look.clone().lerp(c.look, k), fov: lerp(p.fov, c.fov, k) };

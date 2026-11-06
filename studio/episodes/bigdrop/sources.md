@@ -1,0 +1,6 @@
+# Sources — biggest raindrops ever measured
+- UW News, 13 Jul 2004 (Hobbs & Rangno, Geophysical Research Letters): largest drops "at least 8 millimeters in diameter … possibly a centimeter"; recorded on research flights through clouds over a burning forest in Brazil (1995) and in clean marine air over the Marshall Islands (1999); "In laboratory conditions, breakup usually happens when the drops reach about 5 millimeters"; "When air forces through the thin film at the top, large drops break up into many smaller drops"; giant drops may have formed around large ash particles (Brazil) and sea salt (Marshall Islands). https://www.washington.edu/news/2004/07/13/some-of-the-biggest-raindrops-on-record-found-in-both-clean-and-dirty-air/
+- Guinness World Records "Largest raindrops": minimum 8.6 mm, Brazil.
+- NASA GPM FAQ: terminal speed reaches "a maximum of about 10 meters per second … for the largest drops." https://gpm.nasa.gov/resources/faq/how-fast-do-raindrops-fall
+- Sim: 8 mm drop (2.68e-4 kg), Vt 9.2 m/s at sea level (≈ Gunn & Kinzer 1949 maximum, 5.8 mm), from 2,000 m → 207.8 s, impact 33.1 km/h. 4 mm drop (rain episode sim, Vt 8.8 m/s): 31.7 km/h. Volume ratio (8/4)³ = 8.
+- Scene note: shown falling over the same generic city as the `rain` episode; the record drops were measured in clouds by aircraft, not at the ground ("if it survives the fall").

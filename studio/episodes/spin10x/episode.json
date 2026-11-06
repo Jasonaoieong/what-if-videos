@@ -1,0 +1,228 @@
+{
+ "id": "spin10x",
+ "engine": "spin",
+ "spin_mode": "faster",
+ "morph_sign": -1,
+ "title": "WHAT IF EARTH SPUN 10× FASTER?",
+ "hook_text": "WHAT IF EARTH\nSPUN 10× FASTER?",
+ "hook_em": "10× FASTER?",
+ "counter": {
+  "label": "EARTH'S SPIN",
+  "unit": "km/h",
+  "from": 1674,
+  "to": 16744
+ },
+ "voice_style": "Deep calm narrator.",
+ "display": [
+  [
+   "ten times faster",
+   "10× faster"
+  ],
+  [
+   "ten times stronger",
+   "10× stronger"
+  ],
+  [
+   "almost seventeen thousand kilometers per hour",
+   "almost 17,000 km/h"
+  ],
+  [
+   "two hours and twenty-four minutes",
+   "2 h 24 min"
+  ],
+  [
+   "about a third lighter",
+   "about ⅓ lighter"
+  ],
+  [
+   "ten sunrises",
+   "10 sunrises"
+  ],
+  [
+   "twenty-four hours",
+   "24 hours"
+  ],
+  [
+   "four hours",
+   "4 hours"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "space",
+   "dayH": 24,
+   "heading": "SPINNING UP",
+   "text": "Earth just started spinning ten times faster.",
+   "counter": {
+    "label": "EARTH'S SPIN",
+    "unit": "km/h",
+    "from": 1674,
+    "to": 16744
+   },
+   "sfx": [
+    "hit_open"
+   ],
+   "event": "Hook. 465.1 m/s × 10."
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "escalate",
+   "camera": "zoom",
+   "dayH": 2.4,
+   "heading": "A 2-HOUR DAY",
+   "text": "A whole day would last just two hours and twenty-four minutes.",
+   "counter": {
+    "label": "MINUTES IN A DAY",
+    "unit": "min",
+    "from": 1440,
+    "to": 144
+   },
+   "fact": {
+    "title": "AT THE EQUATOR",
+    "value": "≈ 16,700 km/h"
+   },
+   "sfx": [
+    "riser_short"
+   ],
+   "event": "Sidereal 86,164 s / 10 = 8,616 s ≈ 143.6 min."
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "reveal",
+   "camera": "latitude",
+   "cut": true,
+   "dayH": 2.4,
+   "heading": "LIGHTER AT THE EQUATOR",
+   "text": "And you'd feel lighter. At the equator, about a third lighter. At the poles, no change at all.",
+   "counter": {
+    "label": "YOUR WEIGHT",
+    "unit": "kg",
+    "from": 52,
+    "to": 80,
+    "latw": 10
+   },
+   "fact": {
+    "title": "AN 80 KG PERSON",
+    "value": "weighs like 52 kg at the equator"
+   },
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "event": "(9.814 − 100·0.0339)/9.780 = 0.657."
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "reveal",
+   "camera": "oceans",
+   "dayH": 2.4,
+   "heading": "OCEANS MOVE",
+   "text": "The oceans would pile up around the equator, and drain away from the poles.",
+   "counter": {
+    "label": "SPIN EFFECT",
+    "unit": "×",
+    "from": 1,
+    "to": 100
+   },
+   "fact": {
+    "title": "SPIN FORCE",
+    "value": "100× today (10²)"
+   },
+   "sfx": [
+    "riser_long",
+    "wide_atmos"
+   ],
+   "event": "Centrifugal ∝ ω²; equatorial bulge grows."
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "escalate",
+   "camera": "tilt",
+   "dayH": 2.4,
+   "heading": "STORMS SPIN HARDER",
+   "text": "The Coriolis effect, which makes hurricanes spin, would be ten times stronger.",
+   "counter": {
+    "label": "CORIOLIS EFFECT",
+    "unit": "×",
+    "from": 1,
+    "to": 10
+   },
+   "sfx": [
+    "rumble_low"
+   ],
+   "event": "f = 2Ω sin φ ∝ Ω."
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "day",
+   "dayH": 2.4,
+   "heading": "10 SUNRISES A DAY",
+   "text": "And you'd see ten sunrises every twenty-four hours.",
+   "counter": {
+    "label": "SUNRISES TODAY",
+    "unit": "",
+    "from": 0,
+    "to": 10
+   },
+   "sfx": [
+    "bass_hit"
+   ],
+   "event": "24 h / 2.39 h ≈ 10."
+  },
+  {
+   "id": "seg07",
+   "scene": 7,
+   "mood": "ending",
+   "camera": "ending",
+   "dayH": 2.4,
+   "heading": "IT'S REAL · HAUMEA",
+   "text": "Sounds impossible? A real world spins almost this fast. The dwarf planet Haumea turns once every four hours.",
+   "counter": {
+    "label": "HAUMEA'S DAY",
+    "unit": "h",
+    "from": 24,
+    "to": 4
+   },
+   "fact": {
+    "title": "DWARF PLANET HAUMEA",
+    "value": "1 day ≈ 4 hours"
+   },
+   "sfx": [
+    "drone_resolve"
+   ],
+   "event": "NASA Science: Haumea rotates every 4 hours."
+  },
+  {
+   "id": "seg08",
+   "scene": 7,
+   "mood": "ending",
+   "camera": "ending",
+   "dayH": 24,
+   "heading": "STRETCHED BY ITS SPIN",
+   "text": "And the spin has stretched it into the shape of a football.",
+   "counter": {
+    "label": "HAUMEA'S DAY",
+    "unit": "h",
+    "from": 4,
+    "to": 4
+   },
+   "fact": {
+    "title": "SHAPE",
+    "value": "like a football"
+   },
+   "sfx": [
+    "hit_final"
+   ],
+   "event": "NASA Science: fast spin distorts Haumea's shape like a football."
+  }
+ ]
+}

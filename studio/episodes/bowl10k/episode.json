@@ -1,0 +1,247 @@
+{
+ "id": "bowl10k",
+ "engine": "penny",
+ "object": {
+  "type": "ball"
+ },
+ "title": "WHAT IF YOU DROPPED A BOWLING BALL FROM 10 KM?",
+ "hook_text": "A BOWLING BALL\nFROM 10 KM UP",
+ "hook_em": "10 KM",
+ "marker_label": "BOWLING BALL",
+ "danger_h": 300,
+ "vmax": 125,
+ "foot": "SIMULATION · STANDARD ATMOSPHERE · Cd 0.47",
+ "counter": {
+  "label": "ALTITUDE",
+  "field": "h",
+  "unit": "m",
+  "ticks": {
+   "step": 250,
+   "major": 2000,
+   "px": 0.12,
+   "max": 10500
+  }
+ },
+ "voice_style": "Calm, deep male narrator.",
+ "display": [
+  [
+   "ten kilometers",
+   "10 km"
+  ],
+  [
+   "Twelve times",
+   "12×"
+  ],
+  [
+   "Minus fifty degrees",
+   "−50 °C"
+  ],
+  [
+   "over four hundred kilometers per hour",
+   "over 400 km/h"
+  ],
+  [
+   "four hundred and forty",
+   "440 km/h"
+  ],
+  [
+   "three hundred and seventy",
+   "370 km/h"
+  ],
+  [
+   "A minute in",
+   "1 minute in"
+  ],
+  [
+   "One minute and forty seconds",
+   "1 min 40 s"
+  ],
+  [
+   "about three hundred kilometers per hour",
+   "about 300 km/h"
+  ],
+  [
+   "about seven rifle bullets",
+   "about 7 rifle bullets"
+  ],
+  [
+   "two hundred and eighty",
+   "280 km/h"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "hook",
+   "heading": "10,000 M · BOWLING BALL",
+   "text": "A bowling ball, about to drop from ten kilometers up.",
+   "sim": [
+    0,
+    2
+   ],
+   "sfx": [
+    "hit_open"
+   ],
+   "event": "h0 10,000 m, 7.26 kg."
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "camera": "wide",
+   "heading": "12× THE TALLEST TOWER",
+   "text": "Twelve times higher than the tallest tower. Minus fifty degrees.",
+   "sim": [
+    2,
+    10
+   ],
+   "sfx": [
+    "wide_atmos"
+   ],
+   "fact": {
+    "title": "AIR AT 10 KM",
+    "value": "≈ −50 °C · ⅓ as dense"
+   },
+   "event": "Sim: −49.9 °C, rho 0.41 vs 1.225."
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "escalate",
+   "camera": "flutter",
+   "heading": "THIN AIR",
+   "text": "The air is so thin, it keeps speeding up. Past four hundred kilometers per hour.",
+   "sim": [
+    10,
+    22
+   ],
+   "sfx": [
+    "riser_short",
+    "doppler"
+   ],
+   "fact": {
+    "title": "AT 20 SECONDS",
+    "value": "428 km/h"
+   },
+   "event": "Sim 428 km/h at 20 s."
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "reveal",
+   "camera": "topdown",
+   "heading": "THE TWIST",
+   "text": "It peaks at four hundred and forty. Then thicker air starts slowing it down.",
+   "sim": [
+    22,
+    45
+   ],
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "fact": {
+    "title": "TOP SPEED",
+    "value": "440 km/h at 7.8 km"
+   },
+   "event": "Sim peak 122.4 m/s at 25.8 s, h 7,787 m."
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "escalate",
+   "camera": "flutter",
+   "heading": "SLOWING DOWN",
+   "text": "A minute in, it's down to three hundred and seventy.",
+   "sim": [
+    45,
+    75
+   ],
+   "sfx": [
+    "whoosh"
+   ],
+   "fact": {
+    "title": "AT 60 SECONDS",
+    "value": "367 km/h"
+   },
+   "event": "Sim 367 km/h at 60 s."
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "rush",
+   "heading": "IMPACT IN SECONDS",
+   "text": "One minute and forty seconds after letting go.",
+   "sim": [
+    75,
+    102.4
+   ],
+   "sfx": [
+    "heartbeat"
+   ],
+   "event": "Total 102.8 s."
+  },
+  {
+   "id": "seg07",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "impact_cut",
+   "heading": "",
+   "text": "",
+   "silent_duration": 1.2,
+   "sim": [
+    102.4,
+    102.8
+   ],
+   "sfx": [
+    "silence",
+    "impact_huge",
+    "debris"
+   ],
+   "event": "Impact 298 km/h."
+  },
+  {
+   "id": "seg08",
+   "scene": 7,
+   "mood": "ending",
+   "camera": "land",
+   "heading": "IMPACT",
+   "text": "It hits at about three hundred kilometers per hour. With the energy of about seven rifle bullets.",
+   "sim": [
+    102.8,
+    102.8
+   ],
+   "sfx": [
+    "drone_resolve"
+   ],
+   "fact": {
+    "title": "IMPACT ENERGY",
+    "value": "≈ 25 kJ"
+   },
+   "event": "KE = ½·7.26·82.8² ≈ 24.9 kJ; 7.62×51 rifle ≈ 3.5 kJ → ~7."
+  },
+  {
+   "id": "seg09",
+   "scene": 8,
+   "mood": "ending",
+   "camera": "rise",
+   "heading": "THE AIR SETS THE LIMIT",
+   "text": "From the tower, it hit at two hundred and eighty. Twelve times higher, barely faster.",
+   "sim": [
+    102.8,
+    102.8
+   ],
+   "sfx": [
+    "hit_final"
+   ],
+   "fact": {
+    "title": "FROM 828 M",
+    "value": "282 km/h"
+   },
+   "event": "bowling episode sim."
+  }
+ ]
+}

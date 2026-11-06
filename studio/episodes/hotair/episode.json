@@ -1,0 +1,218 @@
+{
+ "id": "hotair",
+ "engine": "main",
+ "balloon": {
+  "x": -1.6,
+  "z": 4.5,
+  "flame": true
+ },
+ "sky_danger_h": 400,
+ "title": "WHAT IF YOU FELL FROM A HOT-AIR BALLOON?",
+ "hook_text": "WHAT IF YOU FELL\nFROM A HOT-AIR BALLOON?",
+ "hook_em": "HOT-AIR BALLOON?",
+ "danger_h": 300,
+ "vmax": 60,
+ "sim_file": "sim.json",
+ "foot": "SIMULATION · STANDARD ATMOSPHERE",
+ "counter": {
+  "label": "ALTITUDE",
+  "field": "h",
+  "unit": "m",
+  "ticks": {
+   "step": 50,
+   "major": 250,
+   "px": 0.9,
+   "max": 1100
+  }
+ },
+ "voice_style": "Deep, calm male documentary narrator.",
+ "display": [
+  [
+   "One kilometer up",
+   "1 km up"
+  ],
+  [
+   "Five seconds in",
+   "5 seconds in"
+  ],
+  [
+   "over a hundred and forty kilometers per hour",
+   "over 140 km/h"
+  ],
+  [
+   "about twelve seconds",
+   "about 12 seconds"
+  ],
+  [
+   "two hundred kilometers per hour",
+   "200 km/h"
+  ],
+  [
+   "Twenty-two seconds",
+   "22 seconds"
+  ],
+  [
+   "ten times higher",
+   "10× higher"
+  ]
+ ],
+ "segments": [
+  {
+   "id": "seg01",
+   "scene": 1,
+   "mood": "opening",
+   "camera": "face_on_shake",
+   "heading": "1,000 M · HOT-AIR BALLOON",
+   "text": "One kilometer up in a hot-air balloon. And you just slipped over the edge.",
+   "sim": [
+    0,
+    0.6
+   ],
+   "sfx": [
+    "hit_open"
+   ],
+   "fact": {
+    "title": "BALLOON RIDES",
+    "value": "cruise ≈ 1,000–9,000 ft"
+   },
+   "event": "h0 1,000 m (3,281 ft)."
+  },
+  {
+   "id": "seg02",
+   "scene": 2,
+   "mood": "explain",
+   "camera": "close_orbit_frost",
+   "heading": "NO WIND UP THERE",
+   "text": "In the basket, you felt no wind at all. The balloon drifts along with it.",
+   "sim": [
+    0.6,
+    3
+   ],
+   "sfx": [
+    "wide_atmos"
+   ],
+   "event": "Balloon moves with the wind."
+  },
+  {
+   "id": "seg03",
+   "scene": 3,
+   "mood": "escalate",
+   "camera": "tracking_side",
+   "heading": "ACCELERATING",
+   "text": "Now the wind is all you feel. Five seconds in, over a hundred and forty kilometers per hour.",
+   "sim": [
+    3,
+    6
+   ],
+   "sfx": [
+    "riser_short",
+    "doppler"
+   ],
+   "forces": true,
+   "fact": {
+    "title": "AT 5 SECONDS",
+    "value": "143 km/h"
+   },
+   "event": "Sim 143.4 km/h at 5 s."
+  },
+  {
+   "id": "seg04",
+   "scene": 4,
+   "mood": "reveal",
+   "camera": "slow_push_in",
+   "heading": "THE TWIST",
+   "text": "After about twelve seconds, you stop speeding up. Around two hundred kilometers per hour.",
+   "sim": [
+    6,
+    12
+   ],
+   "sfx": [
+    "silence_drop",
+    "hit_reveal"
+   ],
+   "forces": true,
+   "fact": {
+    "title": "AT 12 SECONDS",
+    "value": "198 km/h"
+   },
+   "event": "Sim 198.0 km/h at 12 s."
+  },
+  {
+   "id": "seg05",
+   "scene": 5,
+   "mood": "explain",
+   "camera": "top_down_clouds",
+   "heading": "TERMINAL VELOCITY",
+   "text": "The air now pushes up exactly as hard as gravity pulls down.",
+   "sim": [
+    12,
+    17
+   ],
+   "sfx": [
+    "rumble_low"
+   ],
+   "forces": true,
+   "fact": {
+    "title": "TOP SPEED",
+    "value": "≈ 200 km/h"
+   },
+   "event": "Drag = weight."
+  },
+  {
+   "id": "seg06",
+   "scene": 6,
+   "mood": "climax",
+   "camera": "ground_rush",
+   "heading": "",
+   "text": "Twenty-two seconds after slipping out.",
+   "sim": [
+    17,
+    21.3
+   ],
+   "sfx": [
+    "heartbeat"
+   ],
+   "event": "Total 21.7 s."
+  },
+  {
+   "id": "seg07",
+   "scene": 7,
+   "mood": "climax",
+   "camera": "impact_cut",
+   "heading": "",
+   "text": "",
+   "silent_duration": 1.2,
+   "sim": [
+    21.3,
+    21.71
+   ],
+   "sfx": [
+    "silence",
+    "impact_huge",
+    "debris"
+   ],
+   "event": "Impact 199 km/h."
+  },
+  {
+   "id": "seg08",
+   "scene": 8,
+   "mood": "ending",
+   "camera": "aftermath_rise",
+   "heading": "SAME SPEED AS A JET",
+   "text": "Falling from a jet, ten times higher, you'd land at about the same speed. But don't worry: ballooning is known as one of the safest air sports.",
+   "sim": [
+    21.71,
+    21.71
+   ],
+   "sfx": [
+    "drone_resolve",
+    "hit_final"
+   ],
+   "fact": {
+    "title": "FROM 10,000 M",
+    "value": "≈ 200 km/h (fall sim)"
+   },
+   "event": "fall episode sim; Wikipedia/FAI."
+  }
+ ]
+}
