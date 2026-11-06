@@ -1,0 +1,386 @@
+{
+ "id": "ep11",
+ "day": 11,
+ "title": "Day 11 of 30",
+ "days_left": 20,
+ "glow": 31,
+ "glow_steps": [
+  {
+   "scene": "gmeter",
+   "from": 31,
+   "to": 34
+  }
+ ],
+ "look": {
+  "teeth": "fixed",
+  "skin": "clear",
+  "hair": "fresh",
+  "outfit": "fresh",
+  "colors": {
+   "shirt": "#2E86C1",
+   "shirtSh": "#1F6AA0",
+   "pants": "#3D5A9E",
+   "logoText": "N",
+   "logo": "#FFD23F"
+  }
+ },
+ "voices": {
+  "NARR": {
+   "voice": "af_heart",
+   "speed": 1.07,
+   "pitch": 1.0
+  },
+  "NORB": {
+   "voice": "am_puck",
+   "speed": 1.1,
+   "pitch": 1.1
+  },
+  "NORBLOW": {
+   "voice": "am_puck",
+   "speed": 1.0,
+   "pitch": 0.97
+  },
+  "MAYA": {
+   "voice": "af_bella",
+   "speed": 1.05,
+   "pitch": 1.04
+  },
+  "CHAD": {
+   "voice": "am_adam",
+   "speed": 1.05,
+   "pitch": 1.0
+  },
+  "COACH": {
+   "voice": "am_onyx",
+   "speed": 1.0,
+   "pitch": 0.95
+  },
+  "GRAN": {
+   "voice": "bf_isabella",
+   "speed": 0.95,
+   "pitch": 1.0
+  },
+  "MOM": {
+   "voice": "af_sarah",
+   "speed": 1.05,
+   "pitch": 1.0
+  }
+ },
+ "cap_colors": {
+  "NORB": "#FFD23F",
+  "MAYA": "#FF8FD8",
+  "CHAD": "#FF6B5B",
+  "COACH": "#7FC8FF",
+  "GRAN": "#A8F0A0",
+  "MOM": "#FFB870"
+ },
+ "lines": [
+  {
+   "who": "NARR",
+   "text": "Day eleven. There's a rival. His name is Chad.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "hook": "MEET THE RIVAL 😤",
+    "loc": "hallway",
+    "cast": [
+     {
+      "who": "CHAD",
+      "expr": "smug",
+      "scale": 0.92
+     }
+    ],
+    "banner": "DAY 11 / 30",
+    "bannerY": 370,
+    "bannerSize": 52,
+    "hookY": 520,
+    "cam": [
+     540,
+     1130,
+     1.12
+    ],
+    "cam2": [
+     540,
+     1100,
+     1.0
+    ]
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.08
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Chad has abs. Chad has a car. Chad has a podcast.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "who": "CHAD",
+      "expr": "smug",
+      "pose": "cheer",
+      "scale": 0.92
+     }
+    ],
+    "screen": [
+     {
+      "e": "💪",
+      "x": 220,
+      "y": 760,
+      "at": 0.3,
+      "size": 170
+     },
+     {
+      "e": "🚗",
+      "x": 540,
+      "y": 640,
+      "at": 1.1,
+      "size": 170
+     },
+     {
+      "e": "🎙️",
+      "x": 860,
+      "y": 760,
+      "at": 1.9,
+      "size": 170
+     }
+    ]
+   },
+   "sfx": [
+    [
+     "pop",
+     0.3
+    ],
+    [
+     "pop",
+     1.1
+    ],
+    [
+     "pop",
+     1.9
+    ]
+   ]
+  },
+  {
+   "who": "NORB",
+   "text": "I have a library card.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "sad"
+     }
+    ],
+    "front": [
+     {
+      "e": "🪪",
+      "x": 700,
+      "y": 1150,
+      "at": 0.4,
+      "size": 150
+     }
+    ],
+    "cam": [
+     540,
+     900,
+     1.4
+    ]
+   },
+   "sfx": [
+    [
+     "pop",
+     0.4
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "He needed confidence. So: mirror pep talks.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "determined",
+      "pose": "point"
+     }
+    ]
+   }
+  },
+  {
+   "who": "NORB",
+   "text": "You are Norbert. You are cool. You are medium cool.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "determined",
+      "pose": "point"
+     }
+    ],
+    "cam": [
+     540,
+     860,
+     1.6
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "By day two, he believed it. Kind of.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "smug",
+      "pose": "cheer"
+     }
+    ],
+    "fx": [
+     "sparkle"
+    ]
+   },
+   "sfx": [
+    [
+     "chime",
+     0.05
+    ],
+    [
+     "ding",
+     0.2
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Glow up: thirty four percent. Twenty days left.",
+   "scene": "gmeter",
+   "gap": 0.35,
+   "p": {
+    "chip": "✅ CONFIDENCE: MEDIUM COOL"
+   },
+   "sfx": [
+    [
+     "pop",
+     0.1
+    ],
+    [
+     "chime",
+     0.6
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Then Chad walked past and sniffed the air.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "happy"
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "CHAD",
+      "expr": "awkward"
+     }
+    ]
+   }
+  },
+  {
+   "who": "CHAD",
+   "text": "Whoa. Who had garlic for breakfast?",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "shocked"
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "CHAD",
+      "expr": "smug",
+      "pose": "point"
+     }
+    ],
+    "screen": [
+     {
+      "e": "🧄",
+      "x": 330,
+      "y": 700,
+      "at": 0.8,
+      "size": 200
+     }
+    ],
+    "shake": true
+   },
+   "sfx": [
+    [
+     "boing",
+     0.0
+    ],
+    [
+     "pop",
+     0.8
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Tomorrow: the breath problem. Follow for day twelve.",
+   "scene": "end",
+   "gap": 1.4,
+   "p": {
+    "tease": "GARLIC BREATH",
+    "e": "🧄"
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.3
+    ],
+    [
+     "pop",
+     0.8
+    ]
+   ]
+  }
+ ],
+ "hook_title": "meet the rival"
+}

@@ -1,0 +1,371 @@
+{
+ "id": "ep20",
+ "day": 20,
+ "title": "Day 20 of 30",
+ "days_left": 11,
+ "glow": 58,
+ "glow_steps": [
+  {
+   "scene": "gmeter",
+   "from": 58,
+   "to": 61
+  }
+ ],
+ "look": {
+  "teeth": "fixed",
+  "skin": "clear",
+  "hair": "fresh",
+  "outfit": "fresh",
+  "colors": {
+   "shirt": "#2E86C1",
+   "shirtSh": "#1F6AA0",
+   "pants": "#3D5A9E",
+   "logoText": "N",
+   "logo": "#FFD23F"
+  }
+ },
+ "voices": {
+  "NARR": {
+   "voice": "af_heart",
+   "speed": 1.07,
+   "pitch": 1.0
+  },
+  "NORB": {
+   "voice": "am_puck",
+   "speed": 1.1,
+   "pitch": 1.1
+  },
+  "NORBLOW": {
+   "voice": "am_puck",
+   "speed": 1.0,
+   "pitch": 0.97
+  },
+  "MAYA": {
+   "voice": "af_bella",
+   "speed": 1.05,
+   "pitch": 1.04
+  },
+  "CHAD": {
+   "voice": "am_adam",
+   "speed": 1.05,
+   "pitch": 1.0
+  },
+  "COACH": {
+   "voice": "am_onyx",
+   "speed": 1.0,
+   "pitch": 0.95
+  },
+  "GRAN": {
+   "voice": "bf_isabella",
+   "speed": 0.95,
+   "pitch": 1.0
+  },
+  "MOM": {
+   "voice": "af_sarah",
+   "speed": 1.05,
+   "pitch": 1.0
+  }
+ },
+ "cap_colors": {
+  "NORB": "#FFD23F",
+  "MAYA": "#FF8FD8",
+  "CHAD": "#FF6B5B",
+  "COACH": "#7FC8FF",
+  "GRAN": "#A8F0A0",
+  "MOM": "#FFB870"
+ },
+ "lines": [
+  {
+   "who": "NARR",
+   "text": "Day twenty. If he fails this test, no dance.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "hook": "FAIL = NO DANCE 📚",
+    "loc": "classroom",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "panic"
+     }
+    ],
+    "board": "FAIL = NO DANCE",
+    "banner": "DAY 20 / 30",
+    "bannerY": 370,
+    "bannerSize": 52,
+    "hookY": 520,
+    "cam": [
+     540,
+     1130,
+     1.12
+    ],
+    "cam2": [
+     540,
+     1100,
+     1.0
+    ]
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.08
+    ]
+   ]
+  },
+  {
+   "who": "NORB",
+   "text": "My grade is a D. D for doomed.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "classroom",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "sad"
+     }
+    ],
+    "cam": [
+     540,
+     880,
+     1.5
+    ],
+    "board": "MATH TEST FRIDAY"
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Then Maya offered to tutor him.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "classroom",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "shocked",
+      "blush": true
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "MAYA",
+      "expr": "happy",
+      "pose": "wave"
+     }
+    ],
+    "fx": [
+     "hearts"
+    ],
+    "board": "MATH TEST FRIDAY"
+   }
+  },
+  {
+   "who": "MAYA",
+   "text": "It's easy. X is just a number we don't know yet.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "classroom",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "happy",
+      "blush": true
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "MAYA",
+      "expr": "happy",
+      "pose": "point"
+     }
+    ],
+    "cam": [
+     700,
+     900,
+     1.3
+    ],
+    "board": "x = ?"
+   }
+  },
+  {
+   "who": "NORB",
+   "text": "Like my chances with... nothing! Math! I love math!",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "classroom",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "panic",
+      "pose": "panic",
+      "blush": true
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "MAYA",
+      "expr": "awkward"
+     }
+    ],
+    "cam": [
+     380,
+     880,
+     1.5
+    ],
+    "shake": true,
+    "board": "x = ?"
+   },
+   "sfx": [
+    [
+     "boing",
+     0.0
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Friday. The test.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "classroom",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "determined"
+     }
+    ],
+    "fx": [
+     "dark:0.3",
+     "clock"
+    ],
+    "board": "TEST TODAY"
+   },
+   "sfx": [
+    [
+     "clock3",
+     0.2
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "B plus.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "classroom",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "happy",
+      "pose": "cheer",
+      "jump": 6
+     }
+    ],
+    "screen": [
+     {
+      "txt": "B+",
+      "x": 540,
+      "y": 520,
+      "at": 0.2,
+      "size": 320,
+      "col": "#FFD23F"
+     }
+    ],
+    "fx": [
+     "confetti"
+    ],
+    "board": "TEST TODAY"
+   },
+   "sfx": [
+    [
+     "crowd",
+     0.0
+    ],
+    [
+     "pop",
+     0.2
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Glow up: sixty one percent. Eleven days left.",
+   "scene": "gmeter",
+   "gap": 0.35,
+   "p": {
+    "chip": "✅ GRADES: B+"
+   },
+   "sfx": [
+    [
+     "pop",
+     0.1
+    ],
+    [
+     "chime",
+     0.6
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Now he had to talk to her. Like a normal person. With words.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "panic",
+      "pose": "panic"
+     }
+    ],
+    "cam": [
+     540,
+     880,
+     1.5
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Tomorrow: how do words work? Follow for day twenty one.",
+   "scene": "end",
+   "gap": 1.4,
+   "p": {
+    "tease": "HOW DO WORDS WORK",
+    "e": "💬"
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.3
+    ],
+    [
+     "pop",
+     0.8
+    ]
+   ]
+  }
+ ],
+ "hook_title": "fail the test = no dance"
+}

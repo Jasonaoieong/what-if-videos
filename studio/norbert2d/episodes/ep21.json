@@ -1,0 +1,378 @@
+{
+ "id": "ep21",
+ "day": 21,
+ "title": "Day 21 of 30",
+ "days_left": 10,
+ "glow": 61,
+ "glow_steps": [
+  {
+   "scene": "gmeter",
+   "from": 61,
+   "to": 64
+  }
+ ],
+ "look": {
+  "teeth": "fixed",
+  "skin": "clear",
+  "hair": "fresh",
+  "outfit": "fresh",
+  "colors": {
+   "shirt": "#2E86C1",
+   "shirtSh": "#1F6AA0",
+   "pants": "#3D5A9E",
+   "logoText": "N",
+   "logo": "#FFD23F"
+  }
+ },
+ "voices": {
+  "NARR": {
+   "voice": "af_heart",
+   "speed": 1.07,
+   "pitch": 1.0
+  },
+  "NORB": {
+   "voice": "am_puck",
+   "speed": 1.1,
+   "pitch": 1.1
+  },
+  "NORBLOW": {
+   "voice": "am_puck",
+   "speed": 1.0,
+   "pitch": 0.97
+  },
+  "MAYA": {
+   "voice": "af_bella",
+   "speed": 1.05,
+   "pitch": 1.04
+  },
+  "CHAD": {
+   "voice": "am_adam",
+   "speed": 1.05,
+   "pitch": 1.0
+  },
+  "COACH": {
+   "voice": "am_onyx",
+   "speed": 1.0,
+   "pitch": 0.95
+  },
+  "GRAN": {
+   "voice": "bf_isabella",
+   "speed": 0.95,
+   "pitch": 1.0
+  },
+  "MOM": {
+   "voice": "af_sarah",
+   "speed": 1.05,
+   "pitch": 1.0
+  }
+ },
+ "cap_colors": {
+  "NORB": "#FFD23F",
+  "MAYA": "#FF8FD8",
+  "CHAD": "#FF6B5B",
+  "COACH": "#7FC8FF",
+  "GRAN": "#A8F0A0",
+  "MOM": "#FFB870"
+ },
+ "lines": [
+  {
+   "who": "NARR",
+   "text": "Day twenty one. He needs to learn how to talk.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "hook": "HOW DO WORDS WORK 💬",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "awkward"
+     }
+    ],
+    "banner": "DAY 21 / 30",
+    "bannerY": 370,
+    "bannerSize": 52,
+    "hookY": 520,
+    "cam": [
+     540,
+     1130,
+     1.12
+    ],
+    "cam2": [
+     540,
+     1100,
+     1.0
+    ]
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.08
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "He practiced on the cat.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "determined",
+      "x": 420
+     }
+    ],
+    "front": [
+     {
+      "e": "🐱",
+      "x": 820,
+      "y": 1500,
+      "at": 0.2,
+      "size": 200
+     }
+    ]
+   },
+   "sfx": [
+    [
+     "pop",
+     0.2
+    ]
+   ]
+  },
+  {
+   "who": "NORB",
+   "text": "So. Do you like... cheese?",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "awkward",
+      "x": 420,
+      "pose": "shrug"
+     }
+    ],
+    "front": [
+     {
+      "e": "🐱",
+      "x": 820,
+      "y": 1500,
+      "at": 0.3,
+      "size": 200
+     }
+    ],
+    "cam": [
+     600,
+     1000,
+     1.3
+    ]
+   },
+   "sfx": [
+    [
+     "pop",
+     0.3
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "The cat left.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "sad",
+      "x": 420
+     }
+    ],
+    "front": [
+     {
+      "e": "🐱",
+      "x": 820,
+      "y": 1500,
+      "at": null,
+      "size": 200,
+      "fly": [
+       700,
+       0
+      ],
+      "flyDur": 0.6
+     }
+    ]
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.1
+    ]
+   ]
+  },
+  {
+   "who": "GRAN",
+   "text": "Ask questions. Then actually listen. And no cheese.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "awkward"
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "GRAN",
+      "expr": "smug",
+      "pose": "point"
+     }
+    ],
+    "cam": [
+     700,
+     900,
+     1.3
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "At lunch, he asked Maya about her favorite movie. They talked for twenty minutes.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "happy"
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "MAYA",
+      "expr": "happy"
+     }
+    ],
+    "fx": [
+     "hearts",
+     "clock"
+    ]
+   },
+   "sfx": [
+    [
+     "clock3",
+     0.2
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Glow up: sixty four percent. Ten days left.",
+   "scene": "gmeter",
+   "gap": 0.35,
+   "p": {
+    "chip": "✅ TALKING: 20 MINUTES"
+   },
+   "sfx": [
+    [
+     "pop",
+     0.1
+    ],
+    [
+     "chime",
+     0.6
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Then Chad asked Maya to the dance. In front of everyone.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "who": "NORB",
+      "x": 140,
+      "scale": 0.6,
+      "expr": "shocked"
+     },
+     {
+      "who": "CHAD",
+      "x": 600,
+      "scale": 0.8,
+      "expr": "smug",
+      "pose": "point"
+     },
+     {
+      "who": "MAYA",
+      "x": 900,
+      "scale": 0.8,
+      "expr": "shocked"
+     }
+    ],
+    "screen": [
+     {
+      "e": "😳",
+      "x": 140,
+      "y": 640,
+      "at": 1.6,
+      "size": 180
+     }
+    ],
+    "shake": 1.8
+   },
+   "sfx": [
+    [
+     "boing",
+     0.0
+    ],
+    [
+     "pop",
+     1.6
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Tomorrow: what did Maya say?! Follow for day twenty two.",
+   "scene": "end",
+   "gap": 1.4,
+   "p": {
+    "tease": "WHAT DID SHE SAY?!",
+    "e": "😳"
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.3
+    ],
+    [
+     "pop",
+     0.8
+    ]
+   ]
+  }
+ ],
+ "hook_title": "he practiced talking on his cat"
+}

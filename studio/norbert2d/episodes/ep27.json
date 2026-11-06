@@ -1,0 +1,408 @@
+{
+ "id": "ep27",
+ "day": 27,
+ "title": "Day 27 of 30",
+ "days_left": 4,
+ "glow": 79,
+ "glow_steps": [
+  {
+   "scene": "gmeter",
+   "from": 79,
+   "to": 82
+  }
+ ],
+ "look": {
+  "teeth": "fixed",
+  "skin": "clear",
+  "hair": "fresh",
+  "outfit": "fresh",
+  "colors": {
+   "shirt": "#2E86C1",
+   "shirtSh": "#1F6AA0",
+   "pants": "#3D5A9E",
+   "logoText": "N",
+   "logo": "#FFD23F"
+  }
+ },
+ "voices": {
+  "NARR": {
+   "voice": "af_heart",
+   "speed": 1.07,
+   "pitch": 1.0
+  },
+  "NORB": {
+   "voice": "am_puck",
+   "speed": 1.1,
+   "pitch": 1.1
+  },
+  "NORBLOW": {
+   "voice": "am_puck",
+   "speed": 1.0,
+   "pitch": 0.97
+  },
+  "MAYA": {
+   "voice": "af_bella",
+   "speed": 1.05,
+   "pitch": 1.04
+  },
+  "CHAD": {
+   "voice": "am_adam",
+   "speed": 1.05,
+   "pitch": 1.0
+  },
+  "COACH": {
+   "voice": "am_onyx",
+   "speed": 1.0,
+   "pitch": 0.95
+  },
+  "GRAN": {
+   "voice": "bf_isabella",
+   "speed": 0.95,
+   "pitch": 1.0
+  },
+  "MOM": {
+   "voice": "af_sarah",
+   "speed": 1.05,
+   "pitch": 1.0
+  }
+ },
+ "cap_colors": {
+  "NORB": "#FFD23F",
+  "MAYA": "#FF8FD8",
+  "CHAD": "#FF6B5B",
+  "COACH": "#7FC8FF",
+  "GRAN": "#A8F0A0",
+  "MOM": "#FFB870"
+ },
+ "lines": [
+  {
+   "who": "NARR",
+   "text": "Day twenty seven. Grandma's dance boot camp. Five AM.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "hook": "GRAN BOOT CAMP 👵",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "sad",
+      "blink": 0.7
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "GRAN",
+      "expr": "determined"
+     }
+    ],
+    "fx": [
+     "dark:0.3"
+    ],
+    "banner": "DAY 27 / 30",
+    "bannerY": 370,
+    "bannerSize": 52,
+    "hookY": 520,
+    "cam": [
+     540,
+     1130,
+     1.12
+    ],
+    "cam2": [
+     540,
+     1100,
+     1.0
+    ]
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.08
+    ]
+   ]
+  },
+  {
+   "who": "GRAN",
+   "text": "Again! Again! My hip is younger than yours!",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "panic",
+      "dance": true
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "GRAN",
+      "expr": "determined",
+      "dance": true
+     }
+    ],
+    "cam": [
+     700,
+     900,
+     1.3
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "The spin. The slide. The worm.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "determined",
+      "dance": true
+     }
+    ],
+    "screen": [
+     {
+      "e": "🌀",
+      "x": 220,
+      "y": 760,
+      "at": 0.2,
+      "size": 170
+     },
+     {
+      "e": "🛝",
+      "x": 540,
+      "y": 640,
+      "at": 0.8,
+      "size": 170
+     },
+     {
+      "e": "🪱",
+      "x": 860,
+      "y": 760,
+      "at": 1.4,
+      "size": 170
+     }
+    ]
+   },
+   "sfx": [
+    [
+     "pop",
+     0.2
+    ],
+    [
+     "pop",
+     0.8
+    ],
+    [
+     "pop",
+     1.4
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "The worm went badly.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "shocked",
+      "pushup": true,
+      "y": 1450
+     }
+    ],
+    "screen": [
+     {
+      "e": "💥",
+      "x": 540,
+      "y": 1150,
+      "at": 0.4,
+      "size": 240
+     }
+    ],
+    "shake": 1.0
+   },
+   "sfx": [
+    [
+     "boing",
+     0.0
+    ],
+    [
+     "pop",
+     0.4
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "By sunset, he had a full routine.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "park",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "smug",
+      "dance": true
+     }
+    ],
+    "fx": [
+     "sparkle"
+    ]
+   },
+   "sfx": [
+    [
+     "chime",
+     0.05
+    ],
+    [
+     "ding",
+     0.2
+    ]
+   ]
+  },
+  {
+   "who": "NORB",
+   "text": "Gran. I think I can actually dance.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "park",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "happy"
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "GRAN",
+      "expr": "happy"
+     }
+    ]
+   }
+  },
+  {
+   "who": "GRAN",
+   "text": "I know, sweetie. I taught you.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "park",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "happy"
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "GRAN",
+      "expr": "smug"
+     }
+    ],
+    "cam": [
+     700,
+     900,
+     1.3
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Glow up: eighty two percent. Four days left.",
+   "scene": "gmeter",
+   "gap": 0.35,
+   "p": {
+    "chip": "✅ DANCE: FULL ROUTINE"
+   },
+   "sfx": [
+    [
+     "pop",
+     0.1
+    ],
+    [
+     "chime",
+     0.6
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Then it was Friday. Dance battle time.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "gym",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "determined"
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "CHAD",
+      "expr": "determined"
+     }
+    ],
+    "shake": true
+   },
+   "sfx": [
+    [
+     "braam",
+     0.0
+    ],
+    [
+     "boing",
+     0.0
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Tomorrow: the dance battle. Follow for day twenty eight.",
+   "scene": "end",
+   "gap": 1.4,
+   "p": {
+    "tease": "DANCE BATTLE",
+    "e": "⚔️"
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.3
+    ],
+    [
+     "pop",
+     0.8
+    ]
+   ]
+  }
+ ],
+ "hook_title": "grandma's dance boot camp"
+}

@@ -1,0 +1,381 @@
+{
+ "id": "ep28",
+ "day": 28,
+ "title": "Day 28 of 30",
+ "days_left": 3,
+ "glow": 82,
+ "glow_steps": [
+  {
+   "scene": "gmeter",
+   "from": 82,
+   "to": 85
+  }
+ ],
+ "look": {
+  "teeth": "fixed",
+  "skin": "clear",
+  "hair": "fresh",
+  "outfit": "fresh",
+  "colors": {
+   "shirt": "#2E86C1",
+   "shirtSh": "#1F6AA0",
+   "pants": "#3D5A9E",
+   "logoText": "N",
+   "logo": "#FFD23F"
+  }
+ },
+ "voices": {
+  "NARR": {
+   "voice": "af_heart",
+   "speed": 1.07,
+   "pitch": 1.0
+  },
+  "NORB": {
+   "voice": "am_puck",
+   "speed": 1.1,
+   "pitch": 1.1
+  },
+  "NORBLOW": {
+   "voice": "am_puck",
+   "speed": 1.0,
+   "pitch": 0.97
+  },
+  "MAYA": {
+   "voice": "af_bella",
+   "speed": 1.05,
+   "pitch": 1.04
+  },
+  "CHAD": {
+   "voice": "am_adam",
+   "speed": 1.05,
+   "pitch": 1.0
+  },
+  "COACH": {
+   "voice": "am_onyx",
+   "speed": 1.0,
+   "pitch": 0.95
+  },
+  "GRAN": {
+   "voice": "bf_isabella",
+   "speed": 0.95,
+   "pitch": 1.0
+  },
+  "MOM": {
+   "voice": "af_sarah",
+   "speed": 1.05,
+   "pitch": 1.0
+  }
+ },
+ "cap_colors": {
+  "NORB": "#FFD23F",
+  "MAYA": "#FF8FD8",
+  "CHAD": "#FF6B5B",
+  "COACH": "#7FC8FF",
+  "GRAN": "#A8F0A0",
+  "MOM": "#FFB870"
+ },
+ "lines": [
+  {
+   "who": "NARR",
+   "text": "Day twenty eight. Dance battle. The whole school is watching.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "hook": "DANCE BATTLE ⚔️",
+    "loc": "gym",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "determined"
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "CHAD",
+      "expr": "smug"
+     }
+    ],
+    "banner": "DAY 28 / 30",
+    "bannerY": 370,
+    "bannerSize": 52,
+    "hookY": 520,
+    "cam": [
+     540,
+     1130,
+     1.12
+    ],
+    "cam2": [
+     540,
+     1100,
+     1.0
+    ]
+   },
+   "sfx": [
+    [
+     "crowd",
+     0.3
+    ],
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.08
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Chad went first. A backflip. The crowd screamed.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "gym",
+    "cast": [
+     {
+      "who": "CHAD",
+      "expr": "smug",
+      "jump": 5,
+      "pose": "cheer",
+      "scale": 0.92
+     }
+    ],
+    "fx": [
+     "confetti"
+    ]
+   },
+   "sfx": [
+    [
+     "crowd",
+     0.0
+    ]
+   ]
+  },
+  {
+   "who": "CHAD",
+   "text": "Beat that, ten percent.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "gym",
+    "cast": [
+     {
+      "who": "CHAD",
+      "expr": "smug",
+      "pose": "point",
+      "scale": 0.92
+     }
+    ],
+    "cam": [
+     540,
+     860,
+     1.6
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Norbert stepped up. Spin. Slide. Gran's secret move.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "gym",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "determined",
+      "dance": true
+     }
+    ],
+    "fx": [
+     "speed",
+     "sparkle"
+    ]
+   },
+   "sfx": [
+    [
+     "chime",
+     0.05
+    ],
+    [
+     "ding",
+     0.2
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "And then, the worm. Perfect.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "gym",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "happy",
+      "pushup": true,
+      "y": 1450
+     }
+    ],
+    "fx": [
+     "sparkle"
+    ]
+   },
+   "sfx": [
+    [
+     "chime",
+     0.05
+    ],
+    [
+     "ding",
+     0.2
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "The gym went silent. Then it went insane.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "gym",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "happy",
+      "pose": "cheer",
+      "jump": 7
+     }
+    ],
+    "fx": [
+     "confetti",
+     "hearts"
+    ]
+   },
+   "sfx": [
+    [
+     "crowd",
+     0.8
+    ],
+    [
+     "crowd",
+     0.0
+    ]
+   ]
+  },
+  {
+   "who": "NORB",
+   "text": "Gran! It worked!",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "gym",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "happy",
+      "pose": "cheer"
+     }
+    ],
+    "cam": [
+     540,
+     860,
+     1.6
+    ],
+    "fx": [
+     "confetti"
+    ]
+   },
+   "sfx": [
+    [
+     "crowd",
+     0.0
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Glow up: eighty five percent. Three days left.",
+   "scene": "gmeter",
+   "gap": 0.35,
+   "p": {
+    "chip": "✅ BATTLE: WON 🏆"
+   },
+   "sfx": [
+    [
+     "pop",
+     0.1
+    ],
+    [
+     "chime",
+     0.6
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Then Chad walked up to him. Everyone held their breath.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "gym",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "awkward"
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "CHAD",
+      "expr": "determined",
+      "walk": [
+       980,
+       760
+      ]
+     }
+    ],
+    "fx": [
+     "dark:0.35"
+    ]
+   },
+   "sfx": [
+    [
+     "heartbeat",
+     0.0
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Tomorrow: what does Chad do? Follow for day twenty nine.",
+   "scene": "end",
+   "gap": 1.4,
+   "p": {
+    "tease": "CHAD'S MOVE",
+    "e": "😳"
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.3
+    ],
+    [
+     "pop",
+     0.8
+    ]
+   ]
+  }
+ ],
+ "hook_title": "the dance battle"
+}

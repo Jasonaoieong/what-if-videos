@@ -1,0 +1,341 @@
+{
+ "id": "ep14",
+ "day": 14,
+ "title": "Day 14 of 30",
+ "days_left": 17,
+ "glow": 40,
+ "glow_steps": [
+  {
+   "scene": "gmeter",
+   "from": 40,
+   "to": 43
+  }
+ ],
+ "look": {
+  "teeth": "fixed",
+  "skin": "clear",
+  "hair": "fresh",
+  "outfit": "fresh",
+  "colors": {
+   "shirt": "#2E86C1",
+   "shirtSh": "#1F6AA0",
+   "pants": "#3D5A9E",
+   "logoText": "N",
+   "logo": "#FFD23F"
+  }
+ },
+ "voices": {
+  "NARR": {
+   "voice": "af_heart",
+   "speed": 1.07,
+   "pitch": 1.0
+  },
+  "NORB": {
+   "voice": "am_puck",
+   "speed": 1.1,
+   "pitch": 1.1
+  },
+  "NORBLOW": {
+   "voice": "am_puck",
+   "speed": 1.0,
+   "pitch": 0.97
+  },
+  "MAYA": {
+   "voice": "af_bella",
+   "speed": 1.05,
+   "pitch": 1.04
+  },
+  "CHAD": {
+   "voice": "am_adam",
+   "speed": 1.05,
+   "pitch": 1.0
+  },
+  "COACH": {
+   "voice": "am_onyx",
+   "speed": 1.0,
+   "pitch": 0.95
+  },
+  "GRAN": {
+   "voice": "bf_isabella",
+   "speed": 0.95,
+   "pitch": 1.0
+  },
+  "MOM": {
+   "voice": "af_sarah",
+   "speed": 1.05,
+   "pitch": 1.0
+  }
+ },
+ "cap_colors": {
+  "NORB": "#FFD23F",
+  "MAYA": "#FF8FD8",
+  "CHAD": "#FF6B5B",
+  "COACH": "#7FC8FF",
+  "GRAN": "#A8F0A0",
+  "MOM": "#FFB870"
+ },
+ "lines": [
+  {
+   "who": "NARR",
+   "text": "Day fourteen. He saluted his crush.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "hook": "HE SALUTED HER 🫡",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "sad"
+     }
+    ],
+    "banner": "DAY 14 / 30",
+    "bannerY": 370,
+    "bannerSize": 52,
+    "hookY": 520,
+    "cam": [
+     540,
+     1130,
+     1.12
+    ],
+    "cam2": [
+     540,
+     1100,
+     1.0
+    ]
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.08
+    ]
+   ]
+  },
+  {
+   "who": "NORB",
+   "text": "Why would I do that? I'm not in the army!",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "panic",
+      "pose": "panic"
+     }
+    ],
+    "cam": [
+     540,
+     880,
+     1.5
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "The fix: a normal smile. And a normal wave.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "determined"
+     }
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Smile number one: terrifying.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "smug"
+     }
+    ],
+    "cam": [
+     540,
+     820,
+     2.2
+    ],
+    "fx": [
+     "red"
+    ],
+    "screen": [
+     {
+      "e": "😬",
+      "x": 860,
+      "y": 640,
+      "at": 0.6,
+      "size": 200
+     }
+    ]
+   },
+   "sfx": [
+    [
+     "siren",
+     0.0
+    ],
+    [
+     "pop",
+     0.6
+    ]
+   ]
+  },
+  {
+   "who": "MOM",
+   "text": "Honey, why are you making that face at the toaster?",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "kitchen",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "smug"
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "MOM",
+      "expr": "shocked"
+     }
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Smile number two hundred: perfect.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "happy",
+      "pose": "wave"
+     }
+    ],
+    "fx": [
+     "sparkle"
+    ],
+    "cam": [
+     540,
+     900,
+     1.4
+    ]
+   },
+   "sfx": [
+    [
+     "chime",
+     0.05
+    ],
+    [
+     "ding",
+     0.2
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Glow up: forty three percent. Seventeen days left.",
+   "scene": "gmeter",
+   "gap": 0.35,
+   "p": {
+    "chip": "✅ SMILE: NOT SCARY"
+   },
+   "sfx": [
+    [
+     "pop",
+     0.1
+    ],
+    [
+     "chime",
+     0.6
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Tomorrow is the halfway point. And Chad has a plan.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "who": "CHAD",
+      "expr": "smug",
+      "scale": 0.92
+     }
+    ],
+    "fx": [
+     "dark:0.35"
+    ]
+   }
+  },
+  {
+   "who": "CHAD",
+   "text": "Let's see how he handles the mile run.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "who": "CHAD",
+      "expr": "smug",
+      "scale": 0.92,
+      "pose": "point"
+     }
+    ],
+    "cam": [
+     540,
+     860,
+     1.6
+    ],
+    "fx": [
+     "dark:0.35"
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Tomorrow: halfway. The mile run. Follow for day fifteen.",
+   "scene": "end",
+   "gap": 1.4,
+   "p": {
+    "tease": "THE MILE RUN",
+    "e": "🏃"
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.3
+    ],
+    [
+     "pop",
+     0.8
+    ]
+   ]
+  }
+ ],
+ "hook_title": "he saluted his crush"
+}

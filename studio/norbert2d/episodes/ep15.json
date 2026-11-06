@@ -1,0 +1,351 @@
+{
+ "id": "ep15",
+ "day": 15,
+ "title": "Day 15 of 30",
+ "days_left": 16,
+ "glow": 43,
+ "glow_steps": [
+  {
+   "scene": "gmeter",
+   "from": 43,
+   "to": 46
+  }
+ ],
+ "look": {
+  "teeth": "fixed",
+  "skin": "clear",
+  "hair": "fresh",
+  "outfit": "fresh",
+  "colors": {
+   "shirt": "#2E86C1",
+   "shirtSh": "#1F6AA0",
+   "pants": "#3D5A9E",
+   "logoText": "N",
+   "logo": "#FFD23F"
+  }
+ },
+ "voices": {
+  "NARR": {
+   "voice": "af_heart",
+   "speed": 1.07,
+   "pitch": 1.0
+  },
+  "NORB": {
+   "voice": "am_puck",
+   "speed": 1.1,
+   "pitch": 1.1
+  },
+  "NORBLOW": {
+   "voice": "am_puck",
+   "speed": 1.0,
+   "pitch": 0.97
+  },
+  "MAYA": {
+   "voice": "af_bella",
+   "speed": 1.05,
+   "pitch": 1.04
+  },
+  "CHAD": {
+   "voice": "am_adam",
+   "speed": 1.05,
+   "pitch": 1.0
+  },
+  "COACH": {
+   "voice": "am_onyx",
+   "speed": 1.0,
+   "pitch": 0.95
+  },
+  "GRAN": {
+   "voice": "bf_isabella",
+   "speed": 0.95,
+   "pitch": 1.0
+  },
+  "MOM": {
+   "voice": "af_sarah",
+   "speed": 1.05,
+   "pitch": 1.0
+  }
+ },
+ "cap_colors": {
+  "NORB": "#FFD23F",
+  "MAYA": "#FF8FD8",
+  "CHAD": "#FF6B5B",
+  "COACH": "#7FC8FF",
+  "GRAN": "#A8F0A0",
+  "MOM": "#FFB870"
+ },
+ "lines": [
+  {
+   "who": "NARR",
+   "text": "Day fifteen. Halfway. And it's the mile run.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "hook": "HALFWAY: THE MILE 🏃",
+    "loc": "park",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "determined"
+     }
+    ],
+    "banner": "DAY 15 / 30",
+    "bannerY": 370,
+    "bannerSize": 52,
+    "hookY": 520,
+    "cam": [
+     540,
+     1130,
+     1.12
+    ],
+    "cam2": [
+     540,
+     1100,
+     1.0
+    ]
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.08
+    ]
+   ]
+  },
+  {
+   "who": "COACH",
+   "text": "Ready. Set. Go!",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "park",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "determined"
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "COACH",
+      "expr": "determined",
+      "pose": "point"
+     }
+    ]
+   },
+   "sfx": [
+    [
+     "ding",
+     0.6
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Chad finished in six minutes.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "park",
+    "cast": [
+     {
+      "who": "CHAD",
+      "expr": "smug",
+      "walk": [
+       100,
+       980
+      ],
+      "walkDur": 1.0
+     }
+    ],
+    "fx": [
+     "speed"
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Norbert's legs gave up at minute four.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "park",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "sad",
+      "lean": 18,
+      "headTilt": 12
+     }
+    ],
+    "fx": [
+     "clock"
+    ]
+   },
+   "sfx": [
+    [
+     "clock3",
+     0.2
+    ]
+   ]
+  },
+  {
+   "who": "NORB",
+   "text": "Remember the push ups. Remember the push ups.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "park",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "determined",
+      "wobble": 4
+     }
+    ],
+    "cam": [
+     540,
+     860,
+     1.5
+    ],
+    "fx": [
+     "speed"
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "He finished. Last. But he finished. And Maya clapped.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "park",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "happy",
+      "pose": "cheer"
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "MAYA",
+      "expr": "happy",
+      "pose": "cheer"
+     }
+    ],
+    "fx": [
+     "hearts"
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Glow up: forty six percent. Sixteen days left.",
+   "scene": "gmeter",
+   "gap": 0.35,
+   "p": {
+    "chip": "✅ MILE: FINISHED (LAST)"
+   },
+   "sfx": [
+    [
+     "pop",
+     0.1
+    ],
+    [
+     "chime",
+     0.6
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Then his stomach growled so loud the whole class heard.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "park",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "panic"
+     }
+    ],
+    "screen": [
+     {
+      "txt": "GRRRRRR",
+      "x": 540,
+      "y": 520,
+      "at": 0.8,
+      "size": 160,
+      "col": "#FF6B5B"
+     }
+    ],
+    "shake": 1.4
+   },
+   "sfx": [
+    [
+     "boing",
+     0.0
+    ],
+    [
+     "pop",
+     0.8
+    ]
+   ]
+  },
+  {
+   "who": "NORB",
+   "text": "I've had cereal for dinner for three years.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "park",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "awkward",
+      "pose": "shrug"
+     }
+    ],
+    "cam": [
+     540,
+     880,
+     1.5
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Tomorrow: can Norbert cook? Follow for day sixteen.",
+   "scene": "end",
+   "gap": 1.4,
+   "p": {
+    "tease": "CAN HE COOK?!",
+    "e": "🍳"
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.3
+    ],
+    [
+     "pop",
+     0.8
+    ]
+   ]
+  }
+ ],
+ "hook_title": "halfway: the mile run"
+}

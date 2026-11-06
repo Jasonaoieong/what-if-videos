@@ -1,0 +1,335 @@
+{
+ "id": "ep24",
+ "day": 24,
+ "title": "Day 24 of 30",
+ "days_left": 7,
+ "glow": 70,
+ "glow_steps": [
+  {
+   "scene": "gmeter",
+   "from": 70,
+   "to": 73
+  }
+ ],
+ "look": {
+  "teeth": "fixed",
+  "skin": "clear",
+  "hair": "fresh",
+  "outfit": "fresh",
+  "colors": {
+   "shirt": "#2E86C1",
+   "shirtSh": "#1F6AA0",
+   "pants": "#3D5A9E",
+   "logoText": "N",
+   "logo": "#FFD23F"
+  }
+ },
+ "voices": {
+  "NARR": {
+   "voice": "af_heart",
+   "speed": 1.07,
+   "pitch": 1.0
+  },
+  "NORB": {
+   "voice": "am_puck",
+   "speed": 1.1,
+   "pitch": 1.1
+  },
+  "NORBLOW": {
+   "voice": "am_puck",
+   "speed": 1.0,
+   "pitch": 0.97
+  },
+  "MAYA": {
+   "voice": "af_bella",
+   "speed": 1.05,
+   "pitch": 1.04
+  },
+  "CHAD": {
+   "voice": "am_adam",
+   "speed": 1.05,
+   "pitch": 1.0
+  },
+  "COACH": {
+   "voice": "am_onyx",
+   "speed": 1.0,
+   "pitch": 0.95
+  },
+  "GRAN": {
+   "voice": "bf_isabella",
+   "speed": 0.95,
+   "pitch": 1.0
+  },
+  "MOM": {
+   "voice": "af_sarah",
+   "speed": 1.05,
+   "pitch": 1.0
+  }
+ },
+ "cap_colors": {
+  "NORB": "#FFD23F",
+  "MAYA": "#FF8FD8",
+  "CHAD": "#FF6B5B",
+  "COACH": "#7FC8FF",
+  "GRAN": "#A8F0A0",
+  "MOM": "#FFB870"
+ },
+ "lines": [
+  {
+   "who": "NARR",
+   "text": "Day twenty four. Today, he asks Maya to the dance.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "hook": "THE BIG ASK 💌",
+    "loc": "hallway",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "determined"
+     }
+    ],
+    "banner": "DAY 24 / 30",
+    "bannerY": 370,
+    "bannerSize": 52,
+    "hookY": 520,
+    "cam": [
+     540,
+     1130,
+     1.12
+    ],
+    "cam2": [
+     540,
+     1100,
+     1.0
+    ]
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.08
+    ]
+   ]
+  },
+  {
+   "who": "NORB",
+   "text": "Okay. Corsage. Smile. Words. Go.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "determined",
+      "pose": "point"
+     }
+    ],
+    "cam": [
+     540,
+     860,
+     1.6
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "He walked up. He opened his mouth.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "happy",
+      "walk": [
+       200,
+       330
+      ],
+      "scale": 0.8
+     },
+     {
+      "who": "MAYA",
+      "x": 760,
+      "scale": 0.8,
+      "expr": "happy"
+     }
+    ],
+    "fx": [
+     "hearts"
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "And the fire alarm went off.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "shocked"
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "MAYA",
+      "expr": "shocked"
+     }
+    ],
+    "fx": [
+     "red"
+    ],
+    "screen": [
+     {
+      "e": "🚨",
+      "x": 540,
+      "y": 640,
+      "at": 0.2,
+      "size": 200
+     }
+    ],
+    "shake": true
+   },
+   "sfx": [
+    [
+     "boing",
+     0.0
+    ],
+    [
+     "siren",
+     0.0
+    ],
+    [
+     "pop",
+     0.2
+    ]
+   ]
+  },
+  {
+   "who": "NORB",
+   "text": "Are you kidding me?!",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "panic",
+      "pose": "panic"
+     }
+    ],
+    "cam": [
+     540,
+     860,
+     1.7
+    ],
+    "fx": [
+     "red"
+    ]
+   },
+   "sfx": [
+    [
+     "siren",
+     0.0
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Guess who pulled the alarm.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "who": "CHAD",
+      "expr": "smug",
+      "scale": 0.92,
+      "pose": "point"
+     }
+    ],
+    "cam": [
+     540,
+     900,
+     1.4
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Glow up: seventy three percent. Seven days left.",
+   "scene": "gmeter",
+   "gap": 0.35,
+   "p": {
+    "chip": "✅ COURAGE: +3"
+   },
+   "sfx": [
+    [
+     "pop",
+     0.1
+    ],
+    [
+     "chime",
+     0.6
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Norbert had one more idea.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "night",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "determined"
+     }
+    ],
+    "cam": [
+     540,
+     900,
+     1.4
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Tomorrow: plan B. Follow for day twenty five.",
+   "scene": "end",
+   "gap": 1.4,
+   "p": {
+    "tease": "PLAN B",
+    "e": "📝"
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.3
+    ],
+    [
+     "pop",
+     0.8
+    ]
+   ]
+  }
+ ],
+ "hook_title": "he finally asks her"
+}

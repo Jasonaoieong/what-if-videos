@@ -1,0 +1,367 @@
+{
+ "id": "ep12",
+ "day": 12,
+ "title": "Day 12 of 30",
+ "days_left": 19,
+ "glow": 34,
+ "glow_steps": [
+  {
+   "scene": "gmeter",
+   "from": 34,
+   "to": 37
+  }
+ ],
+ "look": {
+  "teeth": "fixed",
+  "skin": "clear",
+  "hair": "fresh",
+  "outfit": "fresh",
+  "colors": {
+   "shirt": "#2E86C1",
+   "shirtSh": "#1F6AA0",
+   "pants": "#3D5A9E",
+   "logoText": "N",
+   "logo": "#FFD23F"
+  }
+ },
+ "voices": {
+  "NARR": {
+   "voice": "af_heart",
+   "speed": 1.07,
+   "pitch": 1.0
+  },
+  "NORB": {
+   "voice": "am_puck",
+   "speed": 1.1,
+   "pitch": 1.1
+  },
+  "NORBLOW": {
+   "voice": "am_puck",
+   "speed": 1.0,
+   "pitch": 0.97
+  },
+  "MAYA": {
+   "voice": "af_bella",
+   "speed": 1.05,
+   "pitch": 1.04
+  },
+  "CHAD": {
+   "voice": "am_adam",
+   "speed": 1.05,
+   "pitch": 1.0
+  },
+  "COACH": {
+   "voice": "am_onyx",
+   "speed": 1.0,
+   "pitch": 0.95
+  },
+  "GRAN": {
+   "voice": "bf_isabella",
+   "speed": 0.95,
+   "pitch": 1.0
+  },
+  "MOM": {
+   "voice": "af_sarah",
+   "speed": 1.05,
+   "pitch": 1.0
+  }
+ },
+ "cap_colors": {
+  "NORB": "#FFD23F",
+  "MAYA": "#FF8FD8",
+  "CHAD": "#FF6B5B",
+  "COACH": "#7FC8FF",
+  "GRAN": "#A8F0A0",
+  "MOM": "#FFB870"
+ },
+ "lines": [
+  {
+   "who": "NARR",
+   "text": "Day twelve. Chad says his breath smells like garlic.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "hook": "GARLIC BREATH?! 🧄",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "awkward"
+     }
+    ],
+    "fx": [
+     "stink"
+    ],
+    "banner": "DAY 12 / 30",
+    "bannerY": 370,
+    "bannerSize": 52,
+    "hookY": 520,
+    "cam": [
+     540,
+     1130,
+     1.12
+    ],
+    "cam2": [
+     540,
+     1100,
+     1.0
+    ]
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.08
+    ]
+   ]
+  },
+  {
+   "who": "NORB",
+   "text": "That's a lie. Let me check.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "smug",
+      "armR": 2.2,
+      "bendR": 0.9
+     }
+    ],
+    "cam": [
+     540,
+     860,
+     1.6
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "It was not a lie.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "shocked",
+      "pose": "panic"
+     }
+    ],
+    "fx": [
+     "stink",
+     "flies"
+    ],
+    "shake": true
+   },
+   "sfx": [
+    [
+     "boing",
+     0.0
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Brush. Floss. Tongue scraper. Forty seven mints.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "determined"
+     }
+    ],
+    "screen": [
+     {
+      "e": "🪥",
+      "x": 200,
+      "y": 760,
+      "at": 0.2,
+      "size": 170
+     },
+     {
+      "e": "🧵",
+      "x": 420,
+      "y": 640,
+      "at": 0.7,
+      "size": 170
+     },
+     {
+      "e": "👅",
+      "x": 660,
+      "y": 640,
+      "at": 1.2,
+      "size": 170
+     },
+     {
+      "e": "🍬",
+      "x": 880,
+      "y": 760,
+      "at": 1.8,
+      "size": 170
+     }
+    ]
+   },
+   "sfx": [
+    [
+     "pop",
+     0.2
+    ],
+    [
+     "pop",
+     0.7
+    ],
+    [
+     "pop",
+     1.2
+    ],
+    [
+     "pop",
+     1.8
+    ]
+   ]
+  },
+  {
+   "who": "NORB",
+   "text": "My mouth is so minty I can see my breath indoors.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "happy"
+     }
+    ],
+    "fx": [
+     "rain:❄️"
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Glow up: thirty seven percent. Nineteen days left.",
+   "scene": "gmeter",
+   "gap": 0.35,
+   "p": {
+    "chip": "✅ BREATH: ARCTIC FRESH"
+   },
+   "sfx": [
+    [
+     "pop",
+     0.1
+    ],
+    [
+     "chime",
+     0.6
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Then a poster went up. Dance lessons. Partners required.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "shocked",
+      "x": 540
+     }
+    ],
+    "screen": [
+     {
+      "txt": "DANCE CLASS 💃",
+      "x": 540,
+      "y": 520,
+      "at": 0.5,
+      "size": 110,
+      "col": "#FFD23F"
+     },
+     {
+      "txt": "PARTNERS REQUIRED",
+      "x": 540,
+      "y": 520,
+      "at": 1.6,
+      "size": 80,
+      "col": "#FF6B5B"
+     }
+    ]
+   },
+   "sfx": [
+    [
+     "pop",
+     0.5
+    ],
+    [
+     "pop",
+     1.6
+    ]
+   ]
+  },
+  {
+   "who": "NORB",
+   "text": "Partners?!",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "panic",
+      "pose": "panic"
+     }
+    ],
+    "cam": [
+     540,
+     860,
+     1.7
+    ],
+    "shake": true
+   },
+   "sfx": [
+    [
+     "boing",
+     0.0
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Tomorrow: Norbert learns to dance. Follow for day thirteen.",
+   "scene": "end",
+   "gap": 1.4,
+   "p": {
+    "tease": "CAN HE DANCE?!",
+    "e": "🕺"
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.3
+    ],
+    [
+     "pop",
+     0.8
+    ]
+   ]
+  }
+ ],
+ "hook_title": "garlic breath emergency"
+}

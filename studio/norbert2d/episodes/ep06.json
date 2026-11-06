@@ -1,0 +1,402 @@
+{
+ "id": "ep06",
+ "day": 6,
+ "title": "Day 6 of 30",
+ "days_left": 25,
+ "glow": 16,
+ "glow_steps": [
+  {
+   "scene": "gmeter",
+   "from": 16,
+   "to": 19
+  }
+ ],
+ "look": {
+  "teeth": "fixed",
+  "skin": "clear",
+  "hair": "fresh",
+  "outfit": "fresh",
+  "colors": {
+   "shirt": "#2E86C1",
+   "shirtSh": "#1F6AA0",
+   "pants": "#3D5A9E",
+   "logoText": "N",
+   "logo": "#FFD23F"
+  }
+ },
+ "voices": {
+  "NARR": {
+   "voice": "af_heart",
+   "speed": 1.07,
+   "pitch": 1.0
+  },
+  "NORB": {
+   "voice": "am_puck",
+   "speed": 1.1,
+   "pitch": 1.1
+  },
+  "NORBLOW": {
+   "voice": "am_puck",
+   "speed": 1.0,
+   "pitch": 0.97
+  },
+  "MAYA": {
+   "voice": "af_bella",
+   "speed": 1.05,
+   "pitch": 1.04
+  },
+  "CHAD": {
+   "voice": "am_adam",
+   "speed": 1.05,
+   "pitch": 1.0
+  },
+  "COACH": {
+   "voice": "am_onyx",
+   "speed": 1.0,
+   "pitch": 0.95
+  },
+  "GRAN": {
+   "voice": "bf_isabella",
+   "speed": 0.95,
+   "pitch": 1.0
+  },
+  "MOM": {
+   "voice": "af_sarah",
+   "speed": 1.05,
+   "pitch": 1.0
+  }
+ },
+ "cap_colors": {
+  "NORB": "#FFD23F",
+  "MAYA": "#FF8FD8",
+  "CHAD": "#FF6B5B",
+  "COACH": "#7FC8FF",
+  "GRAN": "#A8F0A0",
+  "MOM": "#FFB870"
+ },
+ "lines": [
+  {
+   "who": "NARR",
+   "text": "Day six. His only shirt has a ketchup stain.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "hook": "HIS ONLY SHIRT 💀",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "sad",
+      "outfit": "slob",
+      "colors": {}
+     }
+    ],
+    "fx": [
+     "flies"
+    ],
+    "banner": "DAY 6 / 30",
+    "bannerY": 370,
+    "bannerSize": 52,
+    "hookY": 520,
+    "cam": [
+     540,
+     1130,
+     1.12
+    ],
+    "cam2": [
+     540,
+     1100,
+     1.0
+    ]
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.08
+    ]
+   ]
+  },
+  {
+   "who": "MOM",
+   "text": "Twenty dollars. And nothing with a skull on it.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "room",
+    "cast": [
+     {
+      "x": 330,
+      "scale": 0.8,
+      "who": "NORB",
+      "expr": "awkward",
+      "outfit": "slob",
+      "colors": {}
+     },
+     {
+      "x": 760,
+      "scale": 0.8,
+      "who": "MOM",
+      "expr": "smug",
+      "pose": "point"
+     }
+    ]
+   }
+  },
+  {
+   "who": "NORB",
+   "text": "Twenty bucks? I'm basically rich.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "store",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "happy",
+      "pose": "cheer",
+      "outfit": "slob",
+      "colors": {}
+     }
+    ],
+    "fx": [
+     "rain:💸"
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Outfit one: skulls.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "store",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "smug",
+      "outfit": "fresh",
+      "colors": {
+       "shirt": "#111111",
+       "shirtSh": "#000",
+       "pants": "#222",
+       "logoText": "☠",
+       "logo": "#FFF"
+      }
+     }
+    ],
+    "screen": [
+     {
+      "e": "❌",
+      "x": 820,
+      "y": 640,
+      "at": 0.6,
+      "size": 220
+     }
+    ]
+   },
+   "sfx": [
+    [
+     "pop",
+     0.6
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Outfit two: a tuxedo. For school.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "store",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "smug",
+      "outfit": "suit"
+     }
+    ],
+    "screen": [
+     {
+      "e": "❌",
+      "x": 820,
+      "y": 640,
+      "at": 0.7,
+      "size": 220
+     }
+    ]
+   },
+   "sfx": [
+    [
+     "pop",
+     0.7
+    ]
+   ]
+  },
+  {
+   "who": "NORB",
+   "text": "Okay. Normal. I can do normal.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "store",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "determined",
+      "outfit": "slob",
+      "colors": {}
+     }
+    ],
+    "cam": [
+     540,
+     900,
+     1.6
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Blue hoodie. Clean jeans. New shoes.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "store",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "happy",
+      "pose": "cheer"
+     }
+    ],
+    "fx": [
+     "sparkle"
+    ],
+    "cam": [
+     540,
+     1300,
+     1.7
+    ],
+    "cam2": [
+     540,
+     1060,
+     1.0
+    ],
+    "camDur": 2.0
+   },
+   "sfx": [
+    [
+     "chime",
+     0.05
+    ],
+    [
+     "ding",
+     0.2
+    ]
+   ]
+  },
+  {
+   "who": "NORB",
+   "text": "I look like a guy who knows things.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "store",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "smug",
+      "pose": "point"
+     }
+    ],
+    "cam": [
+     540,
+     820,
+     1.6
+    ]
+   }
+  },
+  {
+   "who": "NARR",
+   "text": "Glow up: nineteen percent. Twenty five days left.",
+   "scene": "gmeter",
+   "gap": 0.35,
+   "p": {
+    "chip": "✅ CLOTHES: UPGRADED"
+   },
+   "sfx": [
+    [
+     "pop",
+     0.1
+    ],
+    [
+     "chime",
+     0.6
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Then Coach posted the fitness test list.",
+   "scene": "set",
+   "gap": 0.25,
+   "p": {
+    "loc": "hallway",
+    "cast": [
+     {
+      "who": "NORB",
+      "expr": "shocked"
+     }
+    ],
+    "screen": [
+     {
+      "txt": "FITNESS TEST: FRIDAY",
+      "x": 540,
+      "y": 520,
+      "at": 0.5,
+      "size": 90,
+      "col": "#FF6B5B"
+     }
+    ],
+    "shake": true
+   },
+   "sfx": [
+    [
+     "boing",
+     0.0
+    ],
+    [
+     "pop",
+     0.5
+    ]
+   ]
+  },
+  {
+   "who": "NARR",
+   "text": "Tomorrow: can he do even one push up? Follow for day seven.",
+   "scene": "end",
+   "gap": 1.4,
+   "p": {
+    "tease": "ONE PUSH-UP?!",
+    "e": "💪"
+   },
+   "sfx": [
+    [
+     "whoosh",
+     0.0
+    ],
+    [
+     "pop",
+     0.3
+    ],
+    [
+     "pop",
+     0.8
+    ]
+   ]
+  }
+ ],
+ "hook_title": "his only shirt has a ketchup stain"
+}

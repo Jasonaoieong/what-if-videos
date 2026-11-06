@@ -114,6 +114,8 @@
 
   function hair(t, style) {
     if (style === 'fresh') return hairFresh(t);
+    if (style === 'long') return hairLong(t);
+    if (style === 'chad') return hairChad(t);
     let s = '';
     // Greasy cap with a jagged fringe
     s += shape('M -160 -462 A 162 162 0 1 1 160 -470 L 140 -560 L 118 -546 L 100 -592 L 66 -550 L 38 -600 L 8 -552 ' +
@@ -125,6 +127,22 @@
     s += tube(`M 8 -640 C -2 -700 22 -${742 + w} 62 -${746 + w} C 106 -${748 + w} 120 -${700 + w} 96 -${675 + w} C 82 -${662 + w} 64 -${668 + w} 62 -${682 + w}`, 18, C.hair);
     // Strays
     s += tube('M -60 -642 Q -84 -690 -112 -686', 8, C.hair) + tube('M 70 -640 Q 96 -676 122 -664', 8, C.hair);
+    return s;
+  }
+
+  function hairLongBack(t) {
+    const w = Math.sin(t * 2) * 4;
+    return shape(`M -150 -520 Q -200 -300 ${-170 + w} -230 L ${170 + w} -230 Q 200 -300 150 -520 Z`, C.hair);
+  }
+  function hairLong(t) {
+    let s = shape('M -158 -470 Q -170 -650 0 -652 Q 170 -650 158 -470 Q 130 -560 40 -590 Q -60 -560 -158 -470 Z', C.hair);
+    s += line('M -60 -630 Q 0 -646 60 -630', 8, C.hairHi);
+    s += shape('M 90 -640 L 150 -670 L 140 -610 Z', '#FF6FA8', 5) + shape('M 90 -640 L 40 -680 L 60 -620 Z', '#FF6FA8', 5) + circ(90, -640, 12, '#FF8FBF', 4);
+    return s;
+  }
+  function hairChad(t) {
+    let s = shape('M -152 -500 Q -160 -630 -60 -650 Q 0 -760 140 -700 Q 100 -690 120 -660 Q 160 -600 154 -500 Q 110 -580 0 -590 Q -100 -580 -152 -500 Z', C.hair);
+    s += line('M -20 -700 Q 40 -730 100 -706', 8, C.hairHi);
     return s;
   }
 
@@ -154,8 +172,18 @@
     return { arm, sleeve, hand: { x: hx, y: hy } };
   }
 
-  function legs(t) {
+  function legs(t, outfit) {
     let s = '';
+    if (outfit && outfit !== 'slob') {
+      const pc = outfit === 'suit' ? '#1E1E26' : (C.pants || '#3D5A9E');
+      s += tube('M -50 40 L -54 236', 46, pc) + tube('M 50 40 L 54 236', 46, pc);
+      for (const sd of [-1, 1]) {
+        const x = sd * 62;
+        s += shape(`M ${x - 64} 262 Q ${x - 66} 230 ${x - 30} 228 L ${x + 30} 228 Q ${x + 68} 232 ${x + 66} 262 Q ${x} 284 ${x - 64} 262 Z`, outfit === 'suit' ? '#141418' : (C.newShoe || '#FFFFFF'));
+        s += line(`M ${x - 60} 264 Q ${x} 282 ${x + 62} 264`, 9, outfit === 'suit' ? '#000' : '#E5483B');
+      }
+      return s;
+    }
     s += tube('M -50 60 L -52 238', 22, C.skin) + tube('M 50 60 L 52 238', 22, C.skin);
     s += tube('M -52 150 L -52 236', 32, C.sock);                       // tall sock
     s += shape('M 30 214 Q 52 200 74 214 Q 80 226 74 236 Q 52 246 30 236 Q 24 226 30 214 Z', C.sock, 5); // bunched sock
@@ -171,11 +199,23 @@
     return s;
   }
 
-  function torso() {
+  function torso(outfit) {
     let s = '';
     s += shape('M -112 -336 Q 0 -362 112 -336 L 138 -40 Q 0 -18 -138 -40 Z', C.shirt);
     s += `<path d="M 70 -330 Q 110 -320 112 -336 L 138 -40 Q 110 -34 92 -32 Z" fill="${C.shirtSh}" opacity="0.6"/>`;
     s += shape('M -40 -346 Q 0 -310 40 -346 Q 0 -336 -40 -346 Z', C.skinSh, 5); // collar opening
+    if (outfit === 'suit') {
+      s += shape('M -40 -344 L 0 -200 L 40 -344 Z', '#FFFFFF', 5);
+      s += shape('M -40 -330 L 0 -310 L -40 -290 Z', '#C0392B', 4) + shape('M 40 -330 L 0 -310 L 40 -290 Z', '#C0392B', 4) + circ(0, -310, 9, '#E74C3C', 3);
+      s += circ(0, -160, 7, '#DDD', 3) + circ(0, -100, 7, '#DDD', 3);
+      s += shape('M 60 -260 L 100 -270 L 96 -240 Z', '#FF6FA8', 3);
+      return s;
+    }
+    if (outfit && outfit !== 'slob') {
+      s += line('M -40 -340 Q 0 -300 40 -340', 6, '#FFFFFF');
+      if (outfit === 'fresh') s += `<text x="0" y="-170" text-anchor="middle" font-family="Anton" font-size="56" fill="${C.logo || '#FFFFFF'}" stroke="${C.line}" stroke-width="3">${C.logoText || 'N'}</text>`;
+      return s;
+    }
     // Stains and a hole
     s += `<path d="M -62 -214 q 20 -22 44 -6 q 18 14 -4 30 q -22 14 -36 -2 q -12 -10 -4 -22 Z" fill="${C.stain}" opacity="0.85"/>`;
     s += `<circle cx="-4" cy="-170" r="9" fill="${C.stain}" opacity="0.8"/><circle cx="40" cy="-128" r="14" fill="${C.stain}" opacity="0.7"/>`;
@@ -192,14 +232,18 @@
     const t = p.t || 0, e = EXPR[p.expr || 'neutral'];
     const bob = p.bob != null ? p.bob : Math.sin(t * 2.2) * 6;
     const sq = p.squash || 0;
+    const saved = Object.assign({}, C);
+    if (p.colors) Object.assign(C, p.colors);
+    if (p.outfit === 'suit') Object.assign(C, { shirt: '#1E1E26', shirtSh: '#000' });
     const A = arm(-1, p.armL != null ? p.armL : 0.26, p.bendL != null ? p.bendL : -0.25);
     const B = arm(1, p.armR != null ? p.armR : 0.26, p.bendR != null ? p.bendR : -0.25);
     let s = `<g transform="translate(${f(p.x)} ${f(p.y)}) scale(${f((p.scale || 1) * (1 + sq * 0.06))} ${f((p.scale || 1) * (1 - sq * 0.06))})">`;
     s += `<ellipse cx="0" cy="282" rx="190" ry="26" fill="rgba(0,0,0,0.25)"/>`;
-    s += legs(t);
+    if (p.hair === 'long') s += `<g transform="translate(0 ${f(bob)})">` + hairLongBack(t) + `</g>`;
+    s += legs(t, p.outfit);
     s += `<g transform="translate(0 ${f(bob)}) rotate(${f(p.lean || 0)} 0 0)">`;
     s += A.arm + B.arm;
-    s += torso();
+    s += torso(p.outfit);
     s += A.sleeve + B.sleeve;
     if (p.phone) {  // phone held in the right hand
       const h = B.hand;
@@ -218,7 +262,9 @@
     if (p.skin === 'clear') s += `<circle cx="-60" cy="-520" r="40" fill="#FFFFFF" opacity="0.18"/>`;
     s += `<path d="M 70 -376 Q 140 -420 146 -500 Q 150 -420 70 -376 Z" fill="${C.skinSh}" opacity="0.35"/>`;
     s += face(p, e) + hair(t, p.hair);
+    if (p.blush) s += `<ellipse cx="-90" cy="-420" rx="26" ry="14" fill="#FF7B9C" opacity="0.5"/><ellipse cx="90" cy="-420" rx="26" ry="14" fill="#FF7B9C" opacity="0.5"/>`;
     s += `</g></g></g>`;
+    Object.assign(C, saved);
     return s;
   }
 
