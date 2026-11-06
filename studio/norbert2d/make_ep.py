@@ -155,7 +155,7 @@ def build(ep_path, out_mp4, stills=None):
     sf.write(wav, np.stack([mix, mix], 1), SR)
 
     data = {"lines": ep["lines"], "caps": caps, "mouth": mouths, "fps": FPS, "dur": dur}
-    for key in ("days_left", "glow", "glow_to", "vote", "vote_emoji", "vote_title", "look", "nohud", "title", "vote_pill"):
+    for key in ("days_left", "glow", "glow_to", "vote", "vote_emoji", "vote_title", "look", "nohud", "title", "vote_pill", "glow_steps"):
         if key in ep:
             data[key] = ep[key]
     if "cap_colors" in ep:

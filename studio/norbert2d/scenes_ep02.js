@@ -145,7 +145,7 @@
     const hi = Math.floor(tl / 0.6) % 4;
     EP.vote.forEach((w, i) => { s += L.chip(t, t0 + 0.25 + i * 0.22, 540, 680 + i * 215, 640, em[i], w, tl > 1.2 && i === hi); });
     s += N.svg({ x: 540 + Math.sin(t * 2) * 10, y: 1900, scale: 0.48, t, expr: 'happy', teeth: EP.look && EP.look.teeth || teethAt(t),
-      armL: 2.7, armR: 2.7, bendL: 0.3, bendR: 0.3, blink: blinkAt(t), talk: 0, skin: (EP.look && EP.look.skin_vote) || undefined });
+      armL: 2.7, armR: 2.7, bendL: 0.3, bendR: 0.3, blink: blinkAt(t), talk: 0, skin: (EP.look && EP.look.skin_vote) || undefined, hair: EP.look && EP.look.hair });
     return s;
   };
   void baseVote;

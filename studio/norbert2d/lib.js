@@ -7,6 +7,19 @@
   L.between = (t, a, b) => t >= a && t < b;
   const INK = '#1A1410';
 
+  L.roomClean = function (t) {
+    let s = L.room(t);
+    // cover the clutter: fresh floor and a few tidy touches
+    s += `<rect x="-600" y="1400" width="2280" height="900" fill="#8A6A52"/>`;
+    for (let i = 0; i < 9; i++) s += `<rect x="-600" y="${1400 + i * 90}" width="2280" height="4" fill="#7A5C46"/>`;
+    s += `<rect x="-600" y="1392" width="2280" height="14" fill="#5A4436"/>`;
+    s += `<rect x="-40" y="1180" width="330" height="200" rx="18" fill="#7C6BC4" stroke="${INK}" stroke-width="8"/><rect x="-40" y="1170" width="330" height="60" rx="14" fill="#B9AEEA" stroke="${INK}" stroke-width="7"/><rect x="-40" y="1360" width="330" height="40" fill="#4E3F8F" stroke="${INK}" stroke-width="7"/>`;
+    s += `<rect x="400" y="1500" width="300" height="140" rx="70" fill="#5BA7C9" opacity="0.7"/>`;
+    s += `<rect x="960" y="1310" width="70" height="90" rx="10" fill="#C96B3A" stroke="${INK}" stroke-width="6"/><path d="M 995 1310 Q 950 1220 980 1180 Q 1000 1240 995 1310 Q 1010 1210 1050 1190 Q 1030 1260 995 1310" fill="#4CAF6A" stroke="${INK}" stroke-width="5"/>`;
+    s += `<rect x="-600" y="-600" width="2280" height="2100" fill="#FFF3C4" opacity="0.12"/>`;
+    return s;
+  };
+
   L.room = function (t) {
     let s = '';
     s += `<rect x="-600" y="-600" width="2280" height="2100" fill="#2E5B63"/>`;

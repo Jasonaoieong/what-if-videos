@@ -112,7 +112,8 @@
     return s;
   }
 
-  function hair(t) {
+  function hair(t, style) {
+    if (style === 'fresh') return hairFresh(t);
     let s = '';
     // Greasy cap with a jagged fringe
     s += shape('M -160 -462 A 162 162 0 1 1 160 -470 L 140 -560 L 118 -546 L 100 -592 L 66 -550 L 38 -600 L 8 -552 ' +
@@ -124,6 +125,17 @@
     s += tube(`M 8 -640 C -2 -700 22 -${742 + w} 62 -${746 + w} C 106 -${748 + w} 120 -${700 + w} 96 -${675 + w} C 82 -${662 + w} 64 -${668 + w} 62 -${682 + w}`, 18, C.hair);
     // Strays
     s += tube('M -60 -642 Q -84 -690 -112 -686', 8, C.hair) + tube('M 70 -640 Q 96 -676 122 -664', 8, C.hair);
+    return s;
+  }
+
+  function hairFresh(t) {
+    // Clean fade with a neat side part; the cowlick survives as a small tidy swoop (his signature).
+    let s = '';
+    s += shape('M -152 -500 Q -160 -640 -40 -646 Q 60 -660 150 -600 Q 162 -560 154 -500 Q 120 -560 30 -572 Q -40 -566 -60 -548 Q -100 -580 -152 -500 Z', C.hair);
+    s += `<path d="M -150 -500 Q -156 -470 -150 -446 L -140 -446 Q -146 -470 -140 -500 Z" fill="${C.hair}" opacity="0.5"/>`;
+    s += `<path d="M 150 -500 Q 156 -470 150 -446 L 140 -446 Q 146 -470 140 -500 Z" fill="${C.hair}" opacity="0.5"/>`;
+    s += line('M -40 -640 Q 40 -650 110 -616', 8, C.hairHi);
+    s += tube('M 20 -652 C 30 -690 70 -700 84 -684', 14, C.hair);
     return s;
   }
 
@@ -205,7 +217,7 @@
       `<circle cx="-60" cy="-560" r="14" fill="#A5D46A"/><circle cx="70" cy="-390" r="10" fill="#A5D46A"/><circle cx="-100" cy="-420" r="8" fill="#A5D46A"/>`;
     if (p.skin === 'clear') s += `<circle cx="-60" cy="-520" r="40" fill="#FFFFFF" opacity="0.18"/>`;
     s += `<path d="M 70 -376 Q 140 -420 146 -500 Q 150 -420 70 -376 Z" fill="${C.skinSh}" opacity="0.35"/>`;
-    s += face(p, e) + hair(t);
+    s += face(p, e) + hair(t, p.hair);
     s += `</g></g></g>`;
     return s;
   }

@@ -64,7 +64,10 @@
     else s += line('M -26 -398 Q 0 -390 26 -398', 6);
     s += shape(`M -70 ${-418 - open * 4} Q -40 -440 0 -428 Q 40 -440 70 ${-418 - open * 4} Q 40 -404 0 -414 Q -40 -404 -70 ${-418 - open * 4} Z`, '#B9BFC9');
     // tool in right hand
-    if (p.tool === 'drill') {
+    if (p.tool === 'clippers') {
+      s += `<g transform="translate(${f(hx)} ${f(hy)}) rotate(-30)">` + shape('M -14 -16 L 70 -16 L 70 16 L -14 16 Z', '#2A2A33') +
+        shape('M 70 -18 L 92 -18 L 92 18 L 70 18 Z', '#C9D3DF', 3) + `</g>`;
+    } else if (p.tool === 'drill') {
       s += `<g transform="translate(${f(hx)} ${f(hy)}) rotate(-35)">` + shape('M -14 -10 L 90 -10 L 90 10 L -14 10 Z', '#C9D3DF') +
         shape('M 90 -4 L 130 -2 L 130 2 L 90 4 Z', '#7F8A99', 3) + `</g>`;
     } else if (p.tool === 'light') {

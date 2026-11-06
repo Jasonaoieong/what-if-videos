@@ -1,0 +1,223 @@
+{
+  "id": "ep04",
+  "title": "Day 4 of 30",
+  "days_left": 27,
+  "glow": 35,
+  "glow_steps": [
+    {
+      "scene": "meter_broken",
+      "from": 35,
+      "to": 10
+    },
+    {
+      "scene": "meter4",
+      "from": 10,
+      "to": 13
+    }
+  ],
+  "vote_pill": true,
+  "look": {
+    "teeth": "fixed",
+    "skin": "clear",
+    "hair": "fresh",
+    "skin_vote": "clear"
+  },
+  "voices": {
+    "NARR": {
+      "voice": "af_heart",
+      "speed": 1.05,
+      "pitch": 1.0
+    },
+    "NORB": {
+      "voice": "am_puck",
+      "speed": 1.08,
+      "pitch": 1.1
+    },
+    "BARB": {
+      "voice": "am_michael",
+      "speed": 1.0,
+      "pitch": 0.95
+    }
+  },
+  "cap_colors": {
+    "NORB": "#FFD23F",
+    "BARB": "#8FD3FF"
+  },
+  "lines": [
+    {
+      "who": "NARR",
+      "text": "Day four. You picked hair.",
+      "scene": "recap4",
+      "gap": 0.25,
+      "sfx": [
+        [
+          "pop",
+          0.05
+        ],
+        [
+          "ding",
+          0.3
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "But first, bad news. The glow up meter was broken.",
+      "scene": "meter_broken",
+      "gap": 0.3,
+      "sfx": [
+        [
+          "scratch",
+          0.0
+        ],
+        [
+          "static",
+          0.4
+        ]
+      ]
+    },
+    {
+      "who": "NORB",
+      "text": "Ten percent?! I fixed my whole face!",
+      "scene": "meter_shock",
+      "gap": 0.3,
+      "sfx": [
+        [
+          "boing",
+          0.0
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "So, the barber.",
+      "scene": "barber_wide",
+      "gap": 0.25,
+      "sfx": [
+        [
+          "ding",
+          0.1
+        ]
+      ]
+    },
+    {
+      "who": "BARB",
+      "text": "Whoa. Is something living in there?",
+      "scene": "barber_shock",
+      "gap": 0.3
+    },
+    {
+      "who": "NARR",
+      "text": "A bird flew out.",
+      "scene": "bird",
+      "gap": 0.4,
+      "sfx": [
+        [
+          "whoosh",
+          0.3
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "Forty minutes. Three combs. One broken pair of clippers.",
+      "scene": "clipper_montage",
+      "gap": 0.3,
+      "sfx": [
+        [
+          "drill",
+          0.0
+        ],
+        [
+          "clock3",
+          0.5
+        ]
+      ]
+    },
+    {
+      "who": "NORB",
+      "text": "Wait. Is that... me?",
+      "scene": "reveal_hair",
+      "gap": 0.4,
+      "sfx": [
+        [
+          "chime",
+          0.0
+        ],
+        [
+          "ding",
+          0.15
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "Glow up: thirteen percent. Twenty seven days left.",
+      "scene": "meter4",
+      "gap": 0.4,
+      "sfx": [
+        [
+          "pop",
+          0.1
+        ],
+        [
+          "chime",
+          0.6
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "Then he got home and opened his bedroom door.",
+      "scene": "door_stink",
+      "gap": 0.5,
+      "sfx": [
+        [
+          "creak",
+          0.3
+        ],
+        [
+          "stinger",
+          0.8
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "What does Norbert fix next? Comment one word.",
+      "scene": "vote",
+      "gap": 1.8,
+      "sfx": [
+        [
+          "pop",
+          0.25
+        ],
+        [
+          "pop",
+          0.47
+        ],
+        [
+          "pop",
+          0.69
+        ],
+        [
+          "pop",
+          0.91
+        ]
+      ]
+    }
+  ],
+  "vote": [
+    "ROOM",
+    "CLOTHES",
+    "GYM",
+    "SHOES"
+  ],
+  "vote_emoji": [
+    "🛏️",
+    "👕",
+    "💪",
+    "👟"
+  ],
+  "vote_title": "WHAT SHOULD NORBERT FIX NEXT?"
+}

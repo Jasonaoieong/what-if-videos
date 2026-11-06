@@ -1,0 +1,203 @@
+{
+  "id": "ep05",
+  "title": "Day 5 of 30",
+  "days_left": 26,
+  "glow": 13,
+  "glow_steps": [
+    {
+      "scene": "meter5",
+      "from": 13,
+      "to": 16
+    }
+  ],
+  "vote_pill": true,
+  "look": {
+    "teeth": "fixed",
+    "skin": "clear",
+    "hair": "fresh",
+    "skin_vote": "clear"
+  },
+  "voices": {
+    "NARR": {
+      "voice": "af_heart",
+      "speed": 1.05,
+      "pitch": 1.0
+    },
+    "NORB": {
+      "voice": "am_puck",
+      "speed": 1.08,
+      "pitch": 1.1
+    },
+    "BARB": {
+      "voice": "am_michael",
+      "speed": 1.0,
+      "pitch": 0.95
+    }
+  },
+  "cap_colors": {
+    "NORB": "#FFD23F"
+  },
+  "lines": [
+    {
+      "who": "NARR",
+      "text": "Day five. The room.",
+      "scene": "recap5",
+      "gap": 0.25,
+      "sfx": [
+        [
+          "pop",
+          0.05
+        ],
+        [
+          "ding",
+          0.3
+        ]
+      ]
+    },
+    {
+      "who": "NORB",
+      "text": "Okay. It's not THAT bad.",
+      "scene": "room_wide",
+      "gap": 0.3
+    },
+    {
+      "who": "NARR",
+      "text": "Under the bed: four socks, a sandwich from August, and a family of mice.",
+      "scene": "under_bed",
+      "gap": 0.3,
+      "sfx": [
+        [
+          "pop",
+          0.3
+        ],
+        [
+          "pop",
+          0.9
+        ],
+        [
+          "boing",
+          1.6
+        ]
+      ]
+    },
+    {
+      "who": "NORB",
+      "text": "Hi... guys?",
+      "scene": "mice_hi",
+      "gap": 0.4
+    },
+    {
+      "who": "NARR",
+      "text": "Eleven trash bags later.",
+      "scene": "trash_montage",
+      "gap": 0.6,
+      "sfx": [
+        [
+          "whoosh",
+          0.0
+        ],
+        [
+          "clock3",
+          0.3
+        ]
+      ]
+    },
+    {
+      "who": "NORB",
+      "text": "Whoa. I have a floor!",
+      "scene": "reveal_room",
+      "gap": 0.4,
+      "sfx": [
+        [
+          "chime",
+          0.0
+        ],
+        [
+          "ding",
+          0.15
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "Glow up: sixteen percent. Twenty six days left.",
+      "scene": "meter5",
+      "gap": 0.4,
+      "sfx": [
+        [
+          "pop",
+          0.1
+        ],
+        [
+          "chime",
+          0.6
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "Then Maya texted.",
+      "scene": "maya5",
+      "gap": 0.6,
+      "sfx": [
+        [
+          "vibrate",
+          0.1
+        ],
+        [
+          "pop",
+          0.5
+        ]
+      ]
+    },
+    {
+      "who": "NORB",
+      "text": "An outfit?! My only shirt has a ketchup stain!",
+      "scene": "shirt_panic",
+      "gap": 0.4,
+      "sfx": [
+        [
+          "boing",
+          0.05
+        ]
+      ]
+    },
+    {
+      "who": "NARR",
+      "text": "What does Norbert fix next? Comment one word.",
+      "scene": "vote",
+      "gap": 1.8,
+      "sfx": [
+        [
+          "pop",
+          0.25
+        ],
+        [
+          "pop",
+          0.47
+        ],
+        [
+          "pop",
+          0.69
+        ],
+        [
+          "pop",
+          0.91
+        ]
+      ]
+    }
+  ],
+  "vote": [
+    "CLOTHES",
+    "GYM",
+    "SHOES",
+    "VOICE"
+  ],
+  "vote_emoji": [
+    "👕",
+    "💪",
+    "👟",
+    "🎤"
+  ],
+  "vote_title": "WHAT SHOULD NORBERT FIX NEXT?"
+}
