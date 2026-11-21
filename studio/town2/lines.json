@@ -1,0 +1,23 @@
+[
+ {"id":"l01","shot":"aerial","say":"In this town, nobody whistles after dark."},
+ {"id":"l02","shot":"fogfigure","say":"Because if you whistle, the Tall Man whistles back."},
+ {"id":"l03","shot":"curfew","say":"Every night at nine, everyone goes inside, and the streetlights turn off."},
+ {"id":"l04","shot":"bedroom","say":"Twelve year old Milo had just moved here."},
+ {"id":"l05","shot":"dumbrule","say":"He thought the whole thing was a dumb rule."},
+ {"id":"l06","shot":"walk","say":"So one night, walking home from the store..."},
+ {"id":"l07","shot":"whistle","say":"he whistled."},
+ {"id":"h1","shot":"whistlehold","huss":1.6},
+ {"id":"l08","shot":"nothing","say":"Nothing happened. He laughed."},
+ {"id":"l09","shot":"street","say":"Then, from the end of the street... something whistled back."},
+ {"id":"l10","shot":"turn","say":"He turned around."},
+ {"id":"l11","shot":"monster","say":"Something tall and gray was standing under the last streetlight."},
+ {"id":"h2","shot":"monsterhold","huss":1.6},
+ {"id":"l12","shot":"run","say":"Milo ran. The whistling got closer and closer."},
+ {"id":"l13","shot":"fall","say":"He tripped, and fell face first on the sidewalk."},
+ {"id":"l14","shot":"hand","say":"A long gray hand reached down for him..."},
+ {"id":"l15","shot":"bag","say":"and handed him the bag he dropped."},
+ {"id":"l16","shot":"point","say":"Then it slowly pointed at his house."},
+ {"id":"h3","shot":"pointhold","huss":1.6},
+ {"id":"l17","shot":"bed","say":"Milo never whistled after dark again."},
+ {"id":"l18","shot":"window","say":"Until the next night... when a hundred whistles answered from outside his window."}
+]
