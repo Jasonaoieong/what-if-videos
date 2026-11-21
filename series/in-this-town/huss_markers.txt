@@ -1,0 +1,4 @@
+Drop your 'huss huss huss' sound at these times (seconds) - each gap is 1.6 s of near-silence:
+  5.43s  (0:05.43)
+  13.80s  (0:13.80)
+  26.94s  (0:26.94)
