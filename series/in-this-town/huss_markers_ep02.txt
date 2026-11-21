@@ -1,0 +1,4 @@
+Drop your 'huss huss huss' sound at these times - each gap is 1.6 s with the voice silent:
+  18.86s  (0:18.86)
+  30.20s  (0:30.20)
+  44.80s  (0:44.80)
