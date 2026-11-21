@@ -1,0 +1,16 @@
+[
+ {"id":"hook","say":"In this town... when it rains, it rains MONEY!","text":"IN THIS TOWN... WHEN IT RAINS, IT RAINS MONEY!","hi":["MONEY!"]},
+ {"id":"except","say":"Everyone gets rich... except him.","text":"EVERYONE GETS RICH... EXCEPT HIM.","hi":["HIM."]},
+ {"id":"huss1","huss":1.6},
+ {"id":"plan","say":"His bucket had a hole in it. So he made a plan.","text":"HIS BUCKET HAD A HOLE IN IT. SO HE MADE A PLAN.","hi":["HOLE","PLAN."]},
+ {"id":"rich","say":"But the rich kid had a bigger plan.","text":"BUT THE RICH KID HAD A BIGGER PLAN.","hi":["BIGGER"]},
+ {"id":"huss2","huss":1.6},
+ {"id":"storm","say":"Then the clouds rolled in... the biggest money storm ever!","text":"THEN THE CLOUDS ROLLED IN... THE BIGGEST MONEY STORM EVER!","hi":["STORM"]},
+ {"id":"full","say":"But the vacuum got... way too full.","text":"BUT THE VACUUM GOT... WAY TOO FULL.","hi":["FULL."]},
+ {"id":"boom","boom":1.4},
+ {"id":"hole","say":"All the money fell into his bucket... and right through the hole.","text":"ALL THE MONEY FELL INTO HIS BUCKET... AND RIGHT THROUGH THE HOLE.","hi":["HOLE."]},
+ {"id":"huss3","huss":1.6},
+ {"id":"pipe","say":"But the hole wasn't a mistake. It was a pipe, straight to his secret vault!","text":"BUT THE HOLE WASN'T A MISTAKE. IT WAS A PIPE, STRAIGHT TO HIS SECRET VAULT!","hi":["PIPE,","VAULT!"]},
+ {"id":"richest","say":"Now he's the richest guy in town.","text":"NOW HE'S THE RICHEST GUY IN TOWN.","hi":["RICHEST"]},
+ {"id":"gold","say":"And tomorrow... it rains GOLD.","text":"AND TOMORROW... IT RAINS GOLD.","hi":["GOLD."]}
+]
