@@ -23,6 +23,10 @@ function tex(w,h,draw,rep){const c=document.createElement('canvas');c.width=w;c.
   if(rep){t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(rep[0],rep[1]);}return t;}
 const M=(c,o={})=>new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.8,metalness:0},o));
 const E=(c,i=1.5)=>new THREE.MeshStandardMaterial({color:c,emissive:c,emissiveIntensity:i});
+const _rbc={};function rgeo(w,h,d,r){const key=[w,h,d,r].join();if(_rbc[key])return _rbc[key];const g=new THREE.BoxGeometry(w,h,d,6,6,6);const P=g.attributes.position;const v=new THREE.Vector3(),c=new THREE.Vector3();
+  for(let i=0;i<P.count;i++){v.fromBufferAttribute(P,i);c.set(clamp(v.x,-w/2+r,w/2-r),clamp(v.y,-h/2+r,h/2-r),clamp(v.z,-d/2+r,d/2-r));const dd=v.clone().sub(c);if(dd.lengthSq()>0){dd.normalize().multiplyScalar(r);v.copy(c).add(dd);}P.setXYZ(i,v.x,v.y,v.z);}
+  g.computeVertexNormals();_rbc[key]=g;return g;}
+function rbox(w,h,d,mat,x=0,y=0,z=0,p=scene,r=.16){const m=new THREE.Mesh(rgeo(w,h,d,r),mat);m.position.set(x,y,z);m.castShadow=m.receiveShadow=true;p.add(m);return m;}
 function box(w,h,d,mat,x=0,y=0,z=0,p=scene){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);m.castShadow=m.receiveShadow=true;p.add(m);return m;}
 function sph(r,mat,x,y,z,p=scene,seg=16){const m=new THREE.Mesh(new THREE.SphereGeometry(r,seg,seg/2|0),mat);m.position.set(x,y,z);m.castShadow=true;p.add(m);return m;}
 
@@ -96,11 +100,11 @@ function snowman(x,z){const g=new THREE.Group();g.position.set(x,0,z);scene.add(
 snowman(SNOW.x-1.6,SNOW.z);snowman(SNOW.x+1.6,SNOW.z);
 // ---------- dance hall (far away set) ----------
 const DH=V(400,0,0);const hall=new THREE.Group();hall.position.copy(DH);scene.add(hall);
-const floorT=tex(256,256,(g,w,h)=>{for(let y=0;y<4;y++)for(let x=0;x<4;x++){g.fillStyle=(x+y)%2?'#3a1d4f':'#ff6fb5';g.fillRect(x*64,y*64,64,64);}},[8,8]);
-box(40,.2,40,M('#fff',{map:floorT,emissive:'#ffffff',emissiveMap:floorT,emissiveIntensity:.08}),0,-.1,0,hall);
-const wallM=M('#4a2c70');box(40,16,.4,wallM,0,8,-20,hall);box(.4,16,40,wallM,-20,8,0,hall);box(.4,16,40,wallM,20,8,0,hall);box(40,.4,40,M('#170c24'),0,16,0,hall);
+const floorT=tex(256,256,(g,w,h)=>{for(let y=0;y<h;y+=32){g.fillStyle=(y/32)%2?'#7a5233':'#8a6040';g.fillRect(0,y,w,30);g.fillStyle='#5a3a22';g.fillRect((y*53)%w,y,3,30);g.fillRect(0,y+30,w,2);}},[6,6]);
+box(40,.2,40,M('#fff',{map:floorT,emissive:'#ffffff',emissiveMap:floorT,emissiveIntensity:.0}),0,-.1,0,hall);
+const wallM=M('#3a3360');box(40,16,.4,wallM,0,8,-20,hall);box(.4,16,40,wallM,-20,8,0,hall);box(.4,16,40,wallM,20,8,0,hall);box(40,.4,40,M('#170c24'),0,16,0,hall);
 const banT=tex(1024,192,(g,w,h)=>{g.fillStyle='#ff3d8b';g.fillRect(0,0,w,h);g.fillStyle='#fff';g.font='900 120px Inter';g.textAlign='center';g.textBaseline='middle';g.fillText("VALENTINE'S DANCE",w/2,h/2+8);});
-const ban=new THREE.Mesh(new THREE.PlaneGeometry(22,4.1),new THREE.MeshStandardMaterial({map:banT,emissive:'#ffffff',emissiveMap:banT,emissiveIntensity:.6}));ban.position.set(0,12,-19.7);hall.add(ban);
+const ban=new THREE.Mesh(new THREE.PlaneGeometry(22,4.1),new THREE.MeshStandardMaterial({map:banT,emissive:'#ffffff',emissiveMap:banT,emissiveIntensity:.35}));ban.position.set(0,12,-19.7);hall.add(ban);
 const heartShape=new THREE.Shape();heartShape.moveTo(0,-1);heartShape.bezierCurveTo(-1.6,.2,-1,1.4,0,.6);heartShape.bezierCurveTo(1,1.4,1.6,.2,0,-1);
 const heartG=new THREE.ExtrudeGeometry(heartShape,{depth:.3,bevelEnabled:false});
 for(let i=0;i<10;i++){const h=new THREE.Mesh(heartG,E(i%2?'#ff4f8f':'#ff9ac7',1.2));h.position.set(-17+i*3.8,9+Math.sin(i)*1.2,-19.6);h.scale.setScalar(.9);hall.add(h);}
@@ -136,7 +140,7 @@ const hoodT=tex(256,256,(g,w,h)=>{g.fillStyle='#1f4fc9';g.fillRect(0,0,w,h);g.fi
   for(let i=0;i<14;i++){g.fillStyle=i%2?'#f2c230':'#ff8fb0';g.fillRect(rnd(i)*w,110+rnd(i+3)*80,4,4);}});
 // ---------- avatar ----------
 function avatar(o){const root=new THREE.Group();scene.add(root);const hip=new THREE.Group();hip.position.y=2;root.add(hip);
-  const torsoMat=o.torsoMat||M(o.torso);box(2,2,1,torsoMat,0,1,0,hip);
+  const torsoMat=o.torsoMat||M(o.torso);rbox(2,2,1,torsoMat,0,1,0,hip,.18);
   const head=new THREE.Group();head.position.y=2;hip.add(head);const skin=M(o.skin);
   const hm=new THREE.Mesh(new THREE.CylinderGeometry(.62,.62,1.15,24),skin);hm.position.y=.6;hm.castShadow=true;head.add(hm);
   const cap=new THREE.Mesh(new THREE.SphereGeometry(.62,24,8,0,Math.PI*2,0,Math.PI/2),skin);cap.scale.y=.25;cap.position.y=1.17;head.add(cap);const c2=cap.clone();c2.rotation.x=Math.PI;c2.position.y=.03;head.add(c2);
@@ -150,7 +154,7 @@ function avatar(o){const root=new THREE.Group();scene.add(root);const hip=new TH
   if(o.hair==='bald'){box(1.36,.25,1.36,M(o.hairC),0,.95,-.15,head);}
   if(o.glasses){const gm=M('#222');box(.4,.28,.06,gm,-.27,.75,.66,head);box(.4,.28,.06,gm,.27,.75,.66,head);}
   if(o.bow){box(.5,.3,.2,M(o.bow),.45,1.35,.3,head);}
-  const limb=(x,y,mat)=>{const g=new THREE.Group();g.position.set(x,y,0);hip.add(g);box(1,2,1,mat,0,-1,0,g);return g;};
+  const limb=(x,y,mat)=>{const g=new THREE.Group();g.position.set(x,y,0);hip.add(g);rbox(1,2,1,mat,0,-1,0,g,.16);return g;};
   const armMat=M(o.arms||o.torso),legMat=M(o.legs);
   const armL=limb(-1.5,2,armMat),armR=limb(1.5,2,armMat),legL=limb(-.5,0,legMat),legR=limb(.5,0,legMat);
   const held=new THREE.Group();held.position.set(0,-2.1,.2);armR.add(held);
@@ -177,79 +181,76 @@ const heartSticker=new THREE.Mesh(heartG,E('#ff3d6e',1));heartSticker.scale.setS
 const roses=new THREE.Group();scene.add(roses);for(let i=0;i<6;i++){sph(.18,M('#e01e3c'),Math.cos(i)*.2,.7+rnd(i)*.15,Math.sin(i)*.2,roses,8);}box(.08,.8,.08,M('#2f7a3a'),0,.3,0,roses);
 const dog=new THREE.Group();scene.add(dog);const dm=M('#9a6a3a');box(1.4,.9,2.2,dm,0,1.2,0,dog);box(1,.9,1,dm,0,1.9,1.3,dog);box(.5,.4,.5,M('#3a2a1a'),0,1.75,1.9,dog);
 [[-.5,.8],[.5,.8],[-.5,-.8],[.5,-.8]].forEach(([a,b])=>box(.35,.8,.35,dm,a,.4,b,dog));box(.25,.5,.25,M('#7a4a2a'),-.35,2.5,1.2,dog);box(.25,.5,.25,M('#7a4a2a'),.35,2.5,1.2,dog);const tail=box(.2,.2,.9,dm,0,1.6,-1.4,dog);
+const key=new THREE.DirectionalLight('#fff1dc',1.1);scene.add(key,key.target);const rim=new THREE.DirectionalLight('#8fb0ff',1.4);scene.add(rim,rim.target);
 const spot=new THREE.SpotLight('#cfe0ff',0,60,.35,.6,1.2);scene.add(spot,spot.target);
 
 // ---------- helpers ----------
 const blackEl=document.getElementById('black');
-function look(p,t){camera.position.copy(p);camera.lookAt(t);}
+function look(p,t){camera.position.copy(p);camera.lookAt(t);const f=t.clone().sub(p).normalize();const right=new THREE.Vector3().crossVectors(f,V(0,1,0)).normalize();
+  key.position.copy(p).addScaledVector(right,4).add(V(0,5,0));key.target.position.copy(t);rim.position.copy(t).addScaledVector(f,8).addScaledVector(right,-4).add(V(0,6,0));rim.target.position.copy(t);}
 function hideAll(){[hero,girl,tyler,tylerGF,bro,broGF,gpa,gma,...COUPLES.flat()].forEach(a=>a.set({hide:true}));}
 function couple(pair,x,z,ry,t,opt={}){const[a,b]=pair;const cx=Math.cos(ry),sz=-Math.sin(ry);
-  a.set({x:x-cx*1.3,z:z-sz*1.3,ry,armRz:-.32,armR:.15,face:opt.fa||'grin',walk:opt.walk?t*1.4:0,amp:.4,hy:opt.look?.35:0});
-  b.set({x:x+cx*1.3,z:z+sz*1.3,ry,armLz:-.32,armL:.15,face:opt.fb||'blush',walk:opt.walk?t*1.4+.5:0,amp:.4,hy:opt.look?-.35:0,s:opt.sb||1});}
+  a.set({x:x-cx*1.25,z:z-sz*1.25,ry,armRz:-.14,armR:.08,face:opt.fa||'grin',walk:opt.walk?t*1.4:0,amp:.4,hy:opt.look?.35:0});
+  b.set({x:x+cx*1.25,z:z+sz*1.25,ry,armLz:-.14,armL:.08,face:opt.fb||'blush',walk:opt.walk?t*1.4+.5:0,amp:.4,hy:opt.look?-.35:0,s:opt.sb||1});}
 function reset(){hideAll();skyU.bot.value.set('#2a3f7a');hemi.intensity=1.3;moonL.intensity=1.4;spot.intensity=0;
   letter.visible=false;roses.visible=false;dog.visible=false;juice.visible=false;if(juice.parent)juice.parent.remove(juice);camera.fov=45;blackEl.style.opacity=0;backL.intensity=0;doorL.position.x=-1.5;doorR.position.x=1.5;doorGlow.visible=false;
-  hallL.intensity=55;}
+  hallL.intensity=55;key.intensity=1.1;}
 function hallLights(t,on=1){dlights.forEach((l,i)=>{const a=t*1.6+i*Math.PI/2;l.position.set(Math.cos(a)*12,9,Math.sin(a)*12);l.intensity=70*on;});disco.rotation.y=t*.8;}
 function dancers(t,n=6,cx=0,cz=-6,opt={}){for(let i=0;i<n;i++){const pr=COUPLES[i];const a=i/n*Math.PI*2;const x=DH.x+cx+Math.cos(a)*(opt.r||8),z=cz+Math.sin(a)*(opt.r||6);
   const b=Math.sin(t*7+i)*.25;pr[0].set({x:x-1.3,z,ry:0,armL:2.4+b,armR:-.1,armRz:-.3,hop:Math.abs(Math.sin(t*7+i))*.35*(opt.still?0:1),face:'happy'});
   pr[1].set({x:x+1.3,z,ry:0,armR:2.4-b,armLz:-.3,armL:.1,hop:Math.abs(Math.sin(t*7+i+1))*.35*(opt.still?0:1),face:'love'});}}
 const H0=V(0,0,8);// hero home spot on street
+function ms(p,d=7,yaw=0,h=0,ty=3.7,fov=40){const c=V(p.x+Math.sin(yaw)*d,3.9+h,p.z+Math.cos(yaw)*d);look(c,V(p.x,ty,p.z));camera.fov=fov;}
 const S={
-  open(t,k){hero.set({x:1.5,z:6,ry:-.25,face:k<.62?'smile':'meh',armL:.1,armR:.1});couple(COUPLES[0],-3.5,1,0,t,{});couple(COUPLES[1],5.5,-4,0,t);
-    look(vl(V(4,22,40),V(2.4,4.6,13),sm(k*1.25)),vl(V(0,2,-10),V(1.2,4.3,6),sm(k*1.25)));camera.fov=lerp(55,40,sm(k*1.25));},
+  open(t,k){hero.set({x:1.5,z:6,ry:-.15,face:k<.62?'smile':'meh',armL:.05,armR:.05});couple(COUPLES[0],-4,-2,0,t,{});couple(COUPLES[1],6,-6,0,t);
+    look(vl(V(4,22,40),V(2.2,4.2,13.5),sm(k*1.25)),vl(V(0,2,-10),V(1.4,3.8,6),sm(k*1.25)));camera.fov=lerp(55,40,sm(k*1.25));},
   huss(t,k){hero.set({x:0,z:8,ry:0,face:'meh',armL:.05,armR:.05});skyU.bot.value.set('#121a36');hemi.intensity=.35;moonL.intensity=.5;
-    spot.intensity=900;spot.position.set(0,14,-4);spot.target.position.set(0,2,8);look(V(1.2,.9,13.5+k*.6),V(0,4.6,8));camera.fov=46;},
+    spot.intensity=900;spot.position.set(0,14,-4);spot.target.position.set(0,2,8);look(V(1.2,.9,14.5+k*.6),V(0,4.4,8));key.intensity=.3;camera.fov=46;},
   aerial(t,k){[[-3,0],[3.5,-14],[-3.5,-28],[3,-40],[-6.5,12],[6.5,-22]].forEach(([x,z],i)=>couple(COUPLES[i],x,z,0,t,{walk:true}));
     look(vl(V(-14,30,30),V(14,26,8),sm(k)),V(0,0,-18));camera.fov=52;},
-  park(t,k){const half=k<.5;
-    if(half){couple(COUPLES[2],PARK.x+3,PARK.z+6.3,0,t,{});couple(COUPLES[3],PARK.x-3,PARK.z+1,0,t,{walk:true});look(vl(V(PARK.x+2,4.5,PARK.z+20),V(PARK.x+1,4.2,PARK.z+17),sm(k*2)),V(PARK.x,2.6,PARK.z+4));camera.fov=44;}
-    else{couple(COUPLES[4],PZ.x,PZ.z+8,0,t,{});look(vl(V(PZ.x+1,4.5,PZ.z+24),V(PZ.x+1,4.4,PZ.z+20),sm((k-.5)*2)),V(PZ.x,4,PZ.z+6));camera.fov=46;}},
+  park(t,k){if(k<.5){const z=PARK.z+lerp(0,3,k*2);couple(COUPLES[3],PARK.x,z,0,t,{walk:true});couple(COUPLES[2],PARK.x+5,PARK.z-4,0,t,{});ms(V(PARK.x+1,0,z),lerp(14,12.5,k*2),.15,.6,3.6,42);}
+    else{couple(COUPLES[4],PZ.x,PZ.z+8,0,t,{});ms(V(PZ.x,0,PZ.z+8),lerp(14,12.5,(k-.5)*2),-.1,.6,3.8,42);}},
   snowmen(t,k){look(vl(V(SNOW.x+2,3.4,SNOW.z+13),V(SNOW.x+1.5,3.4,SNOW.z+10),sm(k)),V(SNOW.x,3.2,SNOW.z));camera.fov=42;},
-  friend(t,k){couple([tyler,tylerGF],-1,4,0,t,{look:true});look(vl(V(-1,4.2,17),V(-1,4.2,15.5),sm(k)),V(-1,3.6,4));camera.fov=42;},
-  brother(t,k){bro.set({x:-1,z:4,s:.72,ry:0,armRz:-.32,face:'grin',hy:.3});broGF.set({x:.9,z:4,s:.72,ry:0,armLz:-.32,face:'blush',hy:-.3});look(vl(V(0,2.8,13),V(0,2.8,11.5),sm(k)),V(0,2.4,4));camera.fov=42;},
-  grandpa(t,k){couple([gpa,gma],PARK.x+3,PARK.z+6.3,0,t,{});const kk=k>.55;gpa.set({x:PARK.x+1.7,z:PARK.z+6.3,ry:0,armRz:-.32,face:kk?'wink':'grin',hop:kk?Math.abs(Math.sin(t*8))*.3:0});
-    look(vl(V(PARK.x+3,4.2,PARK.z+20),V(PARK.x+3,4.2,PARK.z+17.5),sm(k)),V(PARK.x+3,3.4,PARK.z+6));camera.fov=42;},
-  notme(t,k){hero.set({x:0,z:8,ry:0,face:'sad',hx:.15,armL:.05,armR:.05});couple(COUPLES[0],-5,0,0,t,{});couple(COUPLES[1],5,-2,0,t);
-    look(vl(V(0,4.4,15),V(0,4.5,14),sm(k)),V(0,4.1,8));camera.fov=40;},
-  letter(t,k){const a=k<.45;
-    if(a){hero.set({x:PARK.x-1,z:PARK.z+2,ry:Math.PI*.9,face:'blush',armR:1.2,armL:.9});letter.visible=true;letter.position.set(PARK.x-1.4,3.6,PARK.z+.9);letter.rotation.set(-.3,0,0);
-      look(V(PARK.x+4,5,PARK.z+10),V(PARK.x-1.5,3.4,PARK.z+1));camera.fov=40;}
-    else{const kk=(k-.45)/.55;hero.set({x:PARK.x-1,z:PARK.z+2,ry:Math.PI*.9,face:kk>.5?'shock':'blush',armR:lerp(1.2,2.4,sm(kk*3)),armL:2.4});letter.visible=true;
-      const lp=vl(V(PARK.x-1.4,3.6,PARK.z+.9),V(PARK.x-4,.3,PARK.z-7),sm(kk));lp.y+=Math.sin(kk*Math.PI)*4;letter.position.copy(lp);letter.rotation.set(t*6,t*4,t*3);
-      look(V(PARK.x+8,6,PARK.z+10),V(PARK.x-3,1.5,PARK.z-3));camera.fov=46;}},
-  roses(t,k){hero.set({x:4,z:10,ry:-1.2,face:k<.45?'blush':'shock',armR:k<.45?1.3:.4});roses.visible=true;dog.visible=true;
-    if(k<.45){roses.position.set(4.2-1.1,2.2,10.9);roses.rotation.set(0,0,-.3);dog.position.set(-3,0,10);dog.rotation.y=Math.PI/2;}
-    else{const kk=(k-.45)/.55;roses.position.set(lerp(3.1,1.6,sm(kk*3)),lerp(2.2,1.9,sm(kk*3)),10.6);dog.position.set(lerp(-1,.9,sm(kk*3)),Math.abs(Math.sin(t*12))*.3,10.6);dog.rotation.y=Math.PI/2;tail.rotation.y=Math.sin(t*20)*.6;
+  friend(t,k){couple([tyler,tylerGF],-1,4,0,t,{look:true});ms(V(-1,0,4),lerp(12,11,sm(k)),.12,.4,3.9,42);},
+  brother(t,k){bro.set({x:-.9,z:4,s:.72,ry:0,armRz:-.14,face:'grin',hy:.3});broGF.set({x:.9,z:4,s:.72,ry:0,armLz:-.14,face:'blush',hy:-.3});look(vl(V(.4,2.8,11),V(.3,2.8,10),sm(k)),V(0,2.5,4));camera.fov=40;},
+  grandpa(t,k){const kk=k>.55;couple([gpa,gma],PARK.x+3,PARK.z+8,0,t,{});gpa.set({x:PARK.x+1.75,z:PARK.z+8,ry:0,armRz:-.14,face:kk?'wink':'grin',hop:kk?Math.abs(Math.sin(t*8))*.3:0});ms(V(PARK.x+3,0,PARK.z+8),lerp(12,11,sm(k)),-.12,.4,3.9,42);},
+  notme(t,k){hero.set({x:0,z:8,ry:0,face:'sad',hx:.12,armL:.05,armR:.05});couple(COUPLES[0],-5,-1,0,t,{});couple(COUPLES[1],5,-3,0,t);ms(V(0,0,8),lerp(8,6.2,sm(k)),0,.1,3.9,40);},
+  letter(t,k){hero.set({x:PARK.x-1,z:PARK.z+2,ry:0,face:k<.45?'blush':(k<.65?'smile':'shock'),armR:k<.45?1.1:2.4,armL:k<.45?.9:2.4});letter.visible=true;
+    if(k<.45){letter.position.set(PARK.x-1.6,3.5,PARK.z+3.2);letter.rotation.set(-.2,0,0);ms(V(PARK.x-1,0,PARK.z+2),6.5,.35,.2,3.6,40);}
+    else{const kk=(k-.45)/.55;const lp=vl(V(PARK.x-1.6,3.5,PARK.z+3.2),V(PARK.x-4,.3,PARK.z-7),sm(kk));lp.y+=Math.sin(kk*Math.PI)*4;letter.position.copy(lp);letter.rotation.set(t*6,t*4,t*3);
+      look(V(PARK.x+6,6,PARK.z+9),V(PARK.x-2.5,2.2,PARK.z-2));camera.fov=46;}},
+  roses(t,k){hero.set({x:2,z:9,ry:0,face:k<.45?'blush':'shock',armR:k<.45?1.2:.3});roses.visible=true;dog.visible=true;dog.rotation.y=Math.PI/2;
+    if(k<.45){roses.position.set(2.9,2.7,10.3);roses.rotation.set(0,0,-.2);dog.position.set(-6,0,10.2);}
+    else{const kk=(k-.45)/.55;roses.position.set(lerp(2.9,1.2,sm(kk*3)),lerp(2.7,1.9,sm(kk*3)),10.3);dog.position.set(lerp(-3,-.6,sm(kk*3)),Math.abs(Math.sin(t*12))*.3,10.3);tail.rotation.y=Math.sin(t*20)*.6;
       if(kk>.5)roses.visible=Math.sin(t*30)>0&&kk<.7;}
-    look(V(7.5,3.5,17.5),V(1.5,2.2,10.5));camera.fov=40;},
-  dance(t,k){hallLights(t);dancers(t);look(vl(V(DH.x,3,18),V(DH.x,5,10),sm(k)),V(DH.x,6,-8));camera.fov=55;},
-  juice(t,k){hallLights(t);const a=k<.5;
-    if(a){couple(COUPLES[0],DH.x-2,14,Math.PI,t,{walk:true});couple(COUPLES[1],DH.x+3,16,Math.PI,t,{walk:true});look(V(DH.x,4,-4),V(DH.x,4,15));camera.fov=46;doorGlow.visible=true;}
-    else{hero.set({x:DH.x,z:13,ry:Math.PI,face:'meh',walk:t*1.3,armR:1.3});hero.held.add(juice);juice.visible=true;juice.rotation.set(-1.3,0,0);
-      look(vl(V(DH.x+.8,4.4,5.5),V(DH.x+.8,4.4,6.5),sm((k-.5)*2)),V(DH.x,3.9,13));camera.fov=40;}},
+    ms(V(1,0,9),9,0,.1,2.9,42);},
+  dance(t,k){hallLights(t);dancers(t);look(vl(V(DH.x,3.4,18),V(DH.x,4.6,11),sm(k)),V(DH.x,5,-8));camera.fov=55;},
+  juice(t,k){hallLights(t);
+    if(k<.5){couple(COUPLES[0],DH.x-2,lerp(16,12,k*2),Math.PI,t,{walk:true});couple(COUPLES[1],DH.x+3,lerp(18,14,k*2),Math.PI,t,{walk:true});look(V(DH.x,4.2,-2),V(DH.x,3.6,15));camera.fov=44;doorGlow.visible=true;}
+    else{const z=lerp(14,12,(k-.5)*2);hero.set({x:DH.x,z,ry:Math.PI,face:'meh',walk:t*1.3,armR:1.2});hero.held.add(juice);juice.visible=true;juice.rotation.set(-1.2,0,0);
+      look(V(DH.x+.4,4,z-6.2),V(DH.x,3.8,z));camera.fov=40;}},
   door(t,k){hallLights(t,k<.3?1:.15);hallL.intensity=k<.3?55:14;dancers(t,6,0,-12,{still:k>.3,r:7});
-    hero.set({x:DH.x+1,z:4,ry:Math.PI,face:k>.55?'shock':'meh',armR:1.3});hero.held.add(juice);juice.visible=true;juice.rotation.set(-1.3,0,0);
+    hero.set({x:DH.x+1,z:4,ry:Math.PI,face:k>.55?'shock':'meh',armR:1.2});hero.held.add(juice);juice.visible=true;juice.rotation.set(-1.2,0,0);
     const o=sm((k-.4)/.25);doorL.position.x=-1.5-o*2.8;doorR.position.x=1.5+o*2.8;doorGlow.visible=o>0;backL.intensity=o*200;
     if(k>.62){const w=sm((k-.62)/.38);girl.set({x:DH.x,z:lerp(20.5,17,w),ry:Math.PI,walk:t*1.3,face:'smile'});}
     look(vl(V(DH.x+3.4,6.2,-5.5),V(DH.x+3,6,-4),sm(k)),V(DH.x,4,15));camera.fov=44;},
-  hussgirl(t,k){hallLights(t,.1);hallL.intensity=15;doorL.position.x=-4.3;doorR.position.x=4.3;doorGlow.visible=true;backL.intensity=200;
+  hussgirl(t,k){hallLights(t,.1);hallL.intensity=15;doorL.position.x=-4.3;doorR.position.x=4.3;doorGlow.visible=true;backL.intensity=200;key.intensity=.2;
     girl.set({x:DH.x,z:17,ry:Math.PI,face:'smile'});look(V(DH.x+.6,1.4,8+k*.6),V(DH.x,4.2,17));camera.fov=40;},
-  walkup(t,k){hallLights(t,.3);hallL.intensity=60;doorL.position.x=-4.3;doorR.position.x=4.3;doorGlow.visible=true;backL.intensity=120;dancers(t,6,0,-6,{still:true});
-    const w=sm(k);girl.set({x:DH.x+lerp(0,.8,w),z:lerp(16,7.6,w),ry:Math.PI+(k<.35?Math.sin(t*3)*.6:0),walk:t*1.3,hy:k<.35?Math.sin(t*2)*.5:0,face:'smile'});
-    hero.set({x:DH.x+1,z:4,ry:0,face:k>.6?'shock':'meh',armR:1.3});hero.held.add(juice);juice.visible=true;juice.rotation.set(-1.3,0,0);
-    look(V(DH.x+17,6,6),V(DH.x,3.6,8));camera.fov=40;},
-  talk1(t,k){hallLights(t,.3);hallL.intensity=70;girl.set({x:DH.x+.8,z:7.6,ry:Math.PI,face:'smile',hz:Math.sin(t*2)*.05});hero.set({x:DH.x+1,z:4,ry:0,face:'shock',armR:1.3});
-    look(vl(V(DH.x+3.6,4.9,2.6),V(DH.x+3.2,4.8,3.2),sm(k)),V(DH.x+.8,4.5,7.6));camera.fov=44;},
-  talk2(t,k){hallLights(t,.3);hallL.intensity=70;const a=k<.35;girl.set({x:DH.x+.8,z:7.6,ry:Math.PI,face:a?'smile':'happy'});hero.set({x:DH.x+1,z:4,ry:0,face:a?'meh':'blush',armR:1.3});hero.held.add(juice);juice.visible=true;juice.rotation.set(-1.3,0,0);
-    if(a)look(V(DH.x+3.6,4.9,9),V(DH.x+1,4.5,4));else look(vl(V(DH.x+12,4.8,5.8),V(DH.x+11,4.8,5.8),sm((k-.35)/.65)),V(DH.x+.9,3.8,5.8));camera.fov=44;},
+  walkup(t,k){hallLights(t,.3);hallL.intensity=40;doorL.position.x=-4.3;doorR.position.x=4.3;doorGlow.visible=true;backL.intensity=120;dancers(t,6,0,-12,{still:true,r:7});
+    const w=sm(k);const gz=lerp(16,7.6,w);girl.set({x:DH.x+lerp(0,.8,w),z:gz,ry:Math.PI+(k<.35?Math.sin(t*3)*.5:0),walk:t*1.3,hy:k<.35?Math.sin(t*2)*.5:0,face:'smile'});
+    hero.set({x:DH.x+1,z:4,ry:0,face:k>.6?'shock':'meh',armR:1.2});hero.held.add(juice);juice.visible=true;juice.rotation.set(-1.2,0,0);
+    look(V(DH.x+6,6,-4),V(DH.x+.6,3.8,gz));camera.fov=44;},
+  talk1(t,k){hallLights(t,.3);hallL.intensity=45;girl.set({x:DH.x+.8,z:7.6,ry:Math.PI,face:'smile',hz:Math.sin(t*2)*.05});hero.set({x:DH.x+1,z:4,ry:0,face:'shock',armR:1.2});
+    look(vl(V(DH.x+4,5.3,1.6),V(DH.x+3.7,5.2,2.4),sm(k)),V(DH.x+.8,4.2,7.6));camera.fov=42;},
+  talk2(t,k){hallLights(t,.3);hallL.intensity=45;const a=k<.35;girl.set({x:DH.x+.8,z:7.6,ry:Math.PI,face:a?'smile':'happy'});hero.set({x:DH.x+1,z:4,ry:0,face:a?'meh':'blush',armR:1.2});hero.held.add(juice);juice.visible=true;juice.rotation.set(-1.2,0,0);
+    if(a)look(V(DH.x+3.8,5.3,10.6),V(DH.x+1,4.1,4));else{hero.set({x:DH.x+1,z:4,ry:0,face:'blush',armR:.1});juice.visible=false;look(vl(V(DH.x+15,5,5.8),V(DH.x+13.5,5,5.8),sm((k-.35)/.65)),V(DH.x+.9,3.8,5.8));}camera.fov=40;},
   dancing(t,k){hallLights(t,1);dancers(t,6,0,-4,{r:14});const b=Math.sin(t*7);
-    hero.set({x:DH.x-1.3,z:2,ry:0,face:'happy',armL:2.4+b*.3,armRz:-.32,armR:.2,hop:Math.abs(Math.sin(t*7))*.4});girl.set({x:DH.x+1.3,z:2,ry:0,face:'love',armR:2.4-b*.3,armLz:-.32,armL:.2,hop:Math.abs(Math.sin(t*7+1))*.4});
-    const a=t*.5;look(V(DH.x+Math.sin(a)*10,6,2+Math.cos(a)*10),V(DH.x,3.4,2));camera.fov=46;},
-  ending(t,k){couple([hero,girl],0,8,0,t,{fa:'happy',fb:'love',walk:k<.5});[[-5,-2],[5,-6],[-6,-14]].forEach(([x,z],i)=>couple(COUPLES[i],x,z,0,t,{}));
-    hero.faceMat.map=FACES[k>.7?'wink':'happy'];
-    look(vl(V(0,8,30),V(-.6,4.6,14.5),sm(k)),V(0,4,8));camera.fov=lerp(50,40,sm(k));},
-  hussend(t,k){couple([hero,girl],0,8,0,t,{fa:'wink',fb:'love'});skyU.bot.value.set('#121a36');hemi.intensity=.4;moonL.intensity=.5;spot.intensity=900;spot.position.set(0,14,-4);spot.target.position.set(0,2,8);
-    look(V(.6,1,15.5+k*.6),V(0,4.4,8));camera.fov=50;blackEl.style.opacity=clamp((k-.86)/.1);}
+    hero.set({x:DH.x-1.25,z:2,ry:0,face:'happy',armL:2.4+b*.3,armRz:-.14,armR:.1,hop:Math.abs(Math.sin(t*7))*.4});girl.set({x:DH.x+1.25,z:2,ry:0,face:'love',armR:2.4-b*.3,armLz:-.14,armL:.1,hop:Math.abs(Math.sin(t*7+1))*.4});
+    const a=t*.5;look(V(DH.x+Math.sin(a)*12.5,6,2+Math.cos(a)*12.5),V(DH.x,3.6,2));camera.fov=44;},
+  ending(t,k){const z=lerp(4,9,k);couple([hero,girl],0,z,0,t,{fa:'happy',fb:'love',walk:true});[[-5,-6],[5,-10],[-6,-18]].forEach(([x,zz],i)=>couple(COUPLES[i],x,zz,0,t,{}));
+    hero.faceMat.map=FACES[k>.7?'wink':'happy'];look(V(0,lerp(6,4.2,sm(k)),z+lerp(16,9,sm(k))),V(0,3.6,z));camera.fov=lerp(50,42,sm(k));},
+  hussend(t,k){couple([hero,girl],0,9,0,t,{fa:'wink',fb:'love'});skyU.bot.value.set('#121a36');hemi.intensity=.4;moonL.intensity=.5;spot.intensity=900;spot.position.set(0,14,-3);spot.target.position.set(0,2,9);key.intensity=.3;
+    look(V(.6,1,16.5+k*.6),V(0,4.2,9));camera.fov=50;blackEl.style.opacity=clamp((k-.86)/.1);}
 };
 // captions: one word at a time; HUSS! on huss beats
 const cap=document.getElementById('cap');
