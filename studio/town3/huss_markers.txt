@@ -1,0 +1,5 @@
+HUSS spots (seconds) - 2.0 s gaps, the screen shows 'HUSS!' 3 times in each:
+  3.18s  (0:03.18)
+  22.13s  (0:22.13)
+  42.65s  (0:42.65)
+  59.26s  (0:59.26)
